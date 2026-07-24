@@ -69,6 +69,9 @@ export default async function ProfilPage() {
             tahun: "1946",
             deskripsi: "Penggabungan Kalurahan Banyumeneng dan Kradenan",
         },
+        lurah: {
+            nama: lurahName,
+        },
         lurahPhoto: "/uploads/perangkat-desa/lurah.svg",
     };
 
