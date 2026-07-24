@@ -145,7 +145,7 @@ export default async function ProfilPage() {
                                 <div className="relative w-48 h-48 rounded-2xl overflow-hidden shadow-2xl border-4 border-white/30">
                                     <Image
                                         src={kalurahanData.lurahPhoto}
-                                        alt={kalurahanName}
+                                        alt={kalurahanData.lurah.nama}
                                         fill
                                         className="object-cover"
                                     />
