@@ -5,14 +5,24 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-export default function StrukturPage() {
-    // Real Lurah data
-    const lurah = {
-        nama: "R. Widayatma, SE",
-        jabatan: "Lurah/Kepala Kalurahan",
-        periode: "2021-2026",
-        foto: "/uploads/perangkat-desa/lurah.jpg",
-    };
+async function getLurahData() {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:5091'}/api/lurah`, {
+            next: { revalidate: 3600 } // Cache for 1 hour
+        });
+        const data = await res.json();
+        return data.current || null;
+    } catch (error) {
+        console.error("Error fetching lurah data:", error);
+        return null;
+    }
+}
+
+export default async function StrukturPage() {
+    const lurah = await getLurahData();
+    const lurahName = lurah?.nama_lurah || "Sudarisman, S.T.";
+    const lurahGelar = lurah?.gelar || "";
+    const periode = lurah ? `${lurah.periode_awal}-${lurah.periode_akhir || 'Sekarang'}` : "2021-2026";
 
     return (
         <div className="container mx-auto px-4 py-4">
@@ -54,11 +64,11 @@ export default function StrukturPage() {
                                     />
                                 </div>
                                 <div className="flex-1 text-center md:text-left">
-                                    <h2 className="text-3xl font-bold text-gray-900 mb-2">{lurah.nama}</h2>
-                                    <p className="text-lg text-gray-700 mb-3">{lurah.jabatan}</p>
+                                    <h2 className="text-3xl font-bold text-gray-900 mb-2">{lurahName}</h2>
+                                    <p className="text-lg text-gray-700 mb-3">Lurah/Kepala Kalurahan</p>
                                     <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full">
                                         <Calendar className="h-4 w-4 text-purple-600" />
-                                        <span className="text-sm font-medium">Periode {lurah.periode}</span>
+                                        <span className="text-sm font-medium">Periode {periode}</span>
                                     </div>
                                 </div>
                             </div>

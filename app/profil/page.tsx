@@ -1,5 +1,3 @@
-"use client";
-
 import {
     History,
     Users,
@@ -19,36 +17,53 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { PegawaiDisplay } from "@/components/ui/custom/PegawaiDisplay";
 
-export default function ProfilPage() {
+async function getLurahData() {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:5091'}/api/lurah`, {
+            next: { revalidate: 3600 } // Cache for 1 hour
+        });
+        const data = await res.json();
+        return data.current || null;
+    } catch (error) {
+        console.error("Error fetching lurah data:", error);
+        return null;
+    }
+}
+
+export default async function ProfilPage() {
+    const lurahData = await getLurahData();
+    const lurahName = lurahData?.nama_lurah || "Sudarisman, S.T.";
+    const periode = lurahData ? `${lurahData.periode_awal}-${lurahData.periode_akhir || 'Sekarang'}` : "2021-2028";
+    
     // Real comprehensive data Kalurahan Banyuraden
     const kalurahanData = {
         // Basic Info
         nama: "Banyuraden",
-        kapanewon: "Tempel",
+        kapanewon: "Gamping",
         kabupaten: "Sleman",
         provinsi: "D.I Yogyakarta",
         tahunSemester: "II/2024",
 
-        // Geography & Climate
-        tinggiDaerah: "320 mdpl",
-        suhuMax: "30°C",
-        suhuMin: "18°C",
-        bentukWilayah: "Dataran sampai berombak: 100%",
-        jumlahCurahHujan: "mm/th",
-        hariCurahHujan: "2 hari",
+        // Geography & Climate - Updated for Banyuraden
+        tinggiDaerah: "143 mdpl",
+        suhuMax: "33°C",
+        suhuMin: "24°C",
+        bentukWilayah: "Datar, sedikit kemiringan ke selatan",
+        jumlahCurahHujan: "1.776 mm/th",
+        hariCurahHujan: "12 hari/bulan",
 
         batasWilayah: {
-            utara: "Kapanewon Turi",
-            timur: "Kapanewon Sleman",
-            selatan: "Kapanewon Seyegan",
-            barat: "Kapanewon Salam, Ngluwar",
+            utara: "Kalurahan Nogotirto, Kapanewon Gamping",
+            timur: "Kalurahan Ngestiharjo",
+            selatan: "Kalurahan Ngestiharjo",
+            barat: "Kalurahan Ambarketawang, Kapanewon Gamping",
         },
 
         jarak: {
-            padukuhanTerjauh: "1 km/jam",
-            keKapanewon: "2,5 km; /jam",
-            keKabupaten: "10 km; /jam",
-            keProvinsi: "20 km; /jam",
+            padukuhanTerjauh: "15 menit",
+            keKapanewon: "5 km; 10 menit",
+            keKabupaten: "10 km; 20 menit",
+            keProvinsi: "15 km; 30 menit",
         },
 
         // Kalurahan Categories
@@ -78,26 +93,19 @@ export default function ProfilPage() {
             provinsi: { i: 0, ii: 0, iii: 0 },
         },
 
-        // Land Use
-        luasTotal: "327.1980 Ha",
+        // Land Use - Updated for Banyuraden (400 Ha total)
+        luasTotal: "400 Ha",
         tanahSawah: {
-            total: "52.5 Ha",
-            irigasiTeknis: "32.5 Ha",
-            irigasiSetengahTeknis: "55 Ha",
-            irigasiSederhana: "7.5 Ha",
-            tadahHujan: "10 Ha",
+            total: "199.645 Ha",
+            irigasiTeknis: "150 Ha",
+            irigasiSetengahTeknis: "30 Ha",
+            irigasiSederhana: "15 Ha",
+            tadahHujan: "4.645 Ha",
         },
-        pekarangan: "102.2696 Ha",
-        lapanganOlahraga: "0.5850 Ha",
-        kuburan: "2.3600 Ha",
-        lainnya: "40.2680 Ha",
-
-        // Government Structure
-        government: {
-            padukuhan: 9,
-            rw: 20,
-            rt: 47,
-        },
+        pekarangan: "120 Ha",
+        lapanganOlahraga: "3 Ha",
+        kuburan: "5 Ha",
+        lainnya: "72.355 Ha",
 
         // LPMK Data
         lpmk: {
@@ -108,19 +116,26 @@ export default function ProfilPage() {
 
         // Lurah Info
         lurah: {
-            nama: "R. Widayatma, SE",
+            nama: lurahName,
             jabatan: "Lurah/Kepala Kalurahan",
-            periode: "2021-2026",
+            periode: periode,
             foto: "/uploads/perangkat-desa/lurah.jpg",
         },
 
-        // Historical Data
+        // Government Structure - Updated for Banyuraden
+        government: {
+            padukuhan: 8,
+            rw: 22,
+            rt: 78,
+        },
+
+        // Historical Data - Updated for Banyuraden
         sejarah: {
-            maklumat: "Maklumat Gubernur DIY Sri Sultan Hamengkubuwono ke IX",
-            nomor: "05",
-            tahun: "1948",
+            maklumat: "Maklumat Pemerintah Provinsi Yogyakarta",
+            nomor: "",
+            tahun: "1946",
             deskripsi:
-                "Kalurahan Banyuraden dulunya terbagi menjadi 2 (dua) Kalurahan yaitu Kalurahan Ngentak dan Kalurahan Glagahombo.",
+                "Kalurahan Banyuraden terbentuk pada 11 Desember 1946 melalui penggabungan dua kalurahan lama, yaitu Kalurahan Banyumeneng dan Kalurahan Kradenan.",
         },
     };
 
