@@ -119,7 +119,7 @@ export default async function ProfilPage() {
             nama: lurahName,
             jabatan: "Lurah/Kepala Kalurahan",
             periode: periode,
-            foto: "/uploads/perangkat-desa/lurah.jpg",
+            foto: "/uploads/perangkat-desa/lurah.svg",
         },
 
         // Government Structure - Updated for Banyuraden

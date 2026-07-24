@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
+const lurahPhoto = "/uploads/perangkat-desa/lurah.svg";
+
 async function getLurahData() {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:5091'}/api/lurah`, {
@@ -56,8 +58,8 @@ export default async function StrukturPage() {
                             <div className="flex flex-col md:flex-row items-center gap-6">
                                 <div className="relative w-48 h-48 flex-shrink-0">
                                     <Image
-                                        src={lurah.foto}
-                                        alt={lurah.nama}
+                                        src={lurahPhoto}
+                                        alt={lurahName}
                                         fill
                                         className="object-cover rounded-lg shadow-lg"
                                         sizes="(max-width: 768px) 100vw, 200px"
