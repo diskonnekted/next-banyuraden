@@ -43,7 +43,7 @@ type UpstreamResponse = {
     meta?: { pagination?: LapakPagination };
 };
 
-const BASE_URL = "https://www.pondokrejo.sleman-desa.id";
+const BASE_URL = "https://banyuraden.slemankab.go.id";
 
 function mapItem(item: UpstreamResponse["data"][number]): LapakProduct {
     const a = item.attributes;

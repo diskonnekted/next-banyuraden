@@ -56,7 +56,7 @@ export function Header() {
         { href: "/idm", label: "IDM", icon: FileText },
         { href: "/sdgs", label: "SDGs", icon: Globe },
         { href: "/iot", label: "IoT", icon: Cpu },
-        { href: "https://pondokrejo.sleman-desa.id/index.php/pengaduan", label: t("navigation.pengaduan"), icon: MessageSquare, external: true },
+        { href: "https://banyuraden.slemankab.go.id/index.php/pengaduan", label: t("navigation.pengaduan"), icon: MessageSquare, external: true },
     ];
 
     const pemerintahanSubItems = [
@@ -196,11 +196,11 @@ export function Header() {
                             >
                                 <Logo {...LogoVariant.light} size={40} />
                                 <div className="hidden sm:block">
-                                    <h1 className="text-lg font-bold text-white">Kalurahan Pondokrejo</h1>
+                                    <h1 className="text-lg font-bold text-white">Kalurahan Banyuraden</h1>
                                     <p className="text-xs text-[#ddf0ff]">Kabupaten Sleman, DIY</p>
                                 </div>
                                 <div className="block sm:hidden">
-                                    <h1 className="text-lg font-bold text-white">Pondokrejo</h1>
+                                    <h1 className="text-lg font-bold text-white">Banyuraden</h1>
                                     <p className="text-xs text-[#ddf0ff]">Kabupaten Sleman</p>
                                 </div>
                             </Link>

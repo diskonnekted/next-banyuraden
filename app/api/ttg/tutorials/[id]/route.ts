@@ -18,7 +18,7 @@ type TtgTutorialDetail = {
     url: string;
 };
 
-const BASE_URL = "https://ttg.pondokrejo.id";
+const BASE_URL = "https://ttg.banyuraden.id";
 
 function estimateReadTimeMinutes(html: string): string | null {
     const text = html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();

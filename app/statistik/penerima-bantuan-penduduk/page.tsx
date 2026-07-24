@@ -16,7 +16,7 @@ export default function PenerimaBantuanPendudukPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Penerima Bantuan Penduduk</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik penerima bantuan penduduk Kalurahan Pondokrejo
+                        Data statistik penerima bantuan penduduk Kalurahan Banyuraden
                     </p>
                 </div>
 

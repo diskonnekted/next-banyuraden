@@ -158,7 +158,7 @@ export default function WilayahAdministratifPage() {
                         </div>
                         <h1 className="text-4xl font-bold text-primary">Wilayah Administratif</h1>
                         <p className="text-gray-600 max-w-2xl mx-auto">
-                            Informasi lengkap mengenai wilayah administratif Kalurahan Pondokrejo
+                            Informasi lengkap mengenai wilayah administratif Kalurahan Banyuraden
                         </p>
                     </div>
                     <WilayahDataLoading />
@@ -177,7 +177,7 @@ export default function WilayahAdministratifPage() {
                         </div>
                         <h1 className="text-4xl font-bold text-primary">Wilayah Administratif</h1>
                         <p className="text-gray-600 max-w-2xl mx-auto">
-                            Informasi lengkap mengenai wilayah administratif Kalurahan Pondokrejo
+                            Informasi lengkap mengenai wilayah administratif Kalurahan Banyuraden
                         </p>
                     </div>
                     <WilayahDataNotAvailable onRetry={fetchWilayahData} />
@@ -195,7 +195,7 @@ export default function WilayahAdministratifPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Wilayah Administratif</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Informasi lengkap mengenai wilayah administratif Kalurahan Pondokrejo
+                        Informasi lengkap mengenai wilayah administratif Kalurahan Banyuraden
                     </p>
                 </div>
 

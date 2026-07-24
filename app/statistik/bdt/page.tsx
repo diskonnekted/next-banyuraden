@@ -16,7 +16,7 @@ export default function BDTPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data BDT Penduduk</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik Basis Data Terpadu (BDT) penduduk Kalurahan Pondokrejo
+                        Data statistik Basis Data Terpadu (BDT) penduduk Kalurahan Banyuraden
                     </p>
                 </div>
 

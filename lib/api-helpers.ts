@@ -80,7 +80,7 @@ export async function fetchOpenSIDArsip() {
 /**
  * SDGS API helper with location code
  */
-export async function fetchSDGSData(locationCode = "3404140004") {
+export async function fetchSDGSData(locationCode = "3404020001") {
     return sdgsApi.get(`/sdgs/searching/score-sdgs?location_code=${locationCode}`, {
         cache: {
             revalidate: 60 * 60 * 24 * 30, // 30 days
@@ -92,7 +92,7 @@ export async function fetchSDGSData(locationCode = "3404140004") {
 /**
  * SDGS detail API helper with goal and location code
  */
-export async function fetchSDGSDetail(goalId: string, locationCode = "3404140004") {
+export async function fetchSDGSDetail(goalId: string, locationCode = "3404020001") {
     return sdgsApi.get(`/sdgs/searching/score-sdgs-detail?goal=${goalId}&location_code=${locationCode}`, {
         cache: {
             revalidate: 60 * 60 * 24 * 30, // 30 days

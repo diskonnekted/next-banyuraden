@@ -29,7 +29,7 @@ export const { GET, OPTIONS } = createApiRouteHandler(async (request: NextReques
 
         // Fetch news data from external API
         const response = await fetch(
-            `${env.OPENSID_API_URL ?? "https://pondokrejo.sleman-desa.id"}/internal_api/arsip`,
+            `${env.OPENSID_API_URL ?? "https://banyuraden.slemankab.go.id"}/internal_api/arsip`,
             {
                 method: "GET",
                 headers: {
@@ -89,11 +89,11 @@ export const { GET, OPTIONS } = createApiRouteHandler(async (request: NextReques
                 let imageUrl = article.attributes.gambar as string;
                 // If it's just a filename, add OpenSID path
                 if (!imageUrl.includes("/")) {
-                    imageUrl = `https://pondokrejo.sleman-desa.id/desa/upload/artikel/sedang_${imageUrl}`;
+                    imageUrl = `https://banyuraden.slemankab.go.id/desa/upload/artikel/sedang_${imageUrl}`;
                 } else {
                     // If it's a relative path, add base URL
                     if (imageUrl.startsWith("/")) {
-                        imageUrl = `https://pondokrejo.sleman-desa.id${imageUrl}`;
+                        imageUrl = `https://banyuraden.slemankab.go.id${imageUrl}`;
                     }
                     // Force HTTPS
                     imageUrl = imageUrl.replace(/^http:\/\//, "https://");

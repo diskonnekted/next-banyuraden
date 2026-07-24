@@ -16,7 +16,7 @@ export default function HubunganDalamKKPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Hubungan Dalam KK</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik hubungan dalam Kartu Keluarga (KK) penduduk Kalurahan Pondokrejo
+                        Data statistik hubungan dalam Kartu Keluarga (KK) penduduk Kalurahan Banyuraden
                     </p>
                 </div>
 

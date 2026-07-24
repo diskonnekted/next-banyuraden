@@ -1,5 +1,5 @@
 /**
- * Pondokrejo Village Official Color Palette
+ * Banyuraden Village Official Color Palette
  * Based on docs/pondokrejo.md theme specification
  */
 

@@ -20,10 +20,10 @@ import Image from "next/image";
 import { PegawaiDisplay } from "@/components/ui/custom/PegawaiDisplay";
 
 export default function ProfilPage() {
-    // Real comprehensive data Kalurahan Pondokrejo
+    // Real comprehensive data Kalurahan Banyuraden
     const kalurahanData = {
         // Basic Info
-        nama: "Pondokrejo",
+        nama: "Banyuraden",
         kapanewon: "Tempel",
         kabupaten: "Sleman",
         provinsi: "D.I Yogyakarta",
@@ -120,7 +120,7 @@ export default function ProfilPage() {
             nomor: "05",
             tahun: "1948",
             deskripsi:
-                "Kalurahan Pondokrejo dulunya terbagi menjadi 2 (dua) Kalurahan yaitu Kalurahan Ngentak dan Kalurahan Glagahombo.",
+                "Kalurahan Banyuraden dulunya terbagi menjadi 2 (dua) Kalurahan yaitu Kalurahan Ngentak dan Kalurahan Glagahombo.",
         },
     };
 

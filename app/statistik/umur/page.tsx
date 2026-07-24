@@ -15,7 +15,7 @@ export default function UmurPage() {
                         <Calendar className="h-10 w-10 text-blue-600" />
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Umur</h1>
-                    <p className="text-gray-600 max-w-2xl mx-auto">Data statistik umur penduduk Kalurahan Pondokrejo</p>
+                    <p className="text-gray-600 max-w-2xl mx-auto">Data statistik umur penduduk Kalurahan Banyuraden</p>
                 </div>
 
                 {/* Quick Stats Cards */}

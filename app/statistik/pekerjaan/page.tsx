@@ -16,7 +16,7 @@ export default function PekerjaanPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Pekerjaan</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik pekerjaan penduduk Kalurahan Pondokrejo
+                        Data statistik pekerjaan penduduk Kalurahan Banyuraden
                     </p>
                 </div>
 

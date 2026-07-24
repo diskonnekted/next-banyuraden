@@ -94,9 +94,9 @@ function PustakaContent({ page }: { page: number }) {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Perpustakaan</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Thumbnail koleksi buku dari Perpustakaan Kalurahan Pondokrejo.
+                        Thumbnail koleksi buku dari Perpustakaan Kalurahan Banyuraden.
                     </p>
-                    <p className="text-xs text-muted-foreground">Sumber data: pustaka.pondokrejo.id</p>
+                    <p className="text-xs text-muted-foreground">Sumber data: pustaka.banyuraden.id</p>
                 </div>
 
                 {loading && (
@@ -201,9 +201,9 @@ export default function PustakaPage() {
                             </div>
                             <h1 className="text-4xl font-bold text-primary">Perpustakaan</h1>
                             <p className="text-gray-600 max-w-2xl mx-auto">
-                                Thumbnail koleksi buku dari Perpustakaan Kalurahan Pondokrejo.
+                                Thumbnail koleksi buku dari Perpustakaan Kalurahan Banyuraden.
                             </p>
-                            <p className="text-xs text-muted-foreground">Sumber data: pustaka.pondokrejo.id</p>
+                            <p className="text-xs text-muted-foreground">Sumber data: pustaka.banyuraden.id</p>
                         </div>
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
                             {Array.from({ length: 12 }).map((_, i) => (

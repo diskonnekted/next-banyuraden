@@ -14,7 +14,7 @@ export default function KegiatanPage() {
                 <h1 className="text-4xl font-bold text-gray-900 mb-4">Kegiatan Masyarakat</h1>
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                     Informasi lengkap mengenai agenda kegiatan, program kemasyarakatan, dan partisipasi warga Kalurahan
-                    Pondokrejo
+                    Banyuraden
                 </p>
             </div>
 
@@ -179,7 +179,7 @@ export default function KegiatanPage() {
                                 </div>
                                 <div className="flex items-center gap-2 text-sm text-gray-600">
                                     <MapPin className="h-4 w-4" />
-                                    <span>Balai Kalurahan Pondokrejo</span>
+                                    <span>Balai Kalurahan Banyuraden</span>
                                 </div>
                                 <div className="flex items-center gap-2 text-sm text-gray-600">
                                     <Users className="h-4 w-4" />

@@ -260,7 +260,7 @@ export const { GET, OPTIONS } = createApiRouteHandler(async () => {
         const raw = response.data as { data?: OpenSIDArticle[] };
         const articles = raw.data ?? [];
 
-        const siteBaseUrl = "https://pondokrejo.sleman-desa.id";
+        const siteBaseUrl = "https://banyuraden.slemankab.go.id";
 
         const toAbsoluteImageUrl = (imageUrl: string | null): string | null => {
             if (!imageUrl) return null;

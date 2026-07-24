@@ -16,7 +16,7 @@ export default function KelasSosialPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Kelas Sosial</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik kelas sosial keluarga berdasarkan tingkat kesejahteraan di Kalurahan Pondokrejo
+                        Data statistik kelas sosial keluarga berdasarkan tingkat kesejahteraan di Kalurahan Banyuraden
                     </p>
                 </div>
 

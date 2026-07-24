@@ -178,7 +178,7 @@ export function HomePageClient({ serverData }: { serverData: ServerData }) {
                     <div className="text-center text-white mb-16">
                         <h1 className="text-4xl md:text-6xl font-bold mb-4">Selamat Datang</h1>
                         <p className="text-lg md:text-xl mb-6 text-white/90">
-                            Portal Resmi Kalurahan Pondokrejo, Kabupaten Sleman, D.I Yogyakarta
+                            Portal Resmi Kalurahan Banyuraden, Kabupaten Sleman, D.I Yogyakarta
                         </p>
                         <div className="flex flex-wrap gap-4 justify-center">
                             <Badge
@@ -243,7 +243,7 @@ export function HomePageClient({ serverData }: { serverData: ServerData }) {
                     {/* Layanan Mandiri CTA Button */}
                     <div className="mt-16 flex justify-center">
                         <a
-                            href="https://pondokrejo.sleman-desa.id/layanan-mandiri"
+                            href="https://banyuraden.sleman-desa.id/layanan-mandiri"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="group relative inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 rounded-2xl shadow-2xl hover:shadow-emerald-500/50 transition-all duration-500 hover:scale-105 overflow-hidden border"
@@ -359,7 +359,7 @@ export function HomePageClient({ serverData }: { serverData: ServerData }) {
                 <div className="text-center">
                     <h2 className="text-3xl font-bold text-primary mb-2">Berita & Informasi Terbaru</h2>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Ada kegiatan apa saja di Kalurahan Pondokrejo hari ini?
+                        Ada kegiatan apa saja di Kalurahan Banyuraden hari ini?
                     </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -638,7 +638,7 @@ export function HomePageClient({ serverData }: { serverData: ServerData }) {
                 <div className="text-center">
                     <h2 className="text-3xl font-bold text-primary mb-2">Tujuan Pembangunan Berkelanjutan (SDGs)</h2>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Pantau kemajuan implementasi 18 Tujuan Pembangunan Berkelanjutan di Kalurahan Pondokrejo
+                        Pantau kemajuan implementasi 18 Tujuan Pembangunan Berkelanjutan di Kalurahan Banyuraden
                     </p>
                 </div>
                 <SDGsDashboard />

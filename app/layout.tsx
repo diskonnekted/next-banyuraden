@@ -21,33 +21,33 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL(env.NEXT_PUBLIC_SITE_URL || "https://devoneclickpondokrejo.slemankab.go.id"),
-    title: "Portal Resmi Kalurahan Pondokrejo - Sleman, DIY",
+    metadataBase: new URL(env.NEXT_PUBLIC_SITE_URL || "https://banyuraden.slemankab.go.id"),
+    title: "Portal Resmi Kalurahan Banyuraden - Sleman, DIY",
     description:
-        "Portal resmi Pemerintah Kalurahan Pondokrejo, Kabupaten Sleman, DIY. Informasi lengkap layanan publik, berita terkini, dan transparansi pemerintahan kalurahan.",
+        "Portal resmi Pemerintah Kalurahan Banyuraden, Kabupaten Sleman, DIY. Informasi lengkap layanan publik, berita terkini, dan transparansi pemerintahan kalurahan.",
     keywords:
-        "Kalurahan Pondokrejo, Sleman, DIY, pemerintahan kalurahan, layanan publik, berita kalurahan, transparansi, APBDes",
-    authors: [{ name: "Pemerintah Kalurahan Pondokrejo" }],
+        "Kalurahan Banyuraden, Sleman, DIY, pemerintahan kalurahan, layanan publik, berita kalurahan, transparansi, APBDes",
+    authors: [{ name: "Pemerintah Kalurahan Banyuraden" }],
     openGraph: {
-        title: "Portal Resmi Kalurahan Pondokrejo",
-        description: "Portal resmi Pemerintah Kalurahan Pondokrejo, Kabupaten Sleman, DIY",
+        title: "Portal Resmi Kalurahan Banyuraden",
+        description: "Portal resmi Pemerintah Kalurahan Banyuraden, Kabupaten Sleman, DIY",
         type: "website",
         locale: "id_ID",
-        url: "https://devoneclickpondokrejo.slemankab.go.id",
-        siteName: env.APP_NAME || "Portal Kalurahan Pondokrejo",
+        url: "https://banyuraden.slemankab.go.id",
+        siteName: env.APP_NAME || "Portal Kalurahan Banyuraden",
         images: [
             {
                 url: "/favicon-512x512.png",
                 width: 512,
                 height: 512,
-                alt: "Kalurahan Pondokrejo Logo",
+                alt: "Kalurahan Banyuraden Logo",
             },
         ],
     },
     twitter: {
         card: "summary_large_image",
-        title: "Portal Resmi Kalurahan Pondokrejo",
-        description: "Portal resmi Pemerintah Kalurahan Pondokrejo, Kabupaten Sleman, DIY",
+        title: "Portal Resmi Kalurahan Banyuraden",
+        description: "Portal resmi Pemerintah Kalurahan Banyuraden, Kabupaten Sleman, DIY",
     },
     other: {
         "msapplication-TileColor": "#39a2cf",

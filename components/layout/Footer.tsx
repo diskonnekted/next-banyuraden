@@ -12,16 +12,16 @@ export function Footer() {
 
     const quickLinks = [
         { href: "/berita", label: t("navigation.berita") },
-        { href: "https://pondokrejo.sleman-desa.id/layanan-mandiri", label: t("navigation.layanan"), external: true },
+        { href: "https://banyuraden.slemankab.go.id/layanan-mandiri", label: t("navigation.layanan"), external: true },
         { href: "/profil/sejarah", label: "Sejarah Kalurahan" },
         { href: "/pemerintahan", label: t("navigation.pemerintahan") },
         { href: "/keuangan", label: t("navigation.keuangan") },
-        { href: "https://pondokrejo.sleman-desa.id/index.php/pengaduan", label: t("navigation.kontak"), external: true },
+        { href: "https://banyuraden.slemankab.go.id/index.php/pengaduan", label: t("navigation.kontak"), external: true },
     ];
 
     const layananLinks = [
-        { href: "https://pondokrejo.sleman-desa.id/layanan-mandiri", label: "Layanan Mandiri", external: true },
-        { href: "https://pondokrejo.sleman-desa.id/index.php/pengaduan", label: "Pengaduan Masyarakat", external: true },
+        { href: "https://banyuraden.slemankab.go.id/layanan-mandiri", label: "Layanan Mandiri", external: true },
+        { href: "https://banyuraden.slemankab.go.id/index.php/pengaduan", label: "Pengaduan Masyarakat", external: true },
         { href: "/iot", label: "IoT Monitoring" },
         { href: "/statistik", label: "Data Statistik" },
     ];
@@ -39,24 +39,24 @@ export function Footer() {
 
     const socialLinks = [
         {
-            href: "https://www.facebook.com/kalurahanpondokrejo.sid",
+            href: "https://www.facebook.com/kalurahanbanyuraden.sid",
             icon: siFacebook,
             label: "Facebook",
             color: "#0866FF",
         },
         {
-            href: "https://api.whatsapp.com/send?phone=6287742203602",
+            href: "https://api.whatsapp.com/send?phone=62274621626",
             icon: siWhatsapp,
             label: "WhatsApp",
             color: "#2bb517",
         },
         {
-            href: "https://www.instagram.com/kalurahanpondokrejo.sid",
+            href: "https://www.instagram.com/kalurahanbanyuraden.sid",
             icon: siInstagram,
             label: "Instagram",
             color: "#FF0069",
         },
-        { href: "https://www.youtube.com/@TIMMEDIAPONDOKREJO", icon: siYoutube, label: "YouTube", color: "#FF0000" },
+        { href: "https://www.youtube.com/@TIMMEDIABANYURADEN", icon: siYoutube, label: "YouTube", color: "#FF0000" },
     ];
 
     return (
@@ -69,12 +69,12 @@ export function Footer() {
                         <div className="flex items-center space-x-3">
                             <Logo {...LogoVariant.footer} />
                             <div>
-                                <h3 className="text-lg font-bold text-white">Kalurahan Pondokrejo</h3>
+                                <h3 className="text-lg font-bold text-white">Kalurahan Banyuraden</h3>
                                 <p className="text-xs text-[#ddf0ff]">Kabupaten Sleman, DIY</p>
                             </div>
                         </div>
                         <p className="text-sm text-[#ddf0ff] leading-relaxed">
-                            Portal resmi Pemerintah Kalurahan Pondokrejo yang menyediakan informasi dan layanan publik
+                            Portal resmi Pemerintah Kalurahan Banyuraden yang menyediakan informasi dan layanan publik
                             digital untuk warga kalurahan.
                         </p>
                         <div className="flex space-x-3">

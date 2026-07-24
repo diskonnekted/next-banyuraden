@@ -3,10 +3,10 @@ import { env } from "process";
 
 export default function manifest(): MetadataRoute.Manifest {
     return {
-        name: env.APP_NAME || "Portal Pondokrejo",
-        short_name: "Pondokrejo",
+        name: env.APP_NAME || "Portal Banyuraden",
+        short_name: "Banyuraden",
         description:
-            "Portal resmi Pemerintah Kalurahan Pondokrejo, Kabupaten Sleman, DIY. Informasi lengkap layanan publik, berita terkini, dan transparansi pemerintahan kalurahan.",
+            "Portal resmi Pemerintah Kalurahan Banyuraden, Kabupaten Sleman, DIY. Informasi lengkap layanan publik, berita terkini, dan transparansi pemerintahan kalurahan.",
         start_url: "/",
         display: "standalone",
         background_color: "#f8f9fc",
@@ -73,7 +73,7 @@ export default function manifest(): MetadataRoute.Manifest {
                 name: "Pengaduan",
                 short_name: "Pengaduan",
                 description: "Hubungi pemerintah kalurahan",
-                url: "https://pondokrejo.sleman-desa.id/index.php/pengaduan",
+                url: "https://banyuraden.slemankab.go.id/index.php/pengaduan",
                 icons: [{ src: "/favicon-96x96.png", sizes: "96x96" }],
             },
         ],
@@ -83,14 +83,14 @@ export default function manifest(): MetadataRoute.Manifest {
                 sizes: "1280x720",
                 type: "image/png",
                 form_factor: "wide",
-                label: "Homepage " + env.APP_NAME || "Portal Kalurahan Pondokrejo",
+                label: "Homepage " + env.APP_NAME || "Portal Kalurahan Banyuraden",
             },
             {
                 src: "/images/home-mobile.png",
                 sizes: "390x844",
                 type: "image/png",
                 form_factor: "narrow",
-                label: "Tampilan Mobile " + env.APP_NAME || "Portal Kalurahan Pondokrejo",
+                label: "Tampilan Mobile " + env.APP_NAME || "Portal Kalurahan Banyuraden",
             },
         ],
         related_applications: [],

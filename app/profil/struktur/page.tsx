@@ -29,7 +29,7 @@ export default function StrukturPage() {
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-purple-100 rounded-full mb-4">
                     <Users className="h-10 w-10 text-purple-600" />
                 </div>
-                <h1 className="text-4xl font-bold text-gray-900 mb-4">Struktur Organisasi Kalurahan Pondokrejo</h1>
+                <h1 className="text-4xl font-bold text-gray-900 mb-4">Struktur Organisasi Kalurahan Banyuraden</h1>
                 <p className="text-xl text-gray-600">
                     Susunan perangkat pemerintahan kalurahan yang bertugas melayani masyarakat
                 </p>
@@ -71,7 +71,7 @@ export default function StrukturPage() {
                                 <div>
                                     <h3 className="font-semibold text-amber-900 mb-1">Struktur Organisasi Lengkap</h3>
                                     <p className="text-sm text-amber-800">
-                                        Data lengkap struktur organisasi Kalurahan Pondokrejo (Sekretaris, Kasi, Kaur,
+                                        Data lengkap struktur organisasi Kalurahan Banyuraden (Sekretaris, Kasi, Kaur,
                                         dan Kepala Dusun) sedang dalam proses penyusunan dan akan segera tersedia.
                                     </p>
                                 </div>
@@ -123,7 +123,7 @@ export default function StrukturPage() {
                             Struktur Organisasi Sedang Disusun
                         </h2>
                         <p className="text-gray-600 mb-4 max-w-2xl mx-auto">
-                            Kami sedang mempersiapkan data lengkap mengenai struktur organisasi Kalurahan Pondokrejo
+                            Kami sedang mempersiapkan data lengkap mengenai struktur organisasi Kalurahan Banyuraden
                             untuk memberikan informasi yang akurat.
                         </p>
 

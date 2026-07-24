@@ -16,7 +16,7 @@ export default function KontrasepsiKbPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Kontrasepsi/KB </h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik kontrasepsi berdasarkan penduduk Kalurahan Pondokrejo
+                        Data statistik kontrasepsi berdasarkan penduduk Kalurahan Banyuraden
                     </p>
                 </div>
 
