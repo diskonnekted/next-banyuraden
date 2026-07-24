@@ -162,7 +162,7 @@ export default async function ProfilPage() {
                                         <Users className="w-3 h-3 mr-1" />
                                         Pimpinan Kalurahan
                                     </Badge>
-                                    <h2 className="text-3xl font-bold text-slate-900 mb-2">{kalurahanName}</h2>
+                                    <h2 className="text-3xl font-bold text-slate-900 mb-2">{kalurahanData.lurah.nama}</h2>
                                     <p className="text-lg text-slate-600">Lurah/Kepala Kalurahan</p>
                                 </div>
                                 <div className="hidden md:flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full">
