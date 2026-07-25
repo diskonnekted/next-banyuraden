@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-const lurahPhoto = "/uploads/perangkat-desa/lurah.svg";
+const lurahPhoto = "/sudarisman.jpg";
 
 async function getLurahData() {
     try {

@@ -72,7 +72,7 @@ export default async function ProfilPage() {
         lurah: {
             nama: lurahName,
         },
-        lurahPhoto: "/uploads/perangkat-desa/lurah.svg",
+        lurahPhoto: "/sudarisman.jpg",
     };
 
     return (
