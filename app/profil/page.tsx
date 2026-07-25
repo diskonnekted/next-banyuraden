@@ -76,23 +76,18 @@ export default async function ProfilPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
+        <div className="min-h-screen bg-white">
             {/* Hero Section */}
-            <div className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white overflow-hidden">
-                <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.05%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20" />
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+            <div className="bg-blue-700 text-white py-16 md:py-20">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center space-y-6">
-                        <Badge variant="secondary" className="bg-white/20 text-white border-white/30 backdrop-blur-sm mb-4">
-                            <Flag className="w-3 h-3 mr-1" />
-                            Portal Resmi Pemerintah Kalurahan
-                        </Badge>
                         <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
                             Kalurahan {kalurahanData.nama}
                         </h1>
                         <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
                             Kapanewon {kalurahanData.kapanewon}, {kalurahanData.kabupaten}, {kalurahanData.provinsi}
                         </p>
-                        <div className="flex flex-wrap justify-center gap-4 text-sm text-blue-100">
+                        <div className="flex flex-wrap justify-center gap-4 text-sm text-blue-200">
                             <div className="flex items-center gap-2">
                                 <MapPin className="w-4 h-4" />
                                 <span>Kode Pos {kalurahanData.kodePos}</span>
@@ -104,35 +99,31 @@ export default async function ProfilPage() {
                         </div>
                     </div>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-slate-50 to-transparent" />
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 space-y-8 pb-16">
-                {/* Quick Stats Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 text-center hover:shadow-xl transition-shadow">
-                        <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+                        <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center mx-auto mb-3">
                             <Users className="w-6 h-6 text-blue-600" />
                         </div>
                         <p className="text-2xl font-bold text-slate-900">{kalurahanData.penduduk}</p>
                         <p className="text-xs text-slate-500 mt-1">Total Penduduk</p>
                     </div>
-                    <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 text-center hover:shadow-xl transition-shadow">
-                        <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <div className="bg-white border border-slate-200 rounded-xl p-6 text-center">
+                        <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center mx-auto mb-3">
                             <TreePine className="w-6 h-6 text-green-600" />
                         </div>
                         <p className="text-2xl font-bold text-slate-900">{kalurahanData.luasTotal}</p>
                         <p className="text-xs text-slate-500 mt-1">Luas Wilayah</p>
                     </div>
-                    <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 text-center hover:shadow-xl transition-shadow">
-                        <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <div className="bg-white border border-slate-200 rounded-xl p-6 text-center">
+                        <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center mx-auto mb-3">
                             <Building className="w-6 h-6 text-purple-600" />
                         </div>
                         <p className="text-2xl font-bold text-slate-900">{kalurahanData.government.padukuhan}</p>
                         <p className="text-xs text-slate-500 mt-1">Padukuhan</p>
                     </div>
-                    <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 text-center hover:shadow-xl transition-shadow">
-                        <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <div className="bg-white border border-slate-200 rounded-xl p-6 text-center">
+                        <div className="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center mx-auto mb-3">
                             <TrendingUp className="w-6 h-6 text-orange-600" />
                         </div>
                         <p className="text-2xl font-bold text-slate-900">{kalurahanData.government.rw}/{kalurahanData.government.rt}</p>
@@ -140,22 +131,20 @@ export default async function ProfilPage() {
                     </div>
                 </div>
 
-                {/* Lurah Section - Modern Card */}
-                <Card className="bg-gradient-to-r from-slate-50 to-white border-slate-200 shadow-lg overflow-hidden">
-                    <div className="md:flex">
-                        <div className="md:w-1/3 relative">
-                            <div className="h-64 md:h-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
-                                <div className="relative w-48 h-48 rounded-2xl overflow-hidden shadow-2xl border-4 border-white/30">
-                                    <Image
-                                        src={kalurahanData.lurahPhoto}
-                                        alt={kalurahanData.lurah.nama}
-                                        fill
-                                        className="object-cover"
-                                    />
-                                </div>
+                {/* Lurah Section - Simple Layout */}
+                <div className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8">
+                    <div className="flex flex-col md:flex-row gap-8 items-center">
+                        <div className="flex-shrink-0">
+                            <div className="relative w-48 h-64 rounded-xl overflow-hidden shadow-lg border-2 border-slate-200">
+                                <Image
+                                    src={kalurahanData.lurahPhoto}
+                                    alt={kalurahanData.lurah.nama}
+                                    fill
+                                    className="object-cover"
+                                />
                             </div>
                         </div>
-                        <div className="md:w-2/3 p-8">
+                        <div className="flex-1 text-center md:text-left">
                             <div className="flex items-start justify-between mb-4">
                                 <div>
                                     <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-200 mb-3">
@@ -190,7 +179,7 @@ export default async function ProfilPage() {
                             </div>
                         </div>
                     </div>
-                </Card>
+                </div>
 
                 {/* Geography & Boundaries - Split Layout */}
                 <div className="grid md:grid-cols-2 gap-6">
