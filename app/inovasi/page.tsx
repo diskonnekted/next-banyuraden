@@ -14,8 +14,9 @@ function getKategoriBadge(kategori: string) {
     return styles[kategori] || "bg-gray-100 text-gray-800 border-gray-200";
 }
 
-function getKategoriIcon(kategori: string) {
-    switch (kategori) {
+function getKategoriIcon(kategori: string | null) {
+    const k = kategori || "TEKNOLOGI";
+    switch (k) {
         case "TEKNOLOGI":
             return <Lightbulb className="h-6 w-6 text-blue-600" />;
         case "PANGAN":
@@ -29,7 +30,8 @@ function getKategoriIcon(kategori: string) {
     }
 }
 
-function getKategoriLabel(kategori: string): string {
+function getKategoriLabel(kategori: string | null): string {
+    const k = kategori || "TEKNOLOGI";
     const labels: Record<string, string> = {
         TEKNOLOGI: "Teknologi",
         PANGAN: "Pangan",
@@ -144,11 +146,11 @@ export default async function InovasiPage() {
                             <Card key={item.id} className="overflow-hidden">
                                 <div className="h-32 bg-gradient-to-br from-blue-400 to-purple-600 relative">
                                     <div className="absolute inset-0 flex items-center justify-center">
-                                        {getKategoriIcon(item.kategori)}
+                                        {getKategoriIcon(item.kategori || "TEKNOLOGI")}
                                     </div>
                                     <div className="absolute top-3 right-3">
                                         <Badge className="bg-white/90 text-blue-700 backdrop-blur-sm">
-                                            {getKategoriLabel(item.kategori)}
+                                            {getKategoriLabel(item.kategori || "TEKNOLOGI")}
                                         </Badge>
                                     </div>
                                 </div>
