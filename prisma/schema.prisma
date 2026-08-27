@@ -593,3 +593,178 @@ model Konfigurasi {
 
   @@map("konfigurasi")
 }
+
+// Aparatur Pamong - Lurah, Carik, KaUR, Jagabaya, Dukuh, BPKal, Staf
+model AparaturPamong {
+  id          Int      @id @default(autoincrement())
+  namaLengkap String   @map("nama_lengkap") @db.VarChar(255)
+  gelar       String?  @db.VarChar(100)
+  jabatan     String   @db.VarChar(100)
+  kelompok    String   @db.VarChar(50)
+  padukuhanId Int?     @map("padukuhan_id")
+  pendidikan  String?  @db.VarChar(100)
+  pengalaman  String?  @db.Text
+  foto        String?  @db.VarChar(500)
+  urutan      Int      @default(999)
+  aktif       Bool     @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("aparatur_pamong")
+}
+
+// Padukuhan
+model Padukuhan {
+  id              Int                @id @default(autoincrement())
+  nama            String             @db.VarChar(100)
+  slug            String             @unique @db.VarChar(100)
+  kepalaDukuh     String?            @db.VarChar(255)
+  jumlahRW        Int                @default(0)
+  jumlahRT        Int                @default(0)
+  luasHa          Float?             @db.Float
+  jumlahKK        Int?               @db.Int
+  jumlahLakiLaki  Int?               @db.Int
+  jumlahPerempuan Int?               @db.Int
+  totalPenduduk   Int?               @db.Int
+  deskripsi       String?            @db.Text
+  kampung         String?            @db.Text
+  gambar          String?            @db.VarChar(500)
+  createdAt       DateTime           @default(now()) @map("created_at")
+  updatedAt       DateTime           @updatedAt @map("updated_at")
+
+  fasilitas       FasilitasPadukuhan[]
+  traditions       TradisiBudaya[]
+  umkm            UMKM[]
+  pertanahan      Pertanahan[]
+  kelompokTani    KelompokTani[]
+  aparat          AparaturPamong[]
+  wisatas         Wisata[]
+
+  @@map("padukuhan")
+}
+
+// Fasilitas
+model FasilitasPadukuhan {
+  id          Int      @id @default(autoincrement())
+  nama        String   @db.VarChar(255)
+  jenis       String   @db.VarChar(50)
+  alamat      String?  @db.Text
+  deskripsi   String?  @db.Text
+  padukuhanId Int      @map("padukuhan_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  padukuhan Padukuhan @relation(fields: [padukuhanId], references: [id])
+
+  @@map("fasilitas_padukuhan")
+}
+
+// UMKM
+model UMKM {
+  id          Int      @id @default(autoincrement())
+  nama        String   @db.VarChar(255)
+  jenis       String   @db.VarChar(100)
+  pemilik     String?  @db.VarChar(255)
+  telepon     String?  @db.VarChar(50)
+  email       String?  @db.VarChar(255)
+  alamat      String?  @db.Text
+  deskripsi   String?  @db.Text
+  aktif       Bool     @default(true)
+  padukuhanId Int      @map("padukuhan_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  padukuhan Padukuhan @relation(fields: [padukuhanId], references: [id])
+
+  @@map("umkm")
+}
+
+// Tradisi Budaya
+model TradisiBudaya {
+  id          Int      @id @default(autoincrement())
+  nama        String   @db.VarChar(255)
+  jenis       String   @db.VarChar(50)
+  deskripsi   String?  @db.Text
+  gambar      String?  @db.VarChar(500)
+  lokasi      String?  @db.VarChar(255)
+  aktif       Bool     @default(true)
+  padukuhanId Int      @map("padukuhan_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  padukuhan Padukuhan @relation(fields: [padukuhanId], references: [id])
+
+  @@map("tradisi_budaya")
+}
+
+// Wisata
+model Wisata {
+  id          Int      @id @default(autoincrement())
+  nama        String   @db.VarChar(255)
+  deskripsi   String?  @db.Text
+  gambar      String?  @db.VarChar(500)
+  lokasi      String?  @db.Text
+  koordinat   String?  @db.VarChar(100)
+  aktif       Bool     @default(true)
+  padukuhanId Int      @map("padukuhan_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  padukuhan Padukuhan @relation(fields: [padukuhanId], references: [id])
+
+  @@map("wisata")
+}
+
+// Pertanahan
+model Pertanahan {
+  id                  Int      @id @default(autoincrement())
+  totalBidang         Int?     @map("total_bidang")
+  bersertifikat       Int?     @map("bersertifikat")
+  persenSertifikat    Float?   @map("persen_sertifikat")
+  bukanHakMilik       Int?     @map("bukan_hak_milik")
+  persentaseBHM       Float?   @map("persentase_bhm")
+  tanahSultan         String?  @db.Text
+  tanahPalungguh      String?  @db.Text
+  tanahWakaf          String?  @db.Text
+  tanahPutih          String?  @db.Text
+  tanahKasDesa        String?  @db.Text
+  padukuhanId         Int      @map("padukuhan_id")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  padukuhan Padukuhan @relation(fields: [padukuhanId], references: [id])
+
+  @@map("pertanahan")
+}
+
+// Kelompok Tani
+model KelompokTani {
+  id          Int      @id @default(autoincrement())
+  nama        String   @db.VarChar(255)
+  jenis       String   @db.VarChar(50)
+  deskripsi   String?  @db.Text
+  ketua      String?  @db.VarChar(255)
+  anggota     Int?     @default(0)
+  aktif       Bool     @default(true)
+  padukuhanId Int      @map("padukuhan_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  padukuhan Padukuhan @relation(fields: [padukuhanId], references: [id])
+
+  @@map("kelompok_tani")
+}
+
+// Inovasi
+model Inovasi {
+  id          Int      @id @default(autoincrement())
+  nama        String   @db.VarChar(255)
+  kategori    String?  @db.VarChar(100)
+  deskripsi   String?  @db.Text
+  tahun       Int?
+  aktif       Bool     @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("inovasi")
+}
