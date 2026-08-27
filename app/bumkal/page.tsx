@@ -188,7 +188,7 @@ export default async function BumkalPage() {
                             </div>
                         ) : (
                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {bumkal.unitUsaha.map((unit) => (
+                                {bumkal.unitUsaha.map((unit: any) => (
                                     <Card key={unit.id}>
                                         <CardHeader className="pb-2">
                                             <CardTitle className="text-base">{unit.nama}</CardTitle>
