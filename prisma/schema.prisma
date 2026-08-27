@@ -606,7 +606,7 @@ model AparaturPamong {
   pengalaman  String?  @db.Text
   foto        String?  @db.VarChar(500)
   urutan      Int      @default(999)
-  aktif       Bool     @default(true)
+  aktif       Boolean  @default(true)
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
@@ -669,7 +669,7 @@ model UMKM {
   email       String?  @db.VarChar(255)
   alamat      String?  @db.Text
   deskripsi   String?  @db.Text
-  aktif       Bool     @default(true)
+  aktif       Boolean  @default(true)
   padukuhanId Int      @map("padukuhan_id")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
@@ -687,7 +687,7 @@ model TradisiBudaya {
   deskripsi   String?  @db.Text
   gambar      String?  @db.VarChar(500)
   lokasi      String?  @db.VarChar(255)
-  aktif       Bool     @default(true)
+  aktif       Boolean  @default(true)
   padukuhanId Int      @map("padukuhan_id")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
@@ -705,7 +705,7 @@ model Wisata {
   gambar      String?  @db.VarChar(500)
   lokasi      String?  @db.Text
   koordinat   String?  @db.VarChar(100)
-  aktif       Bool     @default(true)
+  aktif       Boolean  @default(true)
   padukuhanId Int      @map("padukuhan_id")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
@@ -745,7 +745,7 @@ model KelompokTani {
   deskripsi   String?  @db.Text
   ketua      String?  @db.VarChar(255)
   anggota     Int?     @default(0)
-  aktif       Bool     @default(true)
+  aktif       Boolean  @default(true)
   padukuhanId Int      @map("padukuhan_id")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
@@ -762,7 +762,7 @@ model Inovasi {
   kategori    String?  @db.VarChar(100)
   deskripsi   String?  @db.Text
   tahun       Int?
-  aktif       Bool     @default(true)
+  aktif       Boolean  @default(true)
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
