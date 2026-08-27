@@ -33,7 +33,7 @@ export default async function IbadahPage() {
         include: {
             padukuhan: { select: { nama: true, slug: true } },
         },
-        orderBy: ["nama"],
+        orderBy: { nama: "asc" },
     });
 
     // Group by padukuhan
