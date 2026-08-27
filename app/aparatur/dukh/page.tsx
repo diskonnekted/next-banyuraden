@@ -17,7 +17,7 @@ function getInitials(name: string): string {
 }
 
 export default async function DukuPage() {
-    const dukuhList = await prisma.apaturPamong.findMany({
+    const dukuhList = await prisma.aparaturPamong.findMany({
         where: {
             kelompok: "DUKUH",
             aktif: true,
