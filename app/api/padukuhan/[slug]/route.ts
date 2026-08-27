@@ -9,7 +9,7 @@ export async function GET(request: Request, context: RouteContext) {
     try {
         const { slug } = await context.params;
 
-        const padukuhan = prisma.padukuhan ? await prisma.padukuhan.findUnique({
+        const padukuhan: any = (prisma && prisma.padukuhan) ? await prisma.padukuhan.findUnique({
             where: { slug },
             include: {
                 fasilitas: true,

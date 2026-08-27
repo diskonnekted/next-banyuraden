@@ -7,7 +7,7 @@ export async function GET(request: Request) {
         const slug = searchParams.get("slug");
 
         if (slug) {
-            const padukuhan = prisma.padukuhan ? await prisma.padukuhan.findUnique({
+            const padukuhan: any = (prisma && prisma.padukuhan) ? await prisma.padukuhan.findUnique({
                 where: { slug },
             }) : null;
 
@@ -21,7 +21,7 @@ export async function GET(request: Request) {
             return NextResponse.json({ success: true, data: padukuhan });
         }
 
-        const data = prisma.padukuhan ? await prisma.padukuhan.findMany({
+        const data: any[] = (prisma && prisma.padukuhan) ? await prisma.padukuhan.findMany({
             orderBy: { nama: "asc" },
         }) : [];
 

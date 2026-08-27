@@ -15,7 +15,7 @@ export async function GET(request: Request) {
             where.jenis = jenis;
         }
 
-        const data = prisma.wisata ? await prisma.wisata.findMany({
+        const data: any[] = (prisma && prisma.wisata) ? await prisma.wisata.findMany({
             where,
             include: {
                 padukuhan: true,

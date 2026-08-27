@@ -11,7 +11,7 @@ export async function GET(request: Request) {
             where.padukuhanId = parseInt(padukuhanId, 10);
         }
 
-        const data = prisma.tradisiBudaya ? await prisma.tradisiBudaya.findMany({
+        const data: any[] = (prisma && prisma.tradisiBudaya) ? await prisma.tradisiBudaya.findMany({
             where,
             include: {
                 padukuhan: true,

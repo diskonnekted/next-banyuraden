@@ -11,7 +11,7 @@ export async function GET(request: Request) {
             where.jenis = jenis;
         }
 
-        const data = prisma.produkHukum ? await prisma.produkHukum.findMany({
+        const data: any[] = (prisma && prisma.produkHukum) ? await prisma.produkHukum.findMany({
             where,
             orderBy: { tahun: "desc" },
         }) : [];

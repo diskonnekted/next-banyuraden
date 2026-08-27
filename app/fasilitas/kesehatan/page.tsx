@@ -23,7 +23,7 @@ function getJenisLabel(jenis: string): string {
 }
 
 export default async function KesehatanPage() {
-    const fasilitas = prisma.fasilitasPadukuhan ? await prisma.fasilitasPadukuhan.findMany({
+    const fasilitas: any[] = (prisma && prisma.fasilitasPadukuhan) ? await prisma.fasilitasPadukuhan.findMany({
         where: {
             aktif: true,
             jenis: {

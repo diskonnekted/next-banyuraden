@@ -11,7 +11,7 @@ export async function GET(request: Request) {
             where.kelompok = kelopok;
         }
 
-        const data = prisma.aparaturPamong ? await prisma.aparaturPamong.findMany({
+        const data: any[] = (prisma && prisma.aparaturPamong) ? await prisma.aparaturPamong.findMany({
             where,
             include: {
                 padukuhan: true,

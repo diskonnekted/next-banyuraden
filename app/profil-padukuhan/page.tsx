@@ -11,7 +11,7 @@ function formatNumber(num: number | null): string {
 }
 
 export default async function ProfilPadukuhanPage() {
-    const padukuhan = prisma.padukuhan ? await prisma.padukuhan.findMany({
+    const padukuhan: any[] = (prisma && prisma.padukuhan) ? await prisma.padukuhan.findMany({
         orderBy: { nama: "asc" },
         include: {
             pertanahan: true,

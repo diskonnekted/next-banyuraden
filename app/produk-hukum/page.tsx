@@ -26,7 +26,7 @@ function formatTanggal(date: Date | null | undefined): string {
 }
 
 export default async function ProdukHukumPage() {
-    const produkHukum = prisma.produkHukum ? await prisma.produkHukum.findMany({
+    const produkHukum: any[] = (prisma && prisma.produkHukum) ? await prisma.produkHukum.findMany({
         where: { aktif: true },
         orderBy: [
             { jenis: "asc" },

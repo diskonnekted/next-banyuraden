@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(request: Request) {
     try {
-        const data = prisma.bumkal ? await prisma.bumkal.findMany({
+        const data: any[] = (prisma && prisma.bumkal) ? await prisma.bumkal.findMany({
             include: {
                 pengurus: true,
                 unitUsaha: true,

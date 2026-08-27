@@ -15,7 +15,7 @@ function formatPercent(num: number | null): string {
 }
 
 export default async function PertanahanPage() {
-    const pertanahan = prisma.pertanahan ? await prisma.pertanahan.findMany({
+    const pertanahan: any[] = (prisma && prisma.pertanahan) ? await prisma.pertanahan.findMany({
         include: {
             padukuhan: { select: { nama: true, slug: true } },
         },

@@ -25,7 +25,7 @@ function getJenisLabel(jenis: string): string {
 }
 
 export default async function WisataPage() {
-    const wisatas = prisma.wisata ? await prisma.wisata.findMany({
+    const wisatas: any[] = (prisma && prisma.wisata) ? await prisma.wisata.findMany({
         where: { aktif: true },
         include: {
             padukuhan: { select: { nama: true, slug: true } },

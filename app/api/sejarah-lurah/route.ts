@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(request: Request) {
     try {
-        const data = prisma.sejarahLurah ? await prisma.sejarahLurah.findMany({
+        const data: any[] = (prisma && prisma.sejarahLurah) ? await prisma.sejarahLurah.findMany({
             orderBy: { urutan: "asc" },
         }) : [];
 

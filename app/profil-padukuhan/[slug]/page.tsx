@@ -21,7 +21,7 @@ function formatCurrency(amount: number | null | undefined): string {
 export default async function DetailPadukuhanPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
 
-    const padukuhan = prisma.padukuhan ? await prisma.padukuhan.findUnique({
+    const padukuhan: any = (prisma && prisma.padukuhan) ? await prisma.padukuhan.findUnique({
         where: { slug },
         include: {
             fasilitas: true,

@@ -27,7 +27,7 @@ function getJenisLabel(jenis: string): string {
 }
 
 export default async function TradisiPage() {
-    const traditions = prisma.tradisiBudaya ? await prisma.tradisiBudaya.findMany({
+    const traditions: any[] = (prisma && prisma.tradisiBudaya) ? await prisma.tradisiBudaya.findMany({
         where: {
             aktif: true,
             jenis: { in: ["TRADISI", "SENI"] },

@@ -42,7 +42,7 @@ function getKategoriLabel(kategori: string | null): string {
 }
 
 export default async function InovasiPage() {
-    const inovasiList = prisma.inovasi ? await prisma.inovasi.findMany({
+    const inovasiList: any[] = (prisma && prisma.inovasi) ? await prisma.inovasi.findMany({
         where: { aktif: true },
         orderBy: { nama: "asc" },
     }) : [];

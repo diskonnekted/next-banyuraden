@@ -17,7 +17,7 @@ function getInitials(name: string): string {
 }
 
 export default async function DukuPage() {
-    const dukuhList = prisma.aparaturPamong ? await prisma.aparaturPamong.findMany({
+    const dukuhList: any[] = (prisma && prisma.aparaturPamong) ? await prisma.aparaturPamong.findMany({
         where: {
             kelompok: "DUKUH",
             aktif: true,

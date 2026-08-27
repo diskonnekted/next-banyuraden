@@ -7,11 +7,11 @@ import { prisma } from "@/lib/prisma";
 
 export default async function PotensiDesaPage() {
     const [umkmCount, tradisiCount, cagarBudayaCount] = await Promise.all([
-        prisma.uMKM ? prisma.uMKM.count({ where: { aktif: true } }) : 0,
-        prisma.tradisiBudaya ? prisma.tradisiBudaya.count({
+        (prisma && prisma.uMKM) ? prisma.uMKM.count({ where: { aktif: true } }) : 0,
+        (prisma && prisma.tradisiBudaya) ? prisma.tradisiBudaya.count({
             where: { aktif: true, jenis: { in: ["TRADISI", "SENI"] } },
         }) : 0,
-        prisma.tradisiBudaya ? prisma.tradisiBudaya.count({
+        (prisma && prisma.tradisiBudaya) ? prisma.tradisiBudaya.count({
             where: { aktif: true, jenis: "CAGAR_BUDAYA" },
         }) : 0,
     ]);
