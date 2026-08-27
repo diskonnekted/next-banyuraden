@@ -822,3 +822,18 @@ model UnitUsahaBumkal {
 
   @@map("unit_usaha_bumkal")
 }
+
+// Produk Hukum
+model ProdukHukum {
+  id          Int      @id @default(autoincrement())
+  judul       String   @db.Text
+  jenis       String   @db.VarChar(100)
+  nomor       String?  @db.VarChar(100)
+  tahun       Int
+  tanggal     DateTime? @db.Date
+  fileUrl     String?  @db.VarChar(500)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("produk_hukum")
+}
