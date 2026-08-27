@@ -15,8 +15,8 @@ export async function GET(request: Request) {
             where.jenis = jenis;
         }
 
-        const data = await prisma.umkm.findMany({
-            where,
+        const data = await prisma.uMKM.findMany({
+            where: where as any,
             include: {
                 padukuhan: true,
             },
