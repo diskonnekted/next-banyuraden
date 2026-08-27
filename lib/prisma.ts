@@ -1,15 +1,21 @@
 import { PrismaClient } from "@prisma/client";
 
-const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
+// Prisma is optional - only used if DATABASE_URL is available
+// This app primarily fetches data from external APIs (banyuraden.id, etc.)
+let prismaClient: PrismaClient | undefined;
 
-export const prisma =
-    globalForPrisma.prisma ??
-    (process.env.DATABASE_URL
-        ? new PrismaClient({
-              log: process.env.NODE_ENV === "development" ? ["warn", "error"] : ["error"],
-          })
-        : ({} as PrismaClient));
+if (process.env.DATABASE_URL) {
+    const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
-if (!globalForPrisma.prisma && process.env.DATABASE_URL) {
-    globalForPrisma.prisma = prisma;
+    prismaClient =
+        globalForPrisma.prisma ??
+        new PrismaClient({
+            log: process.env.NODE_ENV === "development" ? ["warn", "error"] : ["error"],
+        });
+
+    if (!globalForPrisma.prisma) {
+        globalForPrisma.prisma = prismaClient;
+    }
 }
+
+export const prisma = prismaClient as PrismaClient;
