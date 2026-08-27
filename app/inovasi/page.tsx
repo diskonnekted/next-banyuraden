@@ -1,4 +1,4 @@
-import { Bulb, Flame, ShoppingCart, Utensils, Users } from "lucide-react";
+import { Lightbulb, Flame, ShoppingCart, Utensils, Users } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -17,7 +17,7 @@ function getKategoriBadge(kategori: string) {
 function getKategoriIcon(kategori: string) {
     switch (kategori) {
         case "TEKNOLOGI":
-            return <Bulb className="h-6 w-6 text-blue-600" />;
+            return <Lightbulb className="h-6 w-6 text-blue-600" />;
         case "PANGAN":
             return <ShoppingCart className="h-6 w-6 text-green-600" />;
         case "PERTANAHAN":
@@ -25,7 +25,7 @@ function getKategoriIcon(kategori: string) {
         case "PELAYANAN":
             return <Utensils className="h-6 w-6 text-purple-600" />;
         default:
-            return <Bulb className="h-6 w-6 text-gray-600" />;
+            return <Lightbulb className="h-6 w-6 text-gray-600" />;
     }
 }
 
@@ -51,7 +51,7 @@ export default async function InovasiPage() {
                 {/* Page Header */}
                 <div className="text-center space-y-6">
                     <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-100 rounded-full">
-                        <Bulb className="h-10 w-10 text-blue-600" />
+                        <Lightbulb className="h-10 w-10 text-blue-600" />
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Inovasi Kalurahan</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
@@ -63,7 +63,7 @@ export default async function InovasiPage() {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <Card className="relative overflow-hidden bg-linear-to-br from-blue-100 to-blue-200 border-0">
                         <CardContent className="p-4 text-center">
-                            <Bulb className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+                            <Lightbulb className="h-8 w-8 text-blue-600 mx-auto mb-2" />
                             <div className="text-3xl font-bold text-blue-900">{inovasiList.length}</div>
                             <p className="text-xs text-blue-700">Total Inovasi</p>
                         </CardContent>
@@ -133,7 +133,7 @@ export default async function InovasiPage() {
                 {inovasiList.length === 0 ? (
                     <Card>
                         <CardContent className="py-12 text-center">
-                            <Bulb className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                            <Lightbulb className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
                             <h3 className="text-lg font-semibold mb-2">Belum Ada Data</h3>
                             <p className="text-muted-foreground">Data inovasi sedang dalam proses pemutakhiran.</p>
                         </CardContent>
