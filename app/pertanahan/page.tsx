@@ -15,12 +15,12 @@ function formatPercent(num: number | null): string {
 }
 
 export default async function PertanahanPage() {
-    const pertanahan = await prisma.pertanahan.findMany({
+    const pertanahan = prisma.pertanahan ? await prisma.pertanahan.findMany({
         include: {
             padukuhan: { select: { nama: true, slug: true } },
         },
         orderBy: { padukuhan: { nama: "asc" } },
-    });
+    }) : [];
 
     // Calculate totals
     const totalBidang = pertanahan.reduce((sum, p) => sum + (p.totalBidang || 0), 0);

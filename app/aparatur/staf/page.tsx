@@ -32,13 +32,13 @@ function getJabatanLabel(jabatan: string): string {
 }
 
 export default async function StafPage() {
-    const stafList = await prisma.aparaturPamong.findMany({
+    const stafList = prisma.aparaturPamong ? await prisma.aparaturPamong.findMany({
         where: { aktif: true },
         orderBy: [
             { kelompok: "asc" },
             { urutan: "asc" },
         ],
-    });
+    }) : [];
 
     const stafFiltered = stafList.filter((a) => a.kelompok !== "DUKUH" && a.kelompok !== "BPKAL");
 

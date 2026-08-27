@@ -26,13 +26,13 @@ function formatTanggal(date: Date | null | undefined): string {
 }
 
 export default async function ProdukHukumPage() {
-    const produkHukum = await prisma.produkHukum.findMany({
+    const produkHukum = prisma.produkHukum ? await prisma.produkHukum.findMany({
         where: { aktif: true },
         orderBy: [
             { jenis: "asc" },
             { tahun: "desc" },
         ],
-    });
+    }) : [];
 
     const jenisGroups = produkHukum.reduce<Record<string, typeof produkHukum>>((acc, p) => {
         if (!acc[p.jenis]) acc[p.jenis] = [];

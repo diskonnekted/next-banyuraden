@@ -15,13 +15,13 @@ export async function GET(request: Request) {
             where.jenis = jenis;
         }
 
-        const data = await prisma.uMKM.findMany({
+        const data = prisma.uMKM ? await prisma.uMKM.findMany({
             where: where as any,
             include: {
                 padukuhan: true,
             },
             orderBy: { nama: "asc" },
-        });
+        }) : [];
 
         return NextResponse.json({ success: true, data });
     } catch (error) {

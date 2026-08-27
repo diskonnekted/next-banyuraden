@@ -11,13 +11,13 @@ export async function GET(request: Request) {
             where.kelompok = kelopok;
         }
 
-        const data = await prisma.aparaturPamong.findMany({
+        const data = prisma.aparaturPamong ? await prisma.aparaturPamong.findMany({
             where,
             include: {
                 padukuhan: true,
             },
             orderBy: { urutan: "asc" },
-        });
+        }) : [];
 
         return NextResponse.json({ success: true, data });
     } catch (error) {

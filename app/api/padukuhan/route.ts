@@ -7,9 +7,9 @@ export async function GET(request: Request) {
         const slug = searchParams.get("slug");
 
         if (slug) {
-            const padukuhan = await prisma.padukuhan.findUnique({
+            const padukuhan = prisma.padukuhan ? await prisma.padukuhan.findUnique({
                 where: { slug },
-            });
+            }) : null;
 
             if (!padukuhan) {
                 return NextResponse.json(
@@ -21,9 +21,9 @@ export async function GET(request: Request) {
             return NextResponse.json({ success: true, data: padukuhan });
         }
 
-        const data = await prisma.padukuhan.findMany({
+        const data = prisma.padukuhan ? await prisma.padukuhan.findMany({
             orderBy: { nama: "asc" },
-        });
+        }) : [];
 
         return NextResponse.json({ success: true, data });
     } catch (error) {

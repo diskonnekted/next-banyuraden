@@ -23,7 +23,7 @@ function getJenisLabel(jenis: string): string {
 }
 
 export default async function CagarBudayaPage() {
-    const cagarBudaya = await prisma.tradisiBudaya.findMany({
+    const cagarBudaya = prisma.tradisiBudaya ? await prisma.tradisiBudaya.findMany({
         where: {
             aktif: true,
             jenis: "CAGAR_BUDAYA",
@@ -32,7 +32,7 @@ export default async function CagarBudayaPage() {
             padukuhan: { select: { nama: true, slug: true } },
         },
         orderBy: { nama: "asc" },
-    });
+    }) : [];
 
     return (
         <div className="min-h-screen bg-linear-to-b from-gray-50 to-white py-8">

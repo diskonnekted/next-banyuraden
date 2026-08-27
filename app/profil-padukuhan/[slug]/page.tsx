@@ -21,7 +21,7 @@ function formatCurrency(amount: number | null | undefined): string {
 export default async function DetailPadukuhanPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
 
-    const padukuhan = await prisma.padukuhan.findUnique({
+    const padukuhan = prisma.padukuhan ? await prisma.padukuhan.findUnique({
         where: { slug },
         include: {
             fasilitas: true,
@@ -34,7 +34,7 @@ export default async function DetailPadukuhanPage({ params }: { params: Promise<
                 orderBy: { urutan: "asc" },
             },
         },
-    });
+    }) : null;
 
     if (!padukuhan) {
         notFound();

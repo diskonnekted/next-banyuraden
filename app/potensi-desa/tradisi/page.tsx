@@ -27,7 +27,7 @@ function getJenisLabel(jenis: string): string {
 }
 
 export default async function TradisiPage() {
-    const traditions = await prisma.tradisiBudaya.findMany({
+    const traditions = prisma.tradisiBudaya ? await prisma.tradisiBudaya.findMany({
         where: {
             aktif: true,
             jenis: { in: ["TRADISI", "SENI"] },
@@ -36,7 +36,7 @@ export default async function TradisiPage() {
             padukuhan: { select: { nama: true, slug: true } },
         },
         orderBy: { nama: "asc" },
-    });
+    }) : [];
 
     // Group by padukuhan
     const grouped = traditions.reduce<Record<string, typeof traditions>>((acc, t) => {

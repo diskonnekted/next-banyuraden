@@ -16,13 +16,13 @@ function getInitials(name: string): string {
 }
 
 export default async function BpkalPage() {
-    const bpkalMembers = await prisma.aparaturPamong.findMany({
+    const bpkalMembers = prisma.aparaturPamong ? await prisma.aparaturPamong.findMany({
         where: {
             kelompok: "BPKAL",
             aktif: true,
         },
         orderBy: { urutan: "asc" },
-    });
+    }) : [];
 
     return (
         <div className="min-h-screen bg-linear-to-b from-gray-50 to-white py-8">

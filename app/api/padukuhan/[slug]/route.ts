@@ -9,7 +9,7 @@ export async function GET(request: Request, context: RouteContext) {
     try {
         const { slug } = await context.params;
 
-        const padukuhan = await prisma.padukuhan.findUnique({
+        const padukuhan = prisma.padukuhan ? await prisma.padukuhan.findUnique({
             where: { slug },
             include: {
                 fasilitas: true,
@@ -19,7 +19,7 @@ export async function GET(request: Request, context: RouteContext) {
                 kelompokTani: true,
                 wisatas: true,
             },
-        });
+        }) : null;
 
         if (!padukuhan) {
             return NextResponse.json(

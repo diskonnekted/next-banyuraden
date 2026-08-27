@@ -6,9 +6,9 @@ export async function GET(request: Request) {
     try {
         // Try to get data from database first (Banyuraden)
         // Use raw query as workaround for Prisma client issue
-        const aparatur = await prisma.$queryRaw`
+        const aparatur = prisma ? await prisma.$queryRaw`
             SELECT * FROM apatur_pamong WHERE aktif = true ORDER BY urutan ASC
-        ` as any[];
+        ` as any[] : [];
 
         if (aparatur.length > 0) {
             // Convert to OpenSID format for compatibility

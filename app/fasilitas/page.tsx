@@ -5,12 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
 
 export default async function FasilitasPage() {
-    const fasilitasList = await prisma.fasilitasPadukuhan.findMany({
+    const fasilitasList = prisma.fasilitasPadukuhan ? await prisma.fasilitasPadukuhan.findMany({
         where: { aktif: true },
         include: {
             padukuhan: { select: { nama: true } },
         },
-    });
+    }) : [];
 
     // Group by jenis
     const grouped = fasilitasList.reduce<Record<string, typeof fasilitasList>>((acc, f) => {

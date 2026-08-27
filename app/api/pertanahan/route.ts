@@ -11,13 +11,13 @@ export async function GET(request: Request) {
             where.padukuhanId = parseInt(padukuhanId, 10);
         }
 
-        const data = await prisma.pertanahan.findMany({
+        const data = prisma.pertanahan ? await prisma.pertanahan.findMany({
             where,
             include: {
                 padukuhan: true,
             },
             orderBy: { padukuhanId: "asc" },
-        });
+        }) : [];
 
         return NextResponse.json({ success: true, data });
     } catch (error) {

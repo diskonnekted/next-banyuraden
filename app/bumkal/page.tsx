@@ -28,13 +28,13 @@ function getJabatanLabel(jabatan: string): string {
 }
 
 export default async function BumkalPage() {
-    const bumkal = await prisma.bumkal.findFirst({
+    const bumkal = prisma.bumkal ? await prisma.bumkal.findFirst({
         where: { slug: "bgr" },
         include: {
             pengurus: { orderBy: { id: "asc" } },
             unitUsaha: { where: { aktif: true }, orderBy: { urutan: "asc" } },
         },
-    });
+    }) : null;
 
     if (!bumkal) {
         return (

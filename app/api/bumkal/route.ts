@@ -3,13 +3,13 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(request: Request) {
     try {
-        const data = await prisma.bumkal.findMany({
+        const data = prisma.bumkal ? await prisma.bumkal.findMany({
             include: {
                 pengurus: true,
                 unitUsaha: true,
             },
             orderBy: { nama: "asc" },
-        });
+        }) : [];
 
         return NextResponse.json({ success: true, data });
     } catch (error) {

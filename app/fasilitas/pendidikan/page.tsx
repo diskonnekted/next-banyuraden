@@ -34,7 +34,7 @@ function getJenisLabel(jenis: string): string {
 }
 
 export default async function PendidikanPage() {
-    const fasilitas = await prisma.fasilitasPadukuhan.findMany({
+    const fasilitas = prisma.fasilitasPadukuhan ? await prisma.fasilitasPadukuhan.findMany({
         where: {
             aktif: true,
             jenis: {
@@ -45,7 +45,7 @@ export default async function PendidikanPage() {
             padukuhan: { select: { nama: true, slug: true } },
         },
         orderBy: { nama: "asc" },
-    });
+    }) : [];
 
     // Group by padukuhan
     const grouped = fasilitas.reduce<Record<string, typeof fasilitas>>((acc, f) => {

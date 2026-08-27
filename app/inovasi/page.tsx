@@ -42,10 +42,10 @@ function getKategoriLabel(kategori: string | null): string {
 }
 
 export default async function InovasiPage() {
-    const inovasiList = await prisma.inovasi.findMany({
+    const inovasiList = prisma.inovasi ? await prisma.inovasi.findMany({
         where: { aktif: true },
         orderBy: { nama: "asc" },
-    });
+    }) : [];
 
     return (
         <div className="min-h-screen bg-linear-to-b from-gray-50 to-white py-8">

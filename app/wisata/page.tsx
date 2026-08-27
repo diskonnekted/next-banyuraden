@@ -25,13 +25,13 @@ function getJenisLabel(jenis: string): string {
 }
 
 export default async function WisataPage() {
-    const wisatas = await prisma.wisata.findMany({
+    const wisatas = prisma.wisata ? await prisma.wisata.findMany({
         where: { aktif: true },
         include: {
             padukuhan: { select: { nama: true, slug: true } },
         },
         orderBy: { nama: "asc" },
-    });
+    }) : [];
 
     // Group by padukuhan
     const grouped = wisatas.reduce<Record<string, typeof wisatas>>((acc, w) => {

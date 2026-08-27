@@ -31,13 +31,13 @@ function getJenisLabel(jenis: string): string {
 }
 
 export default async function UmkmPage() {
-    const umkmList = await prisma.uMKM.findMany({
+    const umkmList = prisma.uMKM ? await prisma.uMKM.findMany({
         where: { aktif: true },
         include: {
             padukuhan: { select: { nama: true, slug: true } },
         },
         orderBy: { nama: "asc" },
-    });
+    }) : [];
 
     // Group by padukuhan
     const grouped = umkmList.reduce<Record<string, typeof umkmList>>((acc, u) => {

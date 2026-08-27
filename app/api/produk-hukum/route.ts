@@ -11,10 +11,10 @@ export async function GET(request: Request) {
             where.jenis = jenis;
         }
 
-        const data = await prisma.produkHukum.findMany({
+        const data = prisma.produkHukum ? await prisma.produkHukum.findMany({
             where,
             orderBy: { tahun: "desc" },
-        });
+        }) : [];
 
         return NextResponse.json({ success: true, data });
     } catch (error) {

@@ -17,13 +17,13 @@ function getInitials(name: string): string {
 }
 
 export default async function DukuPage() {
-    const dukuhList = await prisma.aparaturPamong.findMany({
+    const dukuhList = prisma.aparaturPamong ? await prisma.aparaturPamong.findMany({
         where: {
             kelompok: "DUKUH",
             aktif: true,
         },
         orderBy: { urutan: "asc" },
-    });
+    }) : [];
 
     return (
         <div className="min-h-screen bg-linear-to-b from-gray-50 to-white py-8">
