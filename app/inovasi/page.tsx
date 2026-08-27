@@ -38,7 +38,7 @@ function getKategoriLabel(kategori: string | null): string {
         PERTANAHAN: "Pertanahan",
         PELAYANAN: "Pelayanan",
     };
-    return labels[kategori] || kategori;
+    return labels[k] || k;
 }
 
 export default async function InovasiPage() {
