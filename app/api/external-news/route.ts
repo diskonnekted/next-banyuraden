@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { fetchOpenSIDArsip, createApiRouteHandler } from "@/lib/api-helpers";
 
 // Type definitions for OpenSID article structure
@@ -249,18 +249,38 @@ function parseOpenSIDDate(dateStr: string): string {
     ).toISOString();
 }
 
-export const { GET, OPTIONS } = createApiRouteHandler(async () => {
+export const { GET, OPTIONS } = createApiRouteHandler(async (request: NextRequest) => {
     try {
-        const response = await fetchOpenSIDArsip();
+        // Access searchParams to force dynamic evaluation at runtime
+        const _dynamicTrigger = request.nextUrl.searchParams.get("_t");
+        const firstPageResponse = await fetchOpenSIDArsip(1);
 
-        if (!response.success || !response.data) {
-            throw new Error(response.message || "Gagal mengambil data OpenSID");
+        if (!firstPageResponse.success || !firstPageResponse.data) {
+            throw new Error(firstPageResponse.message || "Gagal mengambil data OpenSID");
         }
 
-        const raw = response.data as { data?: OpenSIDArticle[] };
-        const articles = raw.data ?? [];
+        const rawFirstPage = firstPageResponse.data as { data?: OpenSIDArticle[]; meta?: any };
+        let articles = rawFirstPage.data ?? [];
 
-        const siteBaseUrl = "https://banyuraden.slemankab.go.id";
+        // Check if there are more pages and fetch them in parallel
+        const totalPages = rawFirstPage.meta?.pagination?.total_pages || 1;
+        if (totalPages > 1) {
+            const pagePromises = [];
+            for (let p = 2; p <= totalPages; p++) {
+                pagePromises.push(fetchOpenSIDArsip(p));
+            }
+            const pageResponses = await Promise.all(pagePromises);
+            for (const pageRes of pageResponses) {
+                if (pageRes.success && pageRes.data) {
+                    const rawPage = pageRes.data as { data?: OpenSIDArticle[] };
+                    if (rawPage.data) {
+                        articles = articles.concat(rawPage.data);
+                    }
+                }
+            }
+        }
+
+        const siteBaseUrl = "https://pondokrejo.sleman-desa.id";
 
         const toAbsoluteImageUrl = (imageUrl: string | null): string | null => {
             if (!imageUrl) return null;
@@ -274,7 +294,7 @@ export const { GET, OPTIONS } = createApiRouteHandler(async () => {
         };
 
         // Transform OpenSID data to match expected format for homepage
-        const transformedPosts = articles.slice(0, 10).map((article: OpenSIDArticle) => {
+        const transformedPosts = articles.map((article: OpenSIDArticle) => {
             const attributes = article.attributes;
             const derivedSlug = attributes.slug || (attributes.url_slug ? attributes.url_slug.split("/").pop() || attributes.url_slug : "");
 
@@ -316,10 +336,15 @@ export const { GET, OPTIONS } = createApiRouteHandler(async () => {
             };
         });
 
+        // Sort by date (newest first) and take the top 20
+        const sortedPosts = transformedPosts
+            .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+            .slice(0, 20);
+
         return NextResponse.json({
             success: true,
-            data: transformedPosts,
-            total: transformedPosts.length,
+            data: sortedPosts,
+            total: sortedPosts.length,
         });
     } catch (error) {
         console.error("Error fetching OpenSID news:", error);

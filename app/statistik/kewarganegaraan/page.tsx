@@ -16,7 +16,7 @@ export default function KewarganegaraanPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Kewarganegaraan</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik kewarganegaraan penduduk Kalurahan Banyuraden
+                        Data statistik kewarganegaraan penduduk Kalurahan Pondokrejo
                     </p>
                 </div>
 

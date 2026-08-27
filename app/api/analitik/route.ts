@@ -17,7 +17,7 @@ type AnalyticsData = {
     poor_with_toddler_count: number;
 };
 
-const SOURCE_URL = "https://peta.banyuraden.id/analytics";
+const SOURCE_URL = "https://peta.pondokrejo.id/analytics";
 
 function unescapeJsStringLiteral(input: string): string {
     let out = "";

@@ -19,7 +19,7 @@ export const Logo: React.FC<LogoProps> = ({ size = 48, className, variant = "def
         <div className={cn("inline-block", className)} style={{ width: pixelSize, height: pixelSize }}>
             <Image
                 src="/images/logo.png"
-                alt="Logo Kalurahan Banyuraden"
+                alt="Logo Kalurahan Pondokrejo"
                 width={typeof size === "number" ? size : 48}
                 height={typeof size === "number" ? size : 48}
                 className="w-full h-full object-contain"

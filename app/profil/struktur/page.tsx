@@ -5,26 +5,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-const lurahPhoto = "/sudarisman.jpg";
-
-async function getLurahData() {
-    try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:5091'}/api/lurah`, {
-            next: { revalidate: 3600 } // Cache for 1 hour
-        });
-        const data = await res.json();
-        return data.current || null;
-    } catch (error) {
-        console.error("Error fetching lurah data:", error);
-        return null;
-    }
-}
-
-export default async function StrukturPage() {
-    const lurah = await getLurahData();
-    const lurahName = lurah?.nama_lurah || "Sudarisman, S.T.";
-    const lurahGelar = lurah?.gelar || "";
-    const periode = lurah ? `${lurah.periode_awal}-${lurah.periode_akhir || 'Sekarang'}` : "2021-2026";
+export default function StrukturPage() {
+    // Real Lurah data
+    const lurah = {
+        nama: "R. Widayatma, SE",
+        jabatan: "Lurah/Kepala Kalurahan",
+        periode: "2021-2026",
+        foto: "/uploads/perangkat-desa/lurah.jpg",
+    };
 
     return (
         <div className="container mx-auto px-4 py-4">
@@ -41,7 +29,7 @@ export default async function StrukturPage() {
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-purple-100 rounded-full mb-4">
                     <Users className="h-10 w-10 text-purple-600" />
                 </div>
-                <h1 className="text-4xl font-bold text-gray-900 mb-4">Struktur Organisasi Kalurahan Banyuraden</h1>
+                <h1 className="text-4xl font-bold text-gray-900 mb-4">Struktur Organisasi Kalurahan Pondokrejo</h1>
                 <p className="text-xl text-gray-600">
                     Susunan perangkat pemerintahan kalurahan yang bertugas melayani masyarakat
                 </p>
@@ -58,19 +46,19 @@ export default async function StrukturPage() {
                             <div className="flex flex-col md:flex-row items-center gap-6">
                                 <div className="relative w-48 h-48 flex-shrink-0">
                                     <Image
-                                        src={lurahPhoto}
-                                        alt={lurahName}
+                                        src={lurah.foto}
+                                        alt={lurah.nama}
                                         fill
                                         className="object-cover rounded-lg shadow-lg"
                                         sizes="(max-width: 768px) 100vw, 200px"
                                     />
                                 </div>
                                 <div className="flex-1 text-center md:text-left">
-                                    <h2 className="text-3xl font-bold text-gray-900 mb-2">{lurahName}</h2>
-                                    <p className="text-lg text-gray-700 mb-3">Lurah/Kepala Kalurahan</p>
+                                    <h2 className="text-3xl font-bold text-gray-900 mb-2">{lurah.nama}</h2>
+                                    <p className="text-lg text-gray-700 mb-3">{lurah.jabatan}</p>
                                     <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full">
                                         <Calendar className="h-4 w-4 text-purple-600" />
-                                        <span className="text-sm font-medium">Periode {periode}</span>
+                                        <span className="text-sm font-medium">Periode {lurah.periode}</span>
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +71,7 @@ export default async function StrukturPage() {
                                 <div>
                                     <h3 className="font-semibold text-amber-900 mb-1">Struktur Organisasi Lengkap</h3>
                                     <p className="text-sm text-amber-800">
-                                        Data lengkap struktur organisasi Kalurahan Banyuraden (Sekretaris, Kasi, Kaur,
+                                        Data lengkap struktur organisasi Kalurahan Pondokrejo (Sekretaris, Kasi, Kaur,
                                         dan Kepala Dusun) sedang dalam proses penyusunan dan akan segera tersedia.
                                     </p>
                                 </div>
@@ -135,7 +123,7 @@ export default async function StrukturPage() {
                             Struktur Organisasi Sedang Disusun
                         </h2>
                         <p className="text-gray-600 mb-4 max-w-2xl mx-auto">
-                            Kami sedang mempersiapkan data lengkap mengenai struktur organisasi Kalurahan Banyuraden
+                            Kami sedang mempersiapkan data lengkap mengenai struktur organisasi Kalurahan Pondokrejo
                             untuk memberikan informasi yang akurat.
                         </p>
 

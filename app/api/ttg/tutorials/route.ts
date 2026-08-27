@@ -15,7 +15,7 @@ type TtgTutorial = {
     url: string;
 };
 
-const BASE_URL = "https://ttg.banyuraden.id";
+const BASE_URL = "https://ttg.pondokrejo.id";
 
 export const { GET, OPTIONS } = createApiRouteHandler(async (request: NextRequest) => {
     const { searchParams } = request.nextUrl;

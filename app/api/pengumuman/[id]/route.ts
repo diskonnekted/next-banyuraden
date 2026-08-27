@@ -9,7 +9,7 @@ const mockPengumuman = [
     {
         id: 1,
         judul: "Libur Nasional dan Cuti Bersama Tahun 2025",
-        konten: `Berdasarkan Surat Keputusan Bersama (SKB) Menteri Agama, Menteri Ketenagakerjaan, dan Menteri Pendayagunaan Aparatur Negara dan Reformasi Birokrasi Nomor 812 Tahun 2024, Nomor 1 Tahun 2024, dan Nomor 3 Tahun 2024 tentang Hari Libur Nasional dan Cuti Bersama Tahun 2025, dengan hormat mengundang seluruh masyarakat Kalurahan Banyuraden untuk memperhatikan jadwal libur nasional dan cuti bersama.
+        konten: `Berdasarkan Surat Keputusan Bersama (SKB) Menteri Agama, Menteri Ketenagakerjaan, dan Menteri Pendayagunaan Aparatur Negara dan Reformasi Birokrasi Nomor 812 Tahun 2024, Nomor 1 Tahun 2024, dan Nomor 3 Tahun 2024 tentang Hari Libur Nasional dan Cuti Bersama Tahun 2025, dengan hormat mengundang seluruh masyarakat Kalurahan Pondokrejo untuk memperhatikan jadwal libur nasional dan cuti bersama.
 
 Daftar libur nasional yang akan datang:
 - 25 Desember 2025: Hari Raya Natal
@@ -30,10 +30,10 @@ Masyarakat diharapkan memperhatikan jadwal layanan kantor kalurahan yang disesua
     {
         id: 2,
         judul: "Pembayaran PBB dan Retribusi Sampah Triwulan IV",
-        konten: `Bersama ini kami sampaikan kepada seluruh wajib Pajak Bumi dan Bangunan (PBB) dan pengguna layanan sampah di Kalurahan Banyuraden bahwa pembayaran PBB dan retribusi sampah untuk Triwulan IV (Oktober-Desember 2025) sudah dapat dilaksanakan.
+        konten: `Bersama ini kami sampaikan kepada seluruh wajib Pajak Bumi dan Bangunan (PBB) dan pengguna layanan sampah di Kalurahan Pondokrejo bahwa pembayaran PBB dan retribusi sampah untuk Triwulan IV (Oktober-Desember 2025) sudah dapat dilaksanakan.
 
 Pembayaran dapat dilakukan melalui:
-1. Kantor Kas Kalurahan Banyuraden (Senin-Jumat, 08:00-14:00 WIB)
+1. Kantor Kas Kalurahan Pondokrejo (Senin-Jumat, 08:00-14:00 WIB)
 2. Mobile Payment (QRIS yang tersedia di kantor kalurahan)
 3. Transfer Bank BPD DIY (No. Rekening: 1234567890)
 

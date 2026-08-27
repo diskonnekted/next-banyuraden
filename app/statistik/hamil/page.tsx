@@ -16,7 +16,7 @@ export default function HamilPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Ibu Hamil</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Monitoring dan data statistik ibu hamil serta wanita usia subur di Kalurahan Banyuraden
+                        Monitoring dan data statistik ibu hamil serta wanita usia subur di Kalurahan Pondokrejo
                     </p>
                 </div>
 

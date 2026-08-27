@@ -16,7 +16,7 @@ export default function PerkawinanPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Perkawinan</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik status perkawinan penduduk Kalurahan Banyuraden
+                        Data statistik status perkawinan penduduk Kalurahan Pondokrejo
                     </p>
                 </div>
 

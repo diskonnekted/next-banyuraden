@@ -2,10 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
     reactCompiler: true,
-    cacheComponents: false,
+    cacheComponents: true,
     poweredByHeader: false,
 
-    allowedDevOrigins: ['*.clasnet.co.id'],
+    allowedDevOrigins: ['banyuraden.slemankab.go.id', 'banyuraden.id'],
 
     async headers() {
         return [

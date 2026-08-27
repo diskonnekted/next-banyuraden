@@ -16,7 +16,7 @@ export default function StuntingPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Stunting</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Monitoring dan pencegahan stunting untuk anak 0-23 bulan di Kalurahan Banyuraden
+                        Monitoring dan pencegahan stunting untuk anak 0-23 bulan di Kalurahan Pondokrejo
                     </p>
                 </div>
 

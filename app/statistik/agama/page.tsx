@@ -16,7 +16,7 @@ export default function AgamaPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Agama</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik agama penduduk Kalurahan Banyuraden
+                        Data statistik agama penduduk Kalurahan Pondokrejo
                     </p>
                 </div>
 

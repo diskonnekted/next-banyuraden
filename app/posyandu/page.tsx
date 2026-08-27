@@ -201,7 +201,7 @@ export default function PosyanduPage() {
                 <div className="text-center space-y-3">
                     <h1 className="text-4xl font-bold text-primary">Posyandu</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Ringkasan dashboard Posyandu Kalurahan Banyuraden dengan tampilan yang konsisten.
+                        Ringkasan dashboard Posyandu Kalurahan Pondokrejo dengan tampilan yang konsisten.
                     </p>
                     <p className="text-xs text-muted-foreground">Sumber data: posyandu.sleman-desa.id</p>
                 </div>

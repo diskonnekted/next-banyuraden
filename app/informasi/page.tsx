@@ -14,7 +14,7 @@ export default function InformasiPage() {
                 </div>
                 <h1 className="text-4xl font-bold text-gray-900 mb-4">Informasi & Pengumuman</h1>
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Pusat informasi resmi dan pengumuman penting dari Pemerintah Kalurahan Banyuraden
+                    Pusat informasi resmi dan pengumuman penting dari Pemerintah Kalurahan Pondokrejo
                 </p>
             </div>
 

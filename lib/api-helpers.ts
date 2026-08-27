@@ -68,10 +68,11 @@ export async function fetchOpenSIDStatistikById(
 /**
  * OpenSID arsip/berita API helper
  */
-export async function fetchOpenSIDArsip() {
-    return opensidApi.get("/internal_api/arsip", {
+export async function fetchOpenSIDArsip(page?: number) {
+    const endpoint = page ? `/internal_api/arsip?page[number]=${page}` : "/internal_api/arsip";
+    return opensidApi.get(endpoint, {
         cache: {
-            revalidate: 60 * 60, // 1 hour
+            revalidate: 60, // 60 seconds
             tags: ["opensid-data-proxy"],
         },
     });
@@ -80,7 +81,7 @@ export async function fetchOpenSIDArsip() {
 /**
  * SDGS API helper with location code
  */
-export async function fetchSDGSData(locationCode = "3404020001") {
+export async function fetchSDGSData(locationCode = "3404140004") {
     return sdgsApi.get(`/sdgs/searching/score-sdgs?location_code=${locationCode}`, {
         cache: {
             revalidate: 60 * 60 * 24 * 30, // 30 days
@@ -92,7 +93,7 @@ export async function fetchSDGSData(locationCode = "3404020001") {
 /**
  * SDGS detail API helper with goal and location code
  */
-export async function fetchSDGSDetail(goalId: string, locationCode = "3404020001") {
+export async function fetchSDGSDetail(goalId: string, locationCode = "3404140004") {
     return sdgsApi.get(`/sdgs/searching/score-sdgs-detail?goal=${goalId}&location_code=${locationCode}`, {
         cache: {
             revalidate: 60 * 60 * 24 * 30, // 30 days

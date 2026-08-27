@@ -67,9 +67,9 @@ export default function KomunitasPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Komunitas</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Wadah digital terpadu bagi komunitas warga Kalurahan Banyuraden untuk berkolaborasi dan berkembang.
+                        Wadah digital terpadu bagi komunitas warga Kalurahan Pondokrejo untuk berkolaborasi dan berkembang.
                     </p>
-                    <p className="text-xs text-muted-foreground">Sumber data: komunitas.banyuraden.id</p>
+                    <p className="text-xs text-muted-foreground">Sumber data: komunitas.pondokrejo.id</p>
                 </div>
 
                 {loading && (
@@ -127,7 +127,7 @@ export default function KomunitasPage() {
                                     <p className="text-sm text-muted-foreground">Temukan komunitas sesuai minat dan bakat.</p>
                                 </div>
                                 <a
-                                    href="https://komunitas.banyuraden.id/komunitas"
+                                    href="https://komunitas.pondokrejo.id/komunitas"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="hidden sm:block"
@@ -155,7 +155,7 @@ export default function KomunitasPage() {
                                 ))}
                             </div>
                             <a
-                                href="https://komunitas.banyuraden.id/komunitas"
+                                href="https://komunitas.pondokrejo.id/komunitas"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="sm:hidden block"
@@ -173,7 +173,7 @@ export default function KomunitasPage() {
                                     <p className="text-sm text-muted-foreground">Jangan lewatkan kegiatan-kegiatan komunitas.</p>
                                 </div>
                                 <a
-                                    href="https://komunitas.banyuraden.id/kegiatan"
+                                    href="https://komunitas.pondokrejo.id/kegiatan"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="hidden sm:block"
@@ -207,7 +207,7 @@ export default function KomunitasPage() {
                                 ))}
                             </div>
                             <a
-                                href="https://komunitas.banyuraden.id/kegiatan"
+                                href="https://komunitas.pondokrejo.id/kegiatan"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="sm:hidden block"

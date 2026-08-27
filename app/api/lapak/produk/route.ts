@@ -42,7 +42,7 @@ type UpstreamResponse = {
     meta?: { pagination?: LapakPagination };
 };
 
-const BASE_URL = "https://banyuraden.slemankab.go.id";
+const BASE_URL = "https://www.pondokrejo.sleman-desa.id";
 
 function clampNumber(value: number, min: number, max: number) {
     return Math.min(max, Math.max(min, value));

@@ -118,21 +118,17 @@ export function PegawaiDisplay({ className }: PegawaiDisplayProps) {
 
     // Get photo URL
     const getPhotoUrl = (fotoPath: string, fotoStaff: string) => {
-        // If fotoPath starts with /, it's a local path in /public
-        if (fotoPath && fotoPath.startsWith("/")) {
-            return fotoPath;
-        }
         // Try foto first (direct URL)
         if (fotoPath && fotoPath.startsWith("http")) {
             return fotoPath;
         }
         // Try foto_staff (construct URL from filename)
-        if (fotoStaff && fotoStaff.startsWith("/")) {
-            return fotoStaff;
+        if (fotoStaff) {
+            return `https://pondokrejo.sleman-desa.id/storage-desa?path=upload/user_pict/${fotoStaff}&signature=placeholder`;
         }
         // Fallback to foto with constructed URL
         if (fotoPath) {
-            return fotoPath;
+            return `https://pondokrejo.sleman-desa.id/storage-desa?path=${fotoPath}&signature=placeholder`;
         }
         return null;
     };

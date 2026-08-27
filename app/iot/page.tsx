@@ -662,7 +662,7 @@ export default function IoTPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Smart Monitoring System</h1>
                     <p className="text-gray-600 max-w-3xl mx-auto">
-                        Sistem Monitoring cerdas untuk Smart Office dan Environment Monitoring di Kalurahan Banyuraden
+                        Sistem Monitoring cerdas untuk Smart Office dan Environment Monitoring di Kalurahan Pondokrejo
                     </p>
                 </div>
 

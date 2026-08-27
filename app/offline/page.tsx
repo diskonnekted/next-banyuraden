@@ -17,7 +17,7 @@ export default function OfflinePage() {
                         Sepertinya Anda sedang offline. Beberapa konten mungkin tidak tersedia.
                     </p>
                     <p className="text-sm text-muted-foreground">
-                        {env.APP_NAME || "Portal Kalurahan Banyuraden"} akan otomatis menyegarkan ketika koneksi
+                        {env.APP_NAME || "Portal Kalurahan Pondokrejo"} akan otomatis menyegarkan ketika koneksi
                         kembali.
                     </p>
                 </div>
@@ -33,7 +33,7 @@ export default function OfflinePage() {
 
                 {/* Branding */}
                 <div className="pt-4 border-t border-border">
-                    <p className="text-sm font-medium text-primary">{env.APP_NAME || "Portal Kalurahan Banyuraden"}</p>
+                    <p className="text-sm font-medium text-primary">{env.APP_NAME || "Portal Kalurahan Pondokrejo"}</p>
                     <p className="text-xs text-muted-foreground">Kabupaten Sleman, DIY</p>
                 </div>
             </div>

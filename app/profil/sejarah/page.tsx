@@ -10,7 +10,7 @@ export default function SejarahPage() {
         tahunMaklumat: "1948",
         nomorMaklumat: "05",
         deskripsi:
-            "Sesuai dengan Maklumat Gubernur DIY Sri Sultan Hamengkubuwono ke IX pada Nomor : 05 Tahun 1948, Kalurahan Banyuraden dulunya terbagi menjadi 2 (dua) Kalurahan yaitu:",
+            "Sesuai dengan Maklumat Gubernur DIY Sri Sultan Hamengkubuwono ke IX pada Nomor : 05 Tahun 1948, Kalurahan Pondokrejo dulunya terbagi menjadi 2 (dua) Kalurahan yaitu:",
         kalurahanLama: [
             {
                 nama: "Kalurahan Ngentak",
@@ -40,9 +40,9 @@ export default function SejarahPage() {
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-100 rounded-full mb-4">
                     <History className="h-10 w-10 text-blue-600" />
                 </div>
-                <h1 className="text-4xl font-bold text-gray-900 mb-4">Sejarah Kalurahan Banyuraden</h1>
+                <h1 className="text-4xl font-bold text-gray-900 mb-4">Sejarah Kalurahan Pondokrejo</h1>
                 <p className="text-xl text-gray-600">
-                    Menelusuri perjalanan panjang Kalurahan Banyuraden dari masa ke masa
+                    Menelusuri perjalanan panjang Kalurahan Pondokrejo dari masa ke masa
                 </p>
             </div>
 
@@ -114,7 +114,7 @@ export default function SejarahPage() {
                                 <h3 className="font-semibold text-green-900 mb-1">Kalurahan Terkini</h3>
                                 <p className="text-sm text-green-800">
                                     Kedua kalurahan tersebut kemudian bergabung menjadi{" "}
-                                    <strong>Kalurahan Banyuraden</strong> seperti yang kita kenal today, dengan 9
+                                    <strong>Kalurahan Pondokrejo</strong> seperti yang kita kenal today, dengan 9
                                     padukuhan yang membawahi 20 RW dan 47 RT.
                                 </p>
                             </div>
@@ -143,7 +143,7 @@ export default function SejarahPage() {
                             <p className="text-sm text-gray-700">
                                 Jejak historis dari kedua kalurahan lama masih terlihat dalam penamaan dusun-dusun dan
                                 struktur sosial masyarakat hingga saat ini. Hal ini menjadi bagian dari kekayaan budaya
-                                dan identitas Kalurahan Banyuraden.
+                                dan identitas Kalurahan Pondokrejo.
                             </p>
                         </div>
                     </div>

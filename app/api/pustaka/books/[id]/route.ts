@@ -16,7 +16,7 @@ type PustakaBookDetail = {
     synopsis: string | null;
 };
 
-const BASE_URL = "https://pustaka.banyuraden.id";
+const BASE_URL = "https://pustaka.pondokrejo.id";
 
 function toAbsoluteUrl(url: string): string {
     return new URL(url, BASE_URL).toString();

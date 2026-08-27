@@ -16,7 +16,7 @@ export default function EnfermededadPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Sakit/Penyakit</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik sakit dan penyakit penduduk Kalurahan Banyuraden
+                        Data statistik sakit dan penyakit penduduk Kalurahan Pondokrejo
                     </p>
                 </div>
 

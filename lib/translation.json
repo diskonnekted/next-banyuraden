@@ -3,21 +3,13 @@
         "beranda": "Beranda",
         "berita": "Berita",
         "profilDesa": "Profil",
-        "profilPadukuhan": "Profil Padukuhan",
-        "aparatur": "Aparatur",
-        "produkHukum": "Produk Hukum",
         "layanan": "Layanan",
         "pemerintahan": "Pemerintahan",
-        "potensiDesa": "Potensi Desa",
-        "fasilitas": "Fasilitas",
-        "pertanahan": "Pertanahan",
-        "inovasi": "Inovasi",
-        "wisata": "Wisata",
         "informasi": "Pengumuman",
         "keuangan": "Keuangan",
         "pembangunan": "Pembangunan",
         "kegiatan": "Agenda & Kegiatan",
-        "bumdes": "BUMKal",
+        "bumdes": "BUMDes",
         "pengaduan": "Pengaduan",
         "cari": "Cari informasi, layanan, atau berita...",
         "login": "Masuk",
@@ -27,7 +19,7 @@
         "lainnya": "Lainnya"
     },
     "hero": {
-        "judul1": "Digitalisasi Kalurahan Banyuraden",
+        "judul1": "Digitalisasi Kalurahan Pondokrejo",
         "deskripsi1": "Mewujudkan Tata Kelola Pemerintahan Modern dan Transparan untuk Kesejahteraan Warga",
         "ctaLayananDigital": "Jelajahi Layanan Digital",
         "ctaPantauPembangunan": "Pantau Pembangunan",
@@ -127,7 +119,7 @@
         "pengumumanPrestasi": "Pengumuman Prestasi"
     },
     "sdgs": {
-        "judul": "Target SDGs Kalurahan Banyuraden",
+        "judul": "Target SDGs Kalurahan Pondokrejo",
         "deskripsi": "Sustainable Development Goals",
         "lihatDetailProgress": "Lihat Detail Progress SDGs",
         "goals": {
@@ -182,7 +174,7 @@
     },
     "pemerintah": {
         "judul": "Pemerintah Kalurahan",
-        "lurah": "Lurah Kalurahan Banyuraden",
+        "lurah": "Lurah Kalurahan Pondokrejo",
         "motto": "Melayani dengan hati, membangun bersama warga",
         "jabatan": "Jabatan",
         "email": "Email",
@@ -457,11 +449,11 @@
         }
     },
     "footer": {
-        "copyright": "© 2025 Pemerintah Kalurahan Banyuraden",
-        "alamat": "Kalurahan Banyuraden, Kapanewon Gamping, Kabupaten Sleman, D.I Yogyakarta, 55293",
-        "telepon": "(0274) 621626",
-        "email": "desa.banyuraden@gmail.com",
-        "website": "banyuraden.slemankab.go.id",
+        "copyright": "© 2025 Pemerintah Kalurahan Pondokrejo",
+        "alamat": "Kalurahan Pondokrejo, Kapanewon Tempel, Kabupaten Sleman, D.I Yogyakarta, 55552",
+        "telepon": "0877-4220-3602",
+        "email": "pondokrejo57@gmail.com",
+        "website": "pondokrejo.slemankab.go.id",
         "jamOperasional": "Senin-Jumat: 08:00-16:00 WIB",
         "poweredBy": "Powered by: Clasnet Corporation",
         "securityCertified": "Security Certified",
@@ -494,14 +486,14 @@
         "toggleHighContrast": "Toggle kontras tinggi"
     },
     "seo": {
-        "defaultTitle": "Portal Resmi Kalurahan Banyuraden - Sleman, DIY",
-        "defaultDescription": "Portal resmi Pemerintah Kalurahan Banyuraden, Kabupaten Sleman, DIY. Informasi lengkap layanan publik, berita terkini, dan transparansi pemerintahan kalurahan.",
-        "keywords": "Kalurahan Banyuraden, Sleman, DIY, pemerintahan kalurahan, layanan publik, berita kalurahan, transparansi, APBDes",
+        "defaultTitle": "Portal Resmi Kalurahan Pondokrejo - Sleman, DIY",
+        "defaultDescription": "Portal resmi Pemerintah Kalurahan Pondokrejo, Kabupaten Sleman, DIY. Informasi lengkap layanan publik, berita terkini, dan transparansi pemerintahan kalurahan.",
+        "keywords": "Kalurahan Pondokrejo, Sleman, DIY, pemerintahan kalurahan, layanan publik, berita kalurahan, transparansi, APBDes",
         "homePage": "Beranda",
-        "aboutPage": "Tentang Kalurahan Banyuraden",
+        "aboutPage": "Tentang Kalurahan Pondokrejo",
         "servicesPage": "Layanan Kalurahan",
         "newsPage": "Berita Kalurahan",
-        "newsPageDesc": "Informasi terkini seputar Kalurahan Banyuraden",
-        "contactPage": "Kontak Kalurahan Banyuraden"
+        "newsPageDesc": "Informasi terkini seputar Kalurahan Pondokrejo",
+        "contactPage": "Kontak Kalurahan Pondokrejo"
     }
 }

@@ -68,13 +68,13 @@ export function MobileNavigation() {
         { href: "/", label: translations.navigation.beranda, icon: Home },
         { href: "/berita", label: translations.navigation.berita, icon: Newspaper },
         {
-            href: "https://banyuraden.slemankab.go.id/layanan-mandiri",
+            href: "https://pondokrejo.sleman-desa.id/layanan-mandiri",
             label: translations.navigation.layanan,
             icon: FileText,
             external: true,
         },
         {
-            href: "https://banyuraden.slemankab.go.id/index.php/pengaduan",
+            href: "https://pondokrejo.sleman-desa.id/index.php/pengaduan",
             label: translations.navigation.pengaduan,
             icon: MessageSquare,
             external: true,
@@ -90,7 +90,7 @@ export function MobileNavigation() {
         { href: "/idm", label: "IDM", icon: FileText },
         { href: "/sdgs", label: "SDGs", icon: Globe },
         { href: "/iot", label: "IoT", icon: Monitor },
-        { href: "https://banyuraden.slemankab.go.id/index.php/pengaduan", label: translations.navigation.pengaduan, icon: MessageSquare, external: true },
+        { href: "https://pondokrejo.sleman-desa.id/index.php/pengaduan", label: translations.navigation.pengaduan, icon: MessageSquare, external: true },
     ];
 
     // Additional items for sidebar
@@ -291,7 +291,7 @@ export function MobileNavigation() {
 
                                     <a
                                         key="/layanan"
-                                        href="https://banyuraden.slemankab.go.id/layanan-mandiri"
+                                        href="https://pondokrejo.sleman-desa.id/layanan-mandiri"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         onClick={() => setIsSidebarOpen(false)}
@@ -565,47 +565,19 @@ export function MobileNavigation() {
                                         {isActive("/ttg") && <div className="ml-auto w-2 h-2 bg-current rounded-full" />}
                                     </Link>
 
-                                    <Link
-                                        key="/komunitas"
-                                        href="/komunitas"
+                                    <a
+                                        key="https://web-komunitas.vercel.app/"
+                                        href="https://web-komunitas.vercel.app/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         onClick={() => setIsSidebarOpen(false)}
-                                        className={`flex items-center gap-3 px-3 py-3 text-sm rounded-md transition-all duration-200 mb-1 cursor-pointer ${
-                                            isActive("/komunitas")
-                                                ? "bg-primary text-primary-foreground font-medium"
-                                                : "hover:bg-accent hover:text-accent-foreground"
-                                        }`}
+                                        className="flex items-center gap-3 px-3 py-3 text-sm rounded-md transition-all duration-200 mb-1 cursor-pointer hover:bg-accent hover:text-accent-foreground"
                                     >
-                                        <Users
-                                            className={`h-5 w-5 shrink-0 ${
-                                                isActive("/komunitas") ? "text-primary-foreground" : "text-primary"
-                                            }`}
-                                        />
+                                        <Users className="h-5 w-5 shrink-0 text-primary" />
                                         <span className="truncate">Komunitas</span>
-                                        {isActive("/komunitas") && (
-                                            <div className="ml-auto w-2 h-2 bg-current rounded-full" />
-                                        )}
-                                    </Link>
+                                    </a>
 
-                                    <Link
-                                        key="/analitik"
-                                        href="/analitik"
-                                        onClick={() => setIsSidebarOpen(false)}
-                                        className={`flex items-center gap-3 px-3 py-3 text-sm rounded-md transition-all duration-200 mb-1 cursor-pointer ${
-                                            isActive("/analitik")
-                                                ? "bg-primary text-primary-foreground font-medium"
-                                                : "hover:bg-accent hover:text-accent-foreground"
-                                        }`}
-                                    >
-                                        <BarChart3
-                                            className={`h-5 w-5 shrink-0 ${
-                                                isActive("/analitik") ? "text-primary-foreground" : "text-primary"
-                                            }`}
-                                        />
-                                        <span className="truncate">Analitik</span>
-                                        {isActive("/analitik") && (
-                                            <div className="ml-auto w-2 h-2 bg-current rounded-full" />
-                                        )}
-                                    </Link>
+
 
                                     {/* Statistik Section Header */}
                                     <div className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider mt-4">
@@ -713,7 +685,7 @@ export function MobileNavigation() {
                                 {/* Additional info section */}
                                 <div className="p-4 border-t mt-2">
                                     <div className="text-xs text-muted-foreground space-y-2">
-                                        <p>Portal Resmi Kalurahan Banyuraden</p>
+                                        <p>Portal Resmi Kalurahan Pondokrejo</p>
                                         <p>Kabupaten Sleman, DIY</p>
                                         <div className="pt-2">
                                             <p className="font-medium text-foreground mb-1">Butuh Bantuan?</p>

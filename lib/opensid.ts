@@ -54,10 +54,13 @@ interface OpenSIDApiResponse {
 
 // Configuration
 const OPENSID_CONFIG = {
-    baseUrl: `${env.OPENSID_API_URL ?? "https://banyuraden.slemankab.go.id"}/internal_api/arsip`,
+    baseUrl: `${env.OPENSID_API_URL ?? "https://pondokrejo.sleman-desa.id"}/internal_api/arsip`,
     postsPerPage: 50, // Increased to show more posts per page
     cacheTimeout: 60 * 60 * 1000, // 1 jam cache
 };
+
+// Default domain untuk fallback
+const DEFAULT_DOMAIN = "https://pondokrejo.sleman-desa.id";
 
 // Cache untuk menyimpan data sementara
 const cache = new Map<string, { data: unknown; timestamp: number }>();
@@ -127,7 +130,7 @@ async function fetchFromOpenSID(_endpoint: string = "", params: Record<string, s
             : env.NEXTAUTH_URL ||
               env.NEXT_PUBLIC_SITE_URL ||
               (env.VERCEL_URL ? `https://${env.VERCEL_URL}` : undefined) ||
-              "https://banyuraden.slemankab.go.id";
+              DEFAULT_DOMAIN;
     const url = new URL("/api/opensid-proxy", baseUrl);
 
     // Add parameters if needed
@@ -175,11 +178,11 @@ function transformArticle(article: OpenSIDArticle) {
 
         // If it's just a filename (no path), add the OpenSID path with sedang_ prefix
         if (!imageUrl.includes("/")) {
-            imageUrl = `https://banyuraden.slemankab.go.id/desa/upload/artikel/sedang_${imageUrl}`;
+            imageUrl = `${DEFAULT_DOMAIN}/desa/upload/artikel/sedang_${imageUrl}`;
         } else {
             // If it's a relative path, add base URL
             if (imageUrl.startsWith("/")) {
-                imageUrl = `https://banyuraden.slemankab.go.id${imageUrl}`;
+                imageUrl = `${DEFAULT_DOMAIN}${imageUrl}`;
             }
             // Force HTTPS
             imageUrl = imageUrl.replace(/^http:\/\//i, "https://");

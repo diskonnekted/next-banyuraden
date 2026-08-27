@@ -6,7 +6,6 @@ import {
     Search,
     Bell,
     ChevronDown,
-    Info,
     Home,
     Cpu,
     Building2,
@@ -56,7 +55,7 @@ export function Header() {
         { href: "/idm", label: "IDM", icon: FileText },
         { href: "/sdgs", label: "SDGs", icon: Globe },
         { href: "/iot", label: "IoT", icon: Cpu },
-        { href: "https://banyuraden.slemankab.go.id/index.php/pengaduan", label: t("navigation.pengaduan"), icon: MessageSquare, external: true },
+        { href: "https://pondokrejo.sleman-desa.id/index.php/pengaduan", label: t("navigation.pengaduan"), icon: MessageSquare, external: true },
     ];
 
     const pemerintahanSubItems = [
@@ -78,8 +77,7 @@ export function Header() {
         { href: "/pustaka", label: "Perpustakaan Digital" },
         { href: "/lapak-digital", label: "Lapak Digital" },
         { href: "/ttg", label: "Teknologi Tepat Guna" },
-        { href: "/komunitas", label: "Komunitas" },
-        { href: "/analitik", label: "Analitik" },
+        { href: "https://web-komunitas.vercel.app/", label: "Komunitas", external: true },
     ];
 
     // Categorized statistik sub-items
@@ -196,11 +194,11 @@ export function Header() {
                             >
                                 <Logo {...LogoVariant.light} size={40} />
                                 <div className="hidden sm:block">
-                                    <h1 className="text-lg font-bold text-white">Kalurahan Banyuraden</h1>
+                                    <h1 className="text-lg font-bold text-white">Kalurahan Pondokrejo</h1>
                                     <p className="text-xs text-[#ddf0ff]">Kabupaten Sleman, DIY</p>
                                 </div>
                                 <div className="block sm:hidden">
-                                    <h1 className="text-lg font-bold text-white">Banyuraden</h1>
+                                    <h1 className="text-lg font-bold text-white">Pondokrejo</h1>
                                     <p className="text-xs text-[#ddf0ff]">Kabupaten Sleman</p>
                                 </div>
                             </Link>
@@ -270,33 +268,6 @@ export function Header() {
                                         <Link href="/notifikasi" className="w-full cursor-pointer">
                                             Lihat Semua Notifikasi
                                         </Link>
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-
-                            {/* User Account */}
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        className="text-white hover:text-white! hover:bg-[#2a77a7]! cursor-pointer px-0! ml-4! sm:ml-0!"
-                                    >
-                                        <Info className="h-4 w-4 mr-2" />
-                                        <span className="hidden sm:inline">Info</span>
-                                        <ChevronDown className="h-4 w-4 ml-1" />
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end" className="w-96">
-                                    <DropdownMenuItem className="data-highlighted:bg-[#2a77a7] data-highlighted:text-white" disabled>
-                                        <div className="space-y-1">
-                                            <p className="text-sm">
-                                                Portal ini merupakan penampil konten dari berbagai layanan via API.
-                                            </p>
-                                            <p className="text-sm">
-                                                Tidak tersedia akun, dasbor, atau fitur login publik.
-                                            </p>
-                                        </div>
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
@@ -460,12 +431,23 @@ export function Header() {
                                         <DropdownMenuContent align="start" className="w-full">
                                             {inovasiSubItems.map((subItem) => (
                                                 <DropdownMenuItem key={subItem.href} asChild>
-                                                    <Link
-                                                        href={subItem.href}
-                                                        className="w-full cursor-pointer data-highlighted:bg-[#2a77a7] data-highlighted:text-white"
-                                                    >
-                                                        {subItem.label}
-                                                    </Link>
+                                                    {subItem.external ? (
+                                                        <a
+                                                            href={subItem.href}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="w-full cursor-pointer data-highlighted:bg-[#2a77a7] data-highlighted:text-white px-2 py-1.5 text-sm rounded-sm block"
+                                                        >
+                                                            {subItem.label}
+                                                        </a>
+                                                    ) : (
+                                                        <Link
+                                                            href={subItem.href}
+                                                            className="w-full cursor-pointer data-highlighted:bg-[#2a77a7] data-highlighted:text-white"
+                                                        >
+                                                            {subItem.label}
+                                                        </Link>
+                                                    )}
                                                 </DropdownMenuItem>
                                             ))}
                                         </DropdownMenuContent>

@@ -135,11 +135,11 @@ function TtgContent({ page, categoryId }: { page: number; categoryId: string }) 
             if (!json.success) throw new Error(json.error || "Gagal memuat kategori TTG");
             const totalPosts = json.data.reduce((sum, c) => sum + (typeof c.count === "number" ? c.count : 0), 0);
             setCategories([
-                { id: "", name: "Semua", slug: "all", count: totalPosts, url: "https://ttg.banyuraden.id/" },
+                { id: "", name: "Semua", slug: "all", count: totalPosts, url: "https://ttg.pondokrejo.id/" },
                 ...json.data,
             ]);
         } catch {
-            setCategories([{ id: "", name: "Semua", slug: "all", count: 0, url: "https://ttg.banyuraden.id/" }]);
+            setCategories([{ id: "", name: "Semua", slug: "all", count: 0, url: "https://ttg.pondokrejo.id/" }]);
         }
     }, []);
 
@@ -210,9 +210,9 @@ function TtgContent({ page, categoryId }: { page: number; categoryId: string }) 
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Teknologi Tepat Guna</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Konten TTG Banyuraden untuk kemandirian dan kemajuan Kalurahan Banyuraden.
+                        Konten TTG Pondokrejo untuk kemandirian dan kemajuan Kalurahan Pondokrejo.
                     </p>
-                    <p className="text-xs text-muted-foreground">Sumber data: ttg.banyuraden.id</p>
+                    <p className="text-xs text-muted-foreground">Sumber data: ttg.pondokrejo.id</p>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
@@ -372,9 +372,9 @@ export default function TtgPage() {
                             </div>
                             <h1 className="text-4xl font-bold text-primary">Teknologi Tepat Guna</h1>
                             <p className="text-gray-600 max-w-2xl mx-auto">
-                                Konten TTG Banyuraden untuk kemandirian dan kemajuan Kalurahan Banyuraden.
+                                Konten TTG Pondokrejo untuk kemandirian dan kemajuan Kalurahan Pondokrejo.
                             </p>
-                            <p className="text-xs text-muted-foreground">Sumber data: ttg.banyuraden.id</p>
+                            <p className="text-xs text-muted-foreground">Sumber data: ttg.pondokrejo.id</p>
                         </div>
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
                             {Array.from({ length: 12 }).map((_, i) => (

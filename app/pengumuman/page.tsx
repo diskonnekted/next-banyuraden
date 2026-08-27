@@ -24,7 +24,7 @@ export default function PengumumanPage() {
                 </div>
                 <h1 className="text-4xl font-bold text-gray-900 mb-4">Pengumuman Kalurahan</h1>
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Informasi resmi dan pengumuman penting dari pemerintah Kalurahan Banyuraden untuk seluruh warga
+                    Informasi resmi dan pengumuman penting dari pemerintah Kalurahan Pondokrejo untuk seluruh warga
                 </p>
             </div>
 
@@ -43,7 +43,7 @@ export default function PengumumanPage() {
                         </h2>
                         <p className="text-gray-600 mb-4 max-w-2xl mx-auto">
                             Kami sedang mengembangkan portal pengumuman yang terintegrasi untuk memberikan informasi
-                            resmi dan penting kepada seluruh warga Kalurahan Banyuraden.
+                            resmi dan penting kepada seluruh warga Kalurahan Pondokrejo.
                         </p>
 
                         <div className="space-y-4 max-w-4xl mx-auto">
