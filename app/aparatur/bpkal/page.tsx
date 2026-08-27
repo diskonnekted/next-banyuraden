@@ -16,7 +16,7 @@ function getInitials(name: string): string {
 }
 
 export default async function BpkalPage() {
-    const bpkalMembers = await prisma.apaturPamong.findMany({
+    const bpkalMembers = await prisma.aparaturPamong.findMany({
         where: {
             kelompok: "BPKAL",
             aktif: true,
