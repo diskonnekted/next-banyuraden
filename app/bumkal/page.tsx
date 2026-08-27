@@ -156,7 +156,7 @@ export default async function BumkalPage() {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {bumkal.pengurus.map((p, index) => (
+                                    {bumkal.pengurus.map((p: any, index: number) => (
                                         <TableRow key={p.id}>
                                             <TableCell className="font-medium">{index + 1}</TableCell>
                                             <TableCell className="font-medium">{p.namaLengkap}</TableCell>
