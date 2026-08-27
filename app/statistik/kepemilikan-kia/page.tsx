@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { CreditCard, TrendingUp, Users } from "lucide-react";
 
@@ -16,7 +16,7 @@ export default function KepemilikanKIAPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Kepemilikan KIA</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik kepemilikan Kartu Identitas Anak (KIA) Kalurahan Pondokrejo
+                        Data statistik kepemilikan Kartu Identitas Anak (KIA) Kalurahan Banyuraden
                     </p>
                 </div>
 

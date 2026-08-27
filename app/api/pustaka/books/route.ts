@@ -20,7 +20,7 @@ type PustakaMeta = {
     };
 };
 
-const BASE_URL = "https://pustaka.pondokrejo.id";
+const BASE_URL = "https://pustaka.banyuraden.id";
 
 function toAbsoluteUrl(url: string): string {
     return new URL(url, BASE_URL).toString();

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Shield, Briefcase, TrendingUp } from "lucide-react";
 
@@ -16,7 +16,7 @@ export default function BPJSKetenagakerjaanPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data BPJS Ketenagakerjaan</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik kepesertaan BPJS Ketenagakerjaan penduduk Kalurahan Pondokrejo
+                        Data statistik kepesertaan BPJS Ketenagakerjaan penduduk Kalurahan Banyuraden
                     </p>
                 </div>
 

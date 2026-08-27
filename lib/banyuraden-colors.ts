@@ -1,9 +1,9 @@
 /**
- * Pondokrejo Village Official Color Palette
+ * Banyuraden Village Official Color Palette
  * Based on docs/pondokrejo.md theme specification
  */
 
-export const pondokrejoColors = {
+export const banyuradenColors = {
     // Primary colors - Biru utama resmi
     primary: {
         DEFAULT: "#39a2cf",
@@ -73,9 +73,9 @@ export const pondokrejoColors = {
 } as const;
 
 /**
- * Utility function to get Tailwind class names for Pondokrejo colors
+ * Utility function to get Tailwind class names for Banyuraden colors
  */
-export const getPondokrejoClass = {
+export const getBanyuradenClass = {
     // Background classes
     bg: {
         primary: "bg-[#39a2cf]",
@@ -129,16 +129,16 @@ export const getPondokrejoClass = {
 /**
  * CSS custom properties for use in component styles
  */
-export const pondokrejoCSSVars = {
-    "--village-primary": pondokrejoColors.primary.DEFAULT,
-    "--village-secondary": pondokrejoColors.secondary.DEFAULT,
-    "--village-accent": pondokrejoColors.accent.DEFAULT,
-    "--village-background": pondokrejoColors.background,
-    "--village-surface": pondokrejoColors.surface,
-    "--village-text-dark": pondokrejoColors.textDark,
-    "--village-text-light": pondokrejoColors.textLight,
-    "--village-success": pondokrejoColors.success,
-    "--village-warning": pondokrejoColors.warning,
-    "--village-danger": pondokrejoColors.danger,
-    "--village-info": pondokrejoColors.info,
+export const banyuradenCSSVars = {
+    "--village-primary": banyuradenColors.primary.DEFAULT,
+    "--village-secondary": banyuradenColors.secondary.DEFAULT,
+    "--village-accent": banyuradenColors.accent.DEFAULT,
+    "--village-background": banyuradenColors.background,
+    "--village-surface": banyuradenColors.surface,
+    "--village-text-dark": banyuradenColors.textDark,
+    "--village-text-light": banyuradenColors.textLight,
+    "--village-success": banyuradenColors.success,
+    "--village-warning": banyuradenColors.warning,
+    "--village-danger": banyuradenColors.danger,
+    "--village-info": banyuradenColors.info,
 } as const;

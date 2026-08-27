@@ -88,7 +88,7 @@ function parseIncomeComparison(obj: Record<string, number>) {
 
 export default function AnalitikPage() {
     const [data, setData] = React.useState<AnalyticsData | null>(null);
-    const [sourceUrl, setSourceUrl] = React.useState<string>("https://peta.pondokrejo.id/analytics");
+    const [sourceUrl, setSourceUrl] = React.useState<string>("https://peta.banyuraden.id/analytics");
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState<string | null>(null);
 
@@ -142,9 +142,9 @@ export default function AnalitikPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Analitik</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Ringkasan analisis kesejahteraan dan sosial Kalurahan Pondokrejo berbasis data presisi.
+                        Ringkasan analisis kesejahteraan dan sosial Kalurahan Banyuraden berbasis data presisi.
                     </p>
-                    <p className="text-xs text-muted-foreground">Sumber data: peta.pondokrejo.id</p>
+                    <p className="text-xs text-muted-foreground">Sumber data: peta.banyuraden.id</p>
                     <div className="flex justify-center">
                         <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
                             <Button variant="outline">Buka Dashboard Asli</Button>

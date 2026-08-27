@@ -100,8 +100,8 @@ function LapakContent({ page }: { page: number }) {
                         <Store className="h-10 w-10 text-emerald-700" />
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Lapak Digital</h1>
-                    <p className="text-gray-600 max-w-2xl mx-auto">Produk UMKM Kalurahan Pondokrejo yang ditampilkan dari Lapak.</p>
-                    <p className="text-xs text-muted-foreground">Sumber data: pondokrejo.sleman-desa.id</p>
+                    <p className="text-gray-600 max-w-2xl mx-auto">Produk UMKM Kalurahan Banyuraden yang ditampilkan dari Lapak.</p>
+                    <p className="text-xs text-muted-foreground">Sumber data: banyuraden.sleman-desa.id</p>
                 </div>
 
                 {loading && (
@@ -231,9 +231,9 @@ export default function LapakDigitalPage() {
                             </div>
                             <h1 className="text-4xl font-bold text-primary">Lapak Digital</h1>
                             <p className="text-gray-600 max-w-2xl mx-auto">
-                                Produk UMKM Kalurahan Pondokrejo yang ditampilkan dari Lapak.
+                                Produk UMKM Kalurahan Banyuraden yang ditampilkan dari Lapak.
                             </p>
-                            <p className="text-xs text-muted-foreground">Sumber data: pondokrejo.sleman-desa.id</p>
+                            <p className="text-xs text-muted-foreground">Sumber data: banyuraden.sleman-desa.id</p>
                         </div>
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
                             {Array.from({ length: 12 }).map((_, i) => (

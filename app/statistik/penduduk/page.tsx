@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Users, TrendingUp, BarChart3, PieChart } from "lucide-react";
 

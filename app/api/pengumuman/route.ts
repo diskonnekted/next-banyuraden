@@ -24,7 +24,7 @@ const mockPengumuman: Array<{
     {
         id: 1,
         judul: "Libur Nasional dan Cuti Bersama Tahun 2025",
-        konten: `Berdasarkan Surat Keputusan Bersama (SKB) Menteri Agama, Menteri Ketenagakerjaan, dan Menteri Pendayagunaan Aparatur Negara dan Reformasi Birokrasi Nomor 812 Tahun 2024, Nomor 1 Tahun 2024, dan Nomor 3 Tahun 2024 tentang Hari Libur Nasional dan Cuti Bersama Tahun 2025, dengan hormat mengundang seluruh masyarakat Kalurahan Pondokrejo untuk memperhatikan jadwal libur nasional dan cuti bersama.
+        konten: `Berdasarkan Surat Keputusan Bersama (SKB) Menteri Agama, Menteri Ketenagakerjaan, dan Menteri Pendayagunaan Aparatur Negara dan Reformasi Birokrasi Nomor 812 Tahun 2024, Nomor 1 Tahun 2024, dan Nomor 3 Tahun 2024 tentang Hari Libur Nasional dan Cuti Bersama Tahun 2025, dengan hormat mengundang seluruh masyarakat Kalurahan Banyuraden untuk memperhatikan jadwal libur nasional dan cuti bersama.
 
 Daftar libur nasional yang akan datang:
 - 25 Desember 2025: Hari Raya Natal
@@ -45,10 +45,10 @@ Masyarakat diharapkan memperhatikan jadwal layanan kantor kalurahan yang disesua
     {
         id: 2,
         judul: "Pembayaran PBB dan Retribusi Sampah Triwulan IV",
-        konten: `Bersama ini kami sampaikan kepada seluruh wajib Pajak Bumi dan Bangunan (PBB) dan pengguna layanan sampah di Kalurahan Pondokrejo bahwa pembayaran PBB dan retribusi sampah untuk Triwulan IV (Oktober-Desember 2025) sudah dapat dilaksanakan.
+        konten: `Bersama ini kami sampaikan kepada seluruh wajib Pajak Bumi dan Bangunan (PBB) dan pengguna layanan sampah di Kalurahan Banyuraden bahwa pembayaran PBB dan retribusi sampah untuk Triwulan IV (Oktober-Desember 2025) sudah dapat dilaksanakan.
 
 Pembayaran dapat dilakukan melalui:
-1. Kantor Kas Kalurahan Pondokrejo (Senin-Jumat, 08:00-14:00 WIB)
+1. Kantor Kas Kalurahan Banyuraden (Senin-Jumat, 08:00-14:00 WIB)
 2. Mobile Payment (QRIS yang tersedia di kantor kalurahan)
 3. Transfer Bank BPD DIY (No. Rekening: 1234567890)
 
@@ -69,15 +69,15 @@ Mohon kerjasama dari seluruh warga untuk menyelesaikan kewajiban pembayaran tepa
     {
         id: 3,
         judul: "Jadwal Vaksinasi COVID-19 Dosis Lanjutan",
-        konten: `Dalam rangka meningkatkan imunitas masyarakat Kalurahan Pondokrejo, akan diselenggarakan vaksinasi COVID-19 dosis lanjutan (booster) pada:
+        konten: `Dalam rangka meningkatkan imunitas warga Kalurahan Banyuraden, akan diselenggarakan vaksinasi COVID-19 dosis lanjutan (booster) pada:
 
 📅 Jadwal Pelaksanaan:
 - Hari: Sabtu, 26 Oktober 2025
 - Waktu: 08:00 - 12:00 WIB
-- Tempat: Aula Kantor Kalurahan Pondokrejo
+- Tempat: Aula Kantor Kalurahan Banyuraden
 
 📋 Persyaratan:
-- Warga Kalurahan Pondokrejo (dibuktikan dengan KTP/KK)
+- Warga Kalurahan Banyuraden (dibuktikan dengan KTP/KK)
 - Sudah mendapatkan vaksin dosis kedua (minimal 3 bulan yang lalu)
 - Membawa kartu vaksin atau bukti vaksinasi dosis kedua
 - Sehat dan tidak demam
@@ -102,18 +102,18 @@ Pelayanan gratis dan terbuka untuk seluruh warga yang memenuhi persyaratan. Mari
     {
         id: 4,
         judul: "⚠️ Darurat: Gangguan Air Bersih",
-        konten: `Mohon maaf kepada seluruh warga Kalurahan Pondokrejo, saat ini terjadi gangguan pada sistem distribusi air bersih di wilayah RT 01, RT 02, dan RT 03.
+        konten: `Mohon maaf kepada seluruh warga Kalurahan Banyuraden, saat ini terjadi gangguan pada sistem distribusi air bersih di wilayah RT 01, RT 02, dan RT 03.
 
 🚨 Lokasi Terdampak:
-- RT 01/RW 01 Dusun Pondokrejo
-- RT 02/RW 01 Dusun Pondokrejo
-- RT 03/RW 01 Dusun Pondokrejo
+- RT 01/RW 01 Dusun Banyuraden
+- RT 02/RW 01 Dusun Banyuraden
+- RT 03/RW 01 Dusun Banyuraden
 
 ⏱️ Perkiraan Waktu Perbaikan:
 - Mulai: 24 Oktober 2025, 14:00 WIB
 - Selesai: 24 Oktober 2025, 20:00 WIB
 
-🔧 Penyebab: Perbaikan pipa distribusi utama di Jl. Raya Kalurahan Pondokrejo
+🔧 Penyebab: Perbaikan pipa distribusi utama di Jl. Raya Kalurahan Banyuraden
 
 📞 Kontak Darurat:
 - PDAM Cabang Sleman: (0274) 123456

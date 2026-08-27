@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { GraduationCap, Users, TrendingUp } from "lucide-react";
 
@@ -16,7 +16,7 @@ export default function PendidikanDitempuhPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Pendidikan Ditempuh</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik pendidikan yang ditempuh penduduk Kalurahan Pondokrejo
+                        Data statistik pendidikan yang ditempuh penduduk Kalurahan Banyuraden
                     </p>
                 </div>
 

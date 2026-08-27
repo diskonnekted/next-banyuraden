@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { fetchWeatherApi } from "openmeteo";
 
-// Pondokrejo coordinates
+// Banyuraden coordinates
 const LATITUDE = -7.6654545;
 const LONGITUDE = 110.3073412;
 

@@ -11,7 +11,7 @@ export default function BumdesPage() {
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-[#c2c9df] rounded-full mb-4">
                     <Briefcase className="h-10 w-10 text-gray-900" />
                 </div>
-                <h1 className="text-4xl font-bold text-gray-900 mb-4">BUMDes Pondokrejo</h1>
+                <h1 className="text-4xl font-bold text-gray-900 mb-4">BUMDes Banyuraden</h1>
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                     Badan Usaha Milik Kalurahan sebagai motor penggerak perekonomian masyarakat dan sumber pendapatan
                     kalurahan
@@ -30,7 +30,7 @@ export default function BumdesPage() {
                         </div>
                         <h2 className="text-2xl font-semibold text-gray-900 mb-4">Informasi BUMDes Sedang Disusun</h2>
                         <p className="text-gray-600 mb-4 max-w-2xl mx-auto">
-                            Kami sedang mempersiapkan informasi lengkap mengenai BUMDes Pondokrejo untuk memberikan
+                            Kami sedang mempersiapkan informasi lengkap mengenai BUMDes Banyuraden untuk memberikan
                             transparansi dan peluang partisipasi masyarakat.
                         </p>
 

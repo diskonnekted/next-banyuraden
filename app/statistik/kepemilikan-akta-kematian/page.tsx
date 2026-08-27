@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { FileCheck, TrendingUp, Users } from "lucide-react";
 
@@ -16,7 +16,7 @@ export default function KepemilikanAktaKematianPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Kepemilikan Akta Kematian</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik kepemilikan akta kematian penduduk Kalurahan Pondokrejo
+                        Data statistik kepemilikan akta kematian penduduk Kalurahan Banyuraden
                     </p>
                 </div>
 

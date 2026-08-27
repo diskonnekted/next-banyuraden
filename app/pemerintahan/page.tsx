@@ -11,7 +11,7 @@ export default function PemerintahanPage() {
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-100 rounded-full mb-4">
                     <Building className="h-10 w-10 text-blue-600" />
                 </div>
-                <h1 className="text-4xl font-bold text-gray-900 mb-4">Pemerintahan Kalurahan Pondokrejo</h1>
+                <h1 className="text-4xl font-bold text-gray-900 mb-4">Pemerintahan Kalurahan Banyuraden</h1>
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                     Struktur organisasi, program kerja, dan layanan pemerintahan kalurahan untuk masyarakat
                 </p>
@@ -31,7 +31,7 @@ export default function PemerintahanPage() {
                             Informasi Pemerintahan Sedang Disusun
                         </h2>
                         <p className="text-gray-600 mb-4 max-w-2xl mx-auto">
-                            Kami sedang mempersiapkan informasi lengkap mengenai pemerintahan Kalurahan Pondokrejo untuk
+                            Kami sedang mempersiapkan informasi lengkap mengenai pemerintahan Kalurahan Banyuraden untuk
                             memberikan transparansi dan akses informasi kepada masyarakat.
                         </p>
 

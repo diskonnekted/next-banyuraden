@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Users, UserCheck, TrendingUp } from "lucide-react";
 
@@ -16,7 +16,7 @@ export default function DptPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Daftar Pemilih Tetap</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik pemilih tetap penduduk Kalurahan Pondokrejo
+                        Data statistik pemilih tetap penduduk Kalurahan Banyuraden
                     </p>
                 </div>
 

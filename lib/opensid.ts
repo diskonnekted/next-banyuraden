@@ -54,13 +54,13 @@ interface OpenSIDApiResponse {
 
 // Configuration
 const OPENSID_CONFIG = {
-    baseUrl: `${env.OPENSID_API_URL ?? "https://pondokrejo.sleman-desa.id"}/internal_api/arsip`,
+    baseUrl: `${env.OPENSID_API_URL ?? "https://banyuraden.sleman-desa.id"}/internal_api/arsip`,
     postsPerPage: 50, // Increased to show more posts per page
     cacheTimeout: 60 * 60 * 1000, // 1 jam cache
 };
 
 // Default domain untuk fallback
-const DEFAULT_DOMAIN = "https://pondokrejo.sleman-desa.id";
+const DEFAULT_DOMAIN = "https://banyuraden.sleman-desa.id";
 
 // Cache untuk menyimpan data sementara
 const cache = new Map<string, { data: unknown; timestamp: number }>();

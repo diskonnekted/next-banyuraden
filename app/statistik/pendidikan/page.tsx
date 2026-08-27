@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { GraduationCap, BookOpen, TrendingUp, Users } from "lucide-react";
 
@@ -16,7 +16,7 @@ export default function PendidikanPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Pendidikan</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Analisis tingkat pendidikan masyarakat Kalurahan Pondokrejo untuk monitoring dan peningkatan
+                        Analisis tingkat pendidikan masyarakat Kalurahan Banyuraden untuk monitoring dan peningkatan
                         kualitas sumber daya manusia
                     </p>
                 </div>

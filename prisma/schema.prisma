@@ -1,4 +1,4 @@
-// Schema Prisma untuk Portal Web Kalurahan Pondokrejo
+// Schema Prisma untuk Portal Web Kalurahan Banyuraden
 // Enhanced dengan semua fitur modern: SDGs, Live Statistics, Interactive Map, Community Engagement
 
 generator client {

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Accessibility, Users, TrendingUp } from "lucide-react";
 
@@ -16,7 +16,7 @@ export default function DisabilitasPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Disabilitas</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik disabilitas penduduk Kalurahan Pondokrejo
+                        Data statistik disabilitas penduduk Kalurahan Banyuraden
                     </p>
                 </div>
 

@@ -12,7 +12,7 @@ type KomunitasDetail = {
     url: string;
 };
 
-const BASE_URL = "https://komunitas.pondokrejo.id";
+const BASE_URL = "https://komunitas.banyuraden.id";
 
 function toAbsoluteUrl(url: string): string {
     return new URL(url, BASE_URL).toString();

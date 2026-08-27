@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Globe2, Users, TrendingUp } from "lucide-react";
 
@@ -16,7 +16,7 @@ export default function EtnisPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Etnis Penduduk</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik etnis/suku penduduk Kalurahan Pondokrejo
+                        Data statistik etnis/suku penduduk Kalurahan Banyuraden
                     </p>
                 </div>
 
@@ -33,7 +33,7 @@ export default function EtnisPage() {
                         <CardContent>
                             <p className="text-sm text-muted-foreground mb-3">
                                 Data etnis penduduk adalah informasi penting yang menunjukkan keberagaman suku bangsa
-                                dalam masyarakat Kalurahan Pondokrejo.
+                                dalam masyarakat Kalurahan Banyuraden.
                             </p>
                             <div className="space-y-2 text-sm">
                                 <div className="flex items-start gap-2">

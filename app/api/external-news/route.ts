@@ -280,7 +280,7 @@ export const { GET, OPTIONS } = createApiRouteHandler(async (request: NextReques
             }
         }
 
-        const siteBaseUrl = "https://pondokrejo.sleman-desa.id";
+        const siteBaseUrl = "https://banyuraden.sleman-desa.id";
 
         const toAbsoluteImageUrl = (imageUrl: string | null): string | null => {
             if (!imageUrl) return null;

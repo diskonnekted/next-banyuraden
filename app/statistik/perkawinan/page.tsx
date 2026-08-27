@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Heart, Users, UserCheck } from "lucide-react";
 
@@ -16,7 +16,7 @@ export default function PerkawinanPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Perkawinan</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik status perkawinan penduduk Kalurahan Pondokrejo
+                        Data statistik status perkawinan penduduk Kalurahan Banyuraden
                     </p>
                 </div>
 

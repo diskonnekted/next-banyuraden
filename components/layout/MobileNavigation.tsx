@@ -68,13 +68,13 @@ export function MobileNavigation() {
         { href: "/", label: translations.navigation.beranda, icon: Home },
         { href: "/berita", label: translations.navigation.berita, icon: Newspaper },
         {
-            href: "https://pondokrejo.sleman-desa.id/layanan-mandiri",
+            href: "https://banyuraden.id/layanan-mandiri",
             label: translations.navigation.layanan,
             icon: FileText,
             external: true,
         },
         {
-            href: "https://pondokrejo.sleman-desa.id/index.php/pengaduan",
+            href: "https://banyuraden.id/index.php/pengaduan",
             label: translations.navigation.pengaduan,
             icon: MessageSquare,
             external: true,
@@ -90,7 +90,7 @@ export function MobileNavigation() {
         { href: "/idm", label: "IDM", icon: FileText },
         { href: "/sdgs", label: "SDGs", icon: Globe },
         { href: "/iot", label: "IoT", icon: Monitor },
-        { href: "https://pondokrejo.sleman-desa.id/index.php/pengaduan", label: translations.navigation.pengaduan, icon: MessageSquare, external: true },
+        { href: "https://banyuraden.id/index.php/pengaduan", label: translations.navigation.pengaduan, icon: MessageSquare, external: true },
     ];
 
     // Additional items for sidebar
@@ -291,7 +291,7 @@ export function MobileNavigation() {
 
                                     <a
                                         key="/layanan"
-                                        href="https://pondokrejo.sleman-desa.id/layanan-mandiri"
+                                        href="https://banyuraden.id/layanan-mandiri"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         onClick={() => setIsSidebarOpen(false)}
@@ -685,7 +685,7 @@ export function MobileNavigation() {
                                 {/* Additional info section */}
                                 <div className="p-4 border-t mt-2">
                                     <div className="text-xs text-muted-foreground space-y-2">
-                                        <p>Portal Resmi Kalurahan Pondokrejo</p>
+                                        <p>Portal Resmi Kalurahan Banyuraden</p>
                                         <p>Kabupaten Sleman, DIY</p>
                                         <div className="pt-2">
                                             <p className="font-medium text-foreground mb-1">Butuh Bantuan?</p>

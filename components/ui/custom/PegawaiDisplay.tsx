@@ -124,11 +124,11 @@ export function PegawaiDisplay({ className }: PegawaiDisplayProps) {
         }
         // Try foto_staff (construct URL from filename)
         if (fotoStaff) {
-            return `https://pondokrejo.sleman-desa.id/storage-desa?path=upload/user_pict/${fotoStaff}&signature=placeholder`;
+            return `https://banyuraden.sleman-desa.id/storage-desa?path=upload/user_pict/${fotoStaff}&signature=placeholder`;
         }
         // Fallback to foto with constructed URL
         if (fotoPath) {
-            return `https://pondokrejo.sleman-desa.id/storage-desa?path=${fotoPath}&signature=placeholder`;
+            return `https://banyuraden.sleman-desa.id/storage-desa?path=${fotoPath}&signature=placeholder`;
         }
         return null;
     };

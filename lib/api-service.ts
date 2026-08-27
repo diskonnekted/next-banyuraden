@@ -37,7 +37,7 @@ const DEFAULT_CONFIG: Required<Omit<ApiConfig, "baseUrl" | "cache">> = {
 
 // Common CORS headers
 export const CORS_HEADERS = {
-    "Access-Control-Allow-Origin": process.env.CORS_ORIGIN || process.env.NEXT_PUBLIC_SITE_URL || "https://devoneclickpondokrejo.slemankab.go.id",
+    "Access-Control-Allow-Origin": process.env.CORS_ORIGIN || process.env.NEXT_PUBLIC_SITE_URL || "https://devoneclickbanyuraden.slemankab.go.id",
     "Access-Control-Allow-Methods": "GET, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
 };
@@ -237,7 +237,7 @@ export class ApiService {
  * OpenSID API service
  */
 export const opensidApi = new ApiService({
-    baseUrl: process.env.OPENSID_API_URL || "https://pondokrejo.sleman-desa.id",
+    baseUrl: process.env.OPENSID_API_URL || "https://banyuraden.sleman-desa.id",
     timeout: 30000,
     cache: {
         revalidate: 3600, // 1 hour
@@ -272,7 +272,7 @@ const LOCAL_BASE_URL =
     process.env.NEXT_PUBLIC_SITE_URL ||
     process.env.NEXTAUTH_URL ||
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ||
-    (process.env.NODE_ENV === "development" ? "http://localhost:5091" : "https://devoneclickpondokrejo.slemankab.go.id");
+    (process.env.NODE_ENV === "development" ? "http://localhost:5091" : "https://devoneclickbanyuraden.slemankab.go.id");
 
 export const localApi = new ApiService({
     baseUrl: LOCAL_BASE_URL,

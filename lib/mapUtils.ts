@@ -1,6 +1,6 @@
 /**
  * Map Utilities for Interactive Map Functionality
- * Handles location data, geocoding, and map operations for Pondokrejo Village
+ * Handles location data, geocoding, and map operations for Banyuraden Village
  */
 
 // Location categories for map markers
@@ -114,15 +114,15 @@ export interface MapViewport {
     bounds?: MapBounds;
 }
 
-// Default center coordinates for Pondokrejo Village (Sleman, DIY)
-export const PONDOKREJO_CENTER = {
+// Default center coordinates for Banyuraden Village (Sleman, DIY)
+export const BANYURADEN_CENTER = {
     lat: -7.7828,
     lng: 110.3649,
 };
 
 // Default map configuration
 export const DEFAULT_MAP_CONFIG = {
-    center: PONDOKREJO_CENTER,
+    center: BANYURADEN_CENTER,
     zoom: 14,
     minZoom: 10,
     maxZoom: 20,

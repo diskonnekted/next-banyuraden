@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { CreditCard, UserCheck, TrendingUp } from "lucide-react";
 
@@ -16,7 +16,7 @@ export default function KewarganegaraanPage() {
                     </div>
                     <h1 className="text-4xl font-bold text-primary">Data Kewarganegaraan</h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Data statistik kewarganegaraan penduduk Kalurahan Pondokrejo
+                        Data statistik kewarganegaraan penduduk Kalurahan Banyuraden
                     </p>
                 </div>
 
