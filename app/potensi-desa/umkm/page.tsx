@@ -31,7 +31,7 @@ function getJenisLabel(jenis: string): string {
 }
 
 export default async function UmkmPage() {
-    const umkmList = await prisma.umkm.findMany({
+    const umkmList = await prisma.uMKM.findMany({
         where: { aktif: true },
         include: {
             padukuhan: { select: { nama: true, slug: true } },

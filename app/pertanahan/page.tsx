@@ -19,7 +19,7 @@ export default async function PertanahanPage() {
         include: {
             padukuhan: { select: { nama: true, slug: true } },
         },
-        orderBy: ["padukuhan"],
+        orderBy: { padukuhan: { nama: "asc" } },
     });
 
     // Calculate totals
