@@ -412,7 +412,7 @@ async function main() {
 
     // Create SDGs Progress
     for (const sdgs of sdgsProgressData) {
-        await prisma.sDGsProgress.upsert({
+        await prisma.sdGsProgress.upsert({
             where: { goal: sdgs.goal },
             update: sdgs,
             create: sdgs,
@@ -954,7 +954,7 @@ async function main() {
         ],
     };
 
-    const apbdes = await prisma.aPBDes.upsert({
+    const apbdes = await prisma.apbDes.upsert({
         where: { tahunAnggaran: apbdesData.tahunAnggaran },
         update: {
             totalAnggaran: apbdesData.totalAnggaran,
@@ -1195,7 +1195,7 @@ Database seeded successfully with:
   - Users: ${await prisma.pengguna.count()} users
   - Berita: ${await prisma.berita.count()} artikel
   - Pengumuman: ${await prisma.pengumuman.count()} pengumuman
-  - SDGs Progress: ${await prisma.sDGsProgress.count()} goals
+  - SDGs Progress: ${await prisma.sdGsProgress.count()} goals
   - Lokasi Interaktif: ${await prisma.lokasiInteraktif.count()} lokasi
   - Community Polls: ${await prisma.communityPoll.count()} polling
   - Live Statistics: ${await prisma.liveStatistics.count()} statistik

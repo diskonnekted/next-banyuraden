@@ -837,3 +837,17 @@ model ProdukHukum {
 
   @@map("produk_hukum")
 }
+
+// Sejarah Lurah
+model SejarahLurah {
+  id          Int      @id @default(autoincrement())
+  namaLurah   String   @db.VarChar(255)
+  periode     String   @db.VarChar(50)
+  deskripsi   String?  @db.Text
+  gambar      String?  @db.VarChar(500)
+  urutan      Int      @default(0)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("sejarah_lurah")
+}
