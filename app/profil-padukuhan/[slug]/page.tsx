@@ -18,6 +18,8 @@ function formatCurrency(amount: number | null | undefined): string {
     return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(amount);
 }
 
+export const revalidate = 3600;
+
 export default async function DetailPadukuhanPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
 
