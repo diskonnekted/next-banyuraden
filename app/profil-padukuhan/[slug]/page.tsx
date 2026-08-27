@@ -29,7 +29,7 @@ export default async function DetailPadukuhanPage({ params }: { params: Promise<
             traditions: true,
             wisatas: true,
             pertanahan: true,
-            aparatur: {
+            aparat: {
                 where: { kelompok: "DUKUH" },
                 orderBy: { urutan: "asc" },
             },
