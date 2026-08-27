@@ -770,3 +770,55 @@ model Inovasi {
 
   @@map("inovasi")
 }
+
+// BUMKal
+model Bumkal {
+  id          Int      @id @default(autoincrement())
+  nama        String   @db.VarChar(255)
+  deskripsi   String?  @db.Text
+  alamat      String?  @db.Text
+  telepon     String?  @db.VarChar(50)
+  email       String?  @db.VarChar(255)
+  tahunBerdiri Int?
+  status      String?  @db.VarChar(50)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  pengurus    PengurusBumkal[]
+  unitUsaha   UnitUsahaBumkal[]
+
+  @@map("bumkal")
+}
+
+// Pengurus BUMKal
+model PengurusBumkal {
+  id          Int      @id @default(autoincrement())
+  bumkalId    Int      @map("bumkal_id")
+  nama        String   @db.VarChar(255)
+  jabatan     String   @db.VarChar(100)
+  telepon     String?  @db.VarChar(50)
+  email       String?  @db.VarChar(255)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  bumkal Bumkal @relation(fields: [bumkalId], references: [id])
+
+  @@map("pengurus_bumkal")
+}
+
+// Unit Usaha BUMKal
+model UnitUsahaBumkal {
+  id          Int      @id @default(autoincrement())
+  bumkalId    Int      @map("bumkal_id")
+  nama        String   @db.VarChar(255)
+  deskripsi   String?  @db.Text
+  alamat      String?  @db.Text
+  telepon     String?  @db.VarChar(50)
+  status      String?  @db.VarChar(50)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  bumkal Bumkal @relation(fields: [bumkalId], references: [id])
+
+  @@map("unit_usaha_bumkal")
+}
