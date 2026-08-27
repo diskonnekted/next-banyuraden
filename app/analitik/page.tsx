@@ -97,7 +97,7 @@ export default function AnalitikPage() {
             setLoading(true);
             setError(null);
             const res = await fetch("/api/analitik", { method: "GET" });
-            const json = (await res.json()) as ApiResponse;
+            const json: any = await res.json();
             if (!json.success) throw new Error(json.error || "Gagal memuat data analitik");
             setData(json.data);
             setSourceUrl(json.sourceUrl);
