@@ -30,7 +30,7 @@ export default async function WisataPage() {
         include: {
             padukuhan: { select: { nama: true, slug: true } },
         },
-        orderBy: ["nama"],
+        orderBy: { nama: "asc" },
     });
 
     // Group by padukuhan
