@@ -64,7 +64,7 @@ function getKelompokIcon(kelompok: string | null) {
 }
 
 export default async function AparaturPage() {
-    const aparatur = await prisma.apaturPamong.findMany({
+    const aparatur = await prisma.aparaturPamong.findMany({
         where: { aktif: true },
         orderBy: [
             { kelompok: "asc" },
