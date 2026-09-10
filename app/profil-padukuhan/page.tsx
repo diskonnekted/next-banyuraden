@@ -3,28 +3,80 @@ import { MapPin, Users, Home, Map } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { prisma } from "@/lib/prisma";
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+interface PadukuhanItem {
+    id: number | string;
+    nama?: string;
+    slug?: string;
+    totalPenduduk?: number;
+    jumlahKK?: number;
+    luasHa?: number;
+    jumlahRW?: number;
+    jumlahRT?: number;
+    kepalaDukuh?: string;
+    _count?: {
+        fasilitas?: number;
+        umkm?: number;
+        traditions?: number;
+        wisatas?: number;
+    };
+    attributes?: {
+        nama?: string;
+        slug?: string;
+        totalPenduduk?: number;
+        jumlahKK?: number;
+        luasHa?: number;
+        jumlahRW?: number;
+        jumlahRT?: number;
+        kepalaDukuh?: string;
+        _count?: {
+            fasilitas?: number;
+            umkm?: number;
+            traditions?: number;
+            wisatas?: number;
+        };
+    };
+}
 
 function formatNumber(num: number | null): string {
     if (num === null) return "-";
     return new Intl.NumberFormat("id-ID").format(num);
 }
 
+async function fetchPadukuhanList(): Promise<PadukuhanItem[]> {
+    try {
+        const res = await fetch(`${BASE_URL}/api/padukuhan`, {
+            next: { revalidate: 3600 },
+        });
+        if (!res.ok) return [];
+        const json = await res.json();
+        if (!json.success) return [];
+        return (json.data || []).map((item: PadukuhanItem) => {
+            const a = item.attributes || item;
+            return {
+                id: a.id || item.id,
+                nama: a.nama || item.nama || "",
+                slug: a.slug || item.slug || "",
+                totalPenduduk: a.totalPenduduk ?? item.totalPenduduk ?? null,
+                jumlahKK: a.jumlahKK ?? item.jumlahKK ?? null,
+                luasHa: a.luasHa ?? item.luasHa ?? null,
+                jumlahRW: a.jumlahRW ?? item.jumlahRW ?? null,
+                jumlahRT: a.jumlahRT ?? item.jumlahRT ?? null,
+                kepalaDukuh: a.kepalaDukuh ?? item.kepalaDukuh,
+                _count: a._count ?? item._count,
+            };
+        }).sort((a: PadukuhanItem, b: PadukuhanItem) => {
+            return (a.nama || "").localeCompare(b.nama || "");
+        });
+    } catch {
+        return [];
+    }
+}
+
 export default async function ProfilPadukuhanPage() {
-    const padukuhan: any[] = (prisma && prisma.padukuhan) ? await prisma.padukuhan.findMany({
-        orderBy: { nama: "asc" },
-        include: {
-            pertanahan: true,
-            _count: {
-                select: {
-                    fasilitas: true,
-                    umkm: true,
-                    traditions: true,
-                    wisatas: true,
-                },
-            },
-        },
-    }) : [];
+    const padukuhan = await fetchPadukuhanList();
 
     return (
         <div className="min-h-screen bg-linear-to-b from-gray-50 to-white py-8">
@@ -180,7 +232,7 @@ export default async function ProfilPadukuhanPage() {
                                         </div>
 
                                         <div className="pt-2 border-t flex items-center justify-between text-xs text-muted-foreground">
-                                            <span>{padukuhan._count.fasilitas} fasilitas</span>
+                                            <span>{padukuhan._count?.fasilitas || 0} fasilitas</span>
                                             <span className="text-blue-600 font-medium">Detail &rarr;</span>
                                         </div>
                                     </div>

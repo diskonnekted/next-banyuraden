@@ -1,9 +1,38 @@
-import { Building2, Users, Store, Award, Phone, MapPin, Globe, TrendingUp } from "lucide-react";
+import { Building2, Users, Store, Award, Globe, TrendingUp } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { prisma } from "@/lib/prisma";
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+interface BumkalPengurus {
+    id: string;
+    namaLengkap: string;
+    jabatan: string;
+    [key: string]: unknown;
+}
+
+interface BumkalUnitUsaha {
+    id: string;
+    nama: string;
+    deskripsi?: string;
+    [key: string]: unknown;
+}
+
+interface BumkalData {
+    id: string;
+    nama: string;
+    tagline?: string;
+    deskripsi?: string;
+    badanHukum?: string;
+    npwp?: string;
+    nib?: string;
+    dasarHukum?: string;
+    pengurus: BumkalPengurus[];
+    unitUsaha: BumkalUnitUsaha[];
+    [key: string]: unknown;
+}
 
 function getJabatanBadge(jabatan: string) {
     const styles: Record<string, string> = {
@@ -27,13 +56,43 @@ function getJabatanLabel(jabatan: string): string {
     return labels[jabatan] || jabatan;
 }
 
+async function fetchBumkal(): Promise<BumkalData | null> {
+    try {
+        const res = await fetch(`${BASE_URL}/api/bumkal`, {
+            next: { revalidate: 3600 },
+        });
+        if (!res.ok) return null;
+        const json = await res.json();
+        if (!json.success || !json.data) return null;
+        const d = json.data;
+        const item = d.attributes || d;
+        return {
+            id: item.id || "",
+            nama: item.nama || "",
+            tagline: item.tagline,
+            deskripsi: item.deskripsi,
+            badanHukum: item.badanHukum,
+            npwp: item.npwp,
+            nib: item.nib,
+            dasarHukum: item.dasarHukum,
+            pengurus: (item.pengurus || []).map((p: any) => ({
+                id: p.id || "",
+                namaLengkap: p.attributes?.namaLengkap || p.namaLengkap || "",
+                jabatan: p.attributes?.jabatan || p.jabatan || "",
+            })),
+            unitUsaha: (item.unitUsaha || []).map((u: any) => ({
+                id: u.id || "",
+                nama: u.attributes?.nama || u.nama || "",
+                deskripsi: u.attributes?.deskripsi || u.deskripsi,
+            })),
+        };
+    } catch {
+        return null;
+    }
+}
+
 export default async function BumkalPage() {
-    const bumkal: any = (prisma && prisma.bumkal) ? await prisma.bumkal.findFirst({
-        include: {
-            pengurus: { orderBy: { id: "asc" } },
-            unitUsaha: true,
-        },
-    }) : null;
+    const bumkal = await fetchBumkal();
 
     if (!bumkal) {
         return (
@@ -155,7 +214,7 @@ export default async function BumkalPage() {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {bumkal.pengurus.map((p: any, index: number) => (
+                                    {bumkal.pengurus.map((p, index: number) => (
                                         <TableRow key={p.id}>
                                             <TableCell className="font-medium">{index + 1}</TableCell>
                                             <TableCell className="font-medium">{p.namaLengkap}</TableCell>
@@ -187,7 +246,7 @@ export default async function BumkalPage() {
                             </div>
                         ) : (
                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {bumkal.unitUsaha.map((unit: any) => (
+                                {bumkal.unitUsaha.map((unit) => (
                                     <Card key={unit.id}>
                                         <CardHeader className="pb-2">
                                             <CardTitle className="text-base">{unit.nama}</CardTitle>

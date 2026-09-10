@@ -2,7 +2,40 @@ import { Map, Building2, Landmark } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { prisma } from "@/lib/prisma";
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+interface PertanahanItem {
+    id: number | string;
+    nama?: string;
+    totalBidang?: number;
+    bersertifikat?: number;
+    persenSertifikat?: number;
+    bukanHakMilik?: number;
+    persentaseBHM?: number;
+    tanahSultan?: string;
+    tanahPalungguh?: string;
+    tanahWakaf?: string;
+    tanahPutih?: string;
+    tanahKasDesa?: string;
+    catatan?: string;
+    padukuhan?: { nama?: string; slug?: string };
+    attributes?: {
+        nama?: string;
+        totalBidang?: number;
+        bersertifikat?: number;
+        persenSertifikat?: number;
+        bukanHakMilik?: number;
+        persentaseBHM?: number;
+        tanahSultan?: string;
+        tanahPalungguh?: string;
+        tanahWakaf?: string;
+        tanahPutih?: string;
+        tanahKasDesa?: string;
+        catatan?: string;
+        padukuhan?: { nama?: string; slug?: string };
+    };
+}
 
 function formatNumber(num: number | null): string {
     if (num === null) return "-";
@@ -14,13 +47,44 @@ function formatPercent(num: number | null): string {
     return `${num.toFixed(1)}%`;
 }
 
+async function fetchPertanahan(): Promise<PertanahanItem[]> {
+    try {
+        const res = await fetch(`${BASE_URL}/api/pertanahan`, {
+            next: { revalidate: 3600 },
+        });
+        if (!res.ok) return [];
+        const json = await res.json();
+        if (!json.success) return [];
+        return (json.data || []).map((item: PertanahanItem) => {
+            const a = item.attributes || item;
+            return {
+                id: a.id || item.id,
+                nama: a.nama || item.nama,
+                totalBidang: a.totalBidang ?? item.totalBidang ?? null,
+                bersertifikat: a.bersertifikat ?? item.bersertifikat ?? null,
+                persenSertifikat: a.persenSertifikat ?? item.persenSertifikat ?? null,
+                bukanHakMilik: a.bukanHakMilik ?? item.bukanHakMilik ?? null,
+                persentaseBHM: a.persentaseBHM ?? item.persentaseBHM ?? null,
+                tanahSultan: a.tanahSultan ?? item.tanahSultan,
+                tanahPalungguh: a.tanahPalungguh ?? item.tanahPalungguh,
+                tanahWakaf: a.tanahWakaf ?? item.tanahWakaf,
+                tanahPutih: a.tanahPutih ?? item.tanahPutih,
+                tanahKasDesa: a.tanahKasDesa ?? item.tanahKasDesa,
+                catatan: a.catatan ?? item.catatan,
+                padukuhan: a.padukuhan ?? item.padukuhan,
+            };
+        }).sort((a: PertanahanItem, b: PertanahanItem) => {
+            const namaA = a.padukuhan?.nama || a.nama || "";
+            const namaB = b.padukuhan?.nama || b.nama || "";
+            return namaA.localeCompare(namaB);
+        });
+    } catch {
+        return [];
+    }
+}
+
 export default async function PertanahanPage() {
-    const pertanahan: any[] = (prisma && prisma.pertanahan) ? await prisma.pertanahan.findMany({
-        include: {
-            padukuhan: { select: { nama: true, slug: true } },
-        },
-        orderBy: { padukuhan: { nama: "asc" } },
-    }) : [];
+    const pertanahan = await fetchPertanahan();
 
     // Calculate totals
     const totalBidang = pertanahan.reduce((sum, p) => sum + (p.totalBidang || 0), 0);
@@ -106,7 +170,7 @@ export default async function PertanahanPage() {
                                 <TableBody>
                                     {pertanahan.map((p) => (
                                         <TableRow key={p.id}>
-                                            <TableCell className="font-medium">{p.padukuhan.nama}</TableCell>
+                                            <TableCell className="font-medium">{p.padukuhan?.nama || p.nama}</TableCell>
                                             <TableCell className="text-right">
                                                 {formatNumber(p.totalBidang)}
                                             </TableCell>
@@ -157,7 +221,7 @@ export default async function PertanahanPage() {
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
                                     <Map className="h-5 w-5 text-emerald-600" />
-                                    {p.padukuhan.nama}
+                                    {p.padukuhan?.nama || p.nama}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>

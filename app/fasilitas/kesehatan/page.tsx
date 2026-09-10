@@ -2,7 +2,16 @@ import { Heart, MapPin, Phone, Clock } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { prisma } from "@/lib/prisma";
+
+interface FasilitasItem {
+    attributes?: Record<string, unknown>;
+    jenis?: string;
+    nama?: string;
+    alamat?: string;
+    telepon?: string;
+    jamOperasi?: string;
+    padukuhan?: { nama?: string };
+}
 
 function getJenisBadge(jenis: string) {
     const styles: Record<string, string> = {
@@ -22,21 +31,27 @@ function getJenisLabel(jenis: string): string {
     return labels[jenis] || jenis;
 }
 
+function normalizeJenis(item: FasilitasItem): string {
+    return (item.attributes?.jenis as string) || item.jenis || "";
+}
+
+async function fetchFasilitasKesehatan(): Promise<FasilitasItem[]> {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000"}/api/fasilitas`,
+        { next: { revalidate: 3600 } }
+    );
+    if (!res.ok) return [];
+    const json = await res.json();
+    return (json.data || []).filter((f: FasilitasItem) =>
+        ["KLINIK", "PRATIKA_DOKTER", "POSYANDU"].includes(normalizeJenis(f))
+    );
+}
+
 export default async function KesehatanPage() {
-    const fasilitas: any[] = (prisma && prisma.fasilitasPadukuhan) ? await prisma.fasilitasPadukuhan.findMany({
-        where: {
-            jenis: {
-                in: ["KLINIK", "PRATIKA_DOKTER", "POSYANDU"],
-            },
-        },
-        include: {
-            padukuhan: { select: { nama: true, slug: true } },
-        },
-        orderBy: { nama: "asc" },
-    }) : [];
+    const fasilitas = await fetchFasilitasKesehatan();
 
     // Group by padukuhan
-    const grouped = fasilitas.reduce<Record<string, typeof fasilitas>>((acc, f) => {
+    const grouped = fasilitas.reduce<Record<string, FasilitasItem[]>>((acc, f) => {
         const key = f.padukuhan?.nama || "Tanpa Padukuhan";
         if (!acc[key]) acc[key] = [];
         acc[key].push(f);
@@ -70,7 +85,7 @@ export default async function KesehatanPage() {
                         <CardContent className="p-4 text-center">
                             <Heart className="h-8 w-8 text-green-600 mx-auto mb-2" />
                             <div className="text-3xl font-bold text-green-900">
-                                {fasilitas.filter((f) => f.jenis === "POSYANDU").length}
+                                {fasilitas.filter((f) => normalizeJenis(f) === "POSYANDU").length}
                             </div>
                             <p className="text-xs text-green-700">Posyandu</p>
                         </CardContent>
@@ -79,7 +94,7 @@ export default async function KesehatanPage() {
                         <CardContent className="p-4 text-center">
                             <Heart className="h-8 w-8 text-blue-600 mx-auto mb-2" />
                             <div className="text-3xl font-bold text-blue-900">
-                                {fasilitas.filter((f) => f.jenis === "KLINIK").length}
+                                {fasilitas.filter((f) => normalizeJenis(f) === "KLINIK").length}
                             </div>
                             <p className="text-xs text-blue-700">Klinik</p>
                         </CardContent>
@@ -88,7 +103,7 @@ export default async function KesehatanPage() {
                         <CardContent className="p-4 text-center">
                             <Heart className="h-8 w-8 text-violet-600 mx-auto mb-2" />
                             <div className="text-3xl font-bold text-violet-900">
-                                {fasilitas.filter((f) => f.jenis === "PRATIKA_DOKTER").length}
+                                {fasilitas.filter((f) => normalizeJenis(f) === "PRATIKA_DOKTER").length}
                             </div>
                             <p className="text-xs text-violet-700">Praktek Dokter</p>
                         </CardContent>

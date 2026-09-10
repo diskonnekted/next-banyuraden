@@ -2,19 +2,38 @@ import Link from "next/link";
 import { Building2, School, Heart, Landmark, MapPin } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { prisma } from "@/lib/prisma";
+
+interface FasilitasItem {
+    attributes?: Record<string, unknown>;
+    jenis?: string;
+    nama?: string;
+    alamat?: string;
+    telepon?: string;
+    padukuhan?: { nama?: string };
+}
+
+function normalizeJenis(item: FasilitasItem): string {
+    return (item.attributes?.jenis as string) || item.jenis || "";
+}
+
+async function fetchFasilitasList(): Promise<FasilitasItem[]> {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000"}/api/fasilitas`,
+        { next: { revalidate: 3600 } }
+    );
+    if (!res.ok) return [];
+    const json = await res.json();
+    return json.data || [];
+}
 
 export default async function FasilitasPage() {
-    const fasilitasList: any[] = (prisma && prisma.fasilitasPadukuhan) ? await prisma.fasilitasPadukuhan.findMany({
-        include: {
-            padukuhan: { select: { nama: true } },
-        },
-    }) : [];
+    const fasilitasList = await fetchFasilitasList();
 
     // Group by jenis
-    const grouped = fasilitasList.reduce<Record<string, typeof fasilitasList>>((acc, f) => {
-        if (!acc[f.jenis]) acc[f.jenis] = [];
-        acc[f.jenis].push(f);
+    const grouped = fasilitasList.reduce<Record<string, FasilitasItem[]>>((acc, f) => {
+        const jenis = normalizeJenis(f);
+        if (!acc[jenis]) acc[jenis] = [];
+        acc[jenis].push(f);
         return acc;
     }, {});
 

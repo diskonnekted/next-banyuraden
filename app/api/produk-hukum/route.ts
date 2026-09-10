@@ -1,20 +1,28 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { fetchOpenSIDProdukHukum, createApiRouteHandler, unwrapOpenSIDResponse } from "@/lib/api-helpers";
 
-export async function GET(request: Request) {
+export const { GET } = createApiRouteHandler(async (request: Request) => {
     try {
         const { searchParams } = new URL(request.url);
         const jenis = searchParams.get("jenis");
 
-        const where: { jenis?: string } = {};
+        const response = await fetchOpenSIDProdukHukum();
+        let data = unwrapOpenSIDResponse(response);
+
+        // Filter by jenis if specified
         if (jenis) {
-            where.jenis = jenis;
+            data = data.filter((item) => {
+                const itemJenis = item.attributes?.jenis || item.jenis;
+                return itemJenis === jenis;
+            });
         }
 
-        const data: any[] = (prisma && prisma.produkHukum) ? await prisma.produkHukum.findMany({
-            where,
-            orderBy: { tahun: "desc" },
-        }) : [];
+        // Sort by tahun descending
+        data = data.sort((a, b) => {
+            const tahunA = a.attributes?.tahun ?? a.tahun ?? 0;
+            const tahunB = b.attributes?.tahun ?? b.tahun ?? 0;
+            return tahunB - tahunA;
+        });
 
         return NextResponse.json({ success: true, data });
     } catch (error) {
@@ -23,4 +31,4 @@ export async function GET(request: Request) {
             { status: 500 }
         );
     }
-}
+});

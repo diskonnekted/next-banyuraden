@@ -1,11 +1,17 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { fetchOpenSIDISejarahLurah, createApiRouteHandler, unwrapOpenSIDResponse } from "@/lib/api-helpers";
 
-export async function GET(request: Request) {
+export const { GET } = createApiRouteHandler(async () => {
     try {
-        const data: any[] = (prisma && prisma.sejarahLurah) ? await prisma.sejarahLurah.findMany({
-            orderBy: { urutan: "asc" },
-        }) : [];
+        const response = await fetchOpenSIDISejarahLurah();
+        const data = unwrapOpenSIDResponse(response);
+
+        // Sort by urutan
+        data.sort((a: any, b: any) => {
+            const urutanA = a.attributes?.urutan ?? a.urutan ?? 0;
+            const urutanB = b.attributes?.urutan ?? b.urutan ?? 0;
+            return urutanA - urutanB;
+        });
 
         return NextResponse.json({ success: true, data });
     } catch (error) {
@@ -14,4 +20,4 @@ export async function GET(request: Request) {
             { status: 500 }
         );
     }
-}
+});

@@ -3,17 +3,99 @@ import { Store, Landmark, Sprout } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { prisma } from "@/lib/prisma";
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+interface ApiUkmResponse {
+    success: boolean;
+    data: UmkmItem[];
+}
+
+interface UmkmItem {
+    id: number | string;
+    attributes?: {
+        nama?: string;
+        aktif?: boolean;
+        [key: string]: unknown;
+    };
+    [key: string]: unknown;
+}
+
+interface ApiTradisiResponse {
+    success: boolean;
+    data: TradisiItem[];
+}
+
+interface TradisiItem {
+    id: number | string;
+    attributes?: {
+        jenis?: string;
+        aktif?: boolean;
+        [key: string]: unknown;
+    };
+    [key: string]: unknown;
+}
+
+async function fetchUmkmCount(): Promise<number> {
+    try {
+        const res = await fetch(`${BASE_URL}/api/umkm`, {
+            next: { revalidate: 3600 },
+        });
+        if (!res.ok) return 0;
+        const json: ApiUkmResponse = await res.json();
+        if (!json.success) return 0;
+        return json.data.filter((u: UmkmItem) => {
+            const aktif = u.attributes?.aktif ?? u.aktif;
+            return aktif !== false && aktif !== "false";
+        }).length;
+    } catch {
+        return 0;
+    }
+}
+
+async function fetchTradisiCount(): Promise<number> {
+    try {
+        const res = await fetch(`${BASE_URL}/api/tradisi`, {
+            next: { revalidate: 3600 },
+        });
+        if (!res.ok) return 0;
+        const json: ApiTradisiResponse = await res.json();
+        if (!json.success) return 0;
+        return json.data.filter((t: TradisiItem) => {
+            const attrs = t.attributes || t;
+            const jenis = typeof attrs.jenis === "string" ? attrs.jenis : "";
+            const aktif = (attrs.aktif ?? true) !== false;
+            return aktif && ["TRADISI", "SENI"].includes(jenis);
+        }).length;
+    } catch {
+        return 0;
+    }
+}
+
+async function fetchCagarBudayaCount(): Promise<number> {
+    try {
+        const res = await fetch(`${BASE_URL}/api/tradisi`, {
+            next: { revalidate: 3600 },
+        });
+        if (!res.ok) return 0;
+        const json: ApiTradisiResponse = await res.json();
+        if (!json.success) return 0;
+        return json.data.filter((t: TradisiItem) => {
+            const attrs = t.attributes || t;
+            const jenis = typeof attrs.jenis === "string" ? attrs.jenis : "";
+            const aktif = (attrs.aktif ?? true) !== false;
+            return aktif && jenis === "CAGAR_BUDAYA";
+        }).length;
+    } catch {
+        return 0;
+    }
+}
 
 export default async function PotensiDesaPage() {
     const [umkmCount, tradisiCount, cagarBudayaCount] = await Promise.all([
-        (prisma && prisma.uMKM) ? prisma.uMKM.count({ where: { aktif: true } }) : 0,
-        (prisma && prisma.tradisiBudaya) ? prisma.tradisiBudaya.count({
-            where: { aktif: true, jenis: { in: ["TRADISI", "SENI"] } },
-        }) : 0,
-        (prisma && prisma.tradisiBudaya) ? prisma.tradisiBudaya.count({
-            where: { aktif: true, jenis: "CAGAR_BUDAYA" },
-        }) : 0,
+        fetchUmkmCount(),
+        fetchTradisiCount(),
+        fetchCagarBudayaCount(),
     ]);
 
     return (

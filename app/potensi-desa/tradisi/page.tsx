@@ -2,7 +2,26 @@ import { Landmark, MapPin, Calendar } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { prisma } from "@/lib/prisma";
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+interface TradisiItem {
+    id: number | string;
+    nama?: string;
+    jenis?: string;
+    deskripsi?: string;
+    waktu?: string;
+    aktif?: boolean;
+    padukuhan?: { nama?: string; slug?: string };
+    attributes?: {
+        nama?: string;
+        jenis?: string;
+        deskripsi?: string;
+        waktu?: string;
+        aktif?: boolean;
+        padukuhan?: { nama?: string; slug?: string };
+    };
+}
 
 function getJenisBadge(jenis: string) {
     const styles: Record<string, string> = {
@@ -26,20 +45,45 @@ function getJenisLabel(jenis: string): string {
     return labels[jenis] || jenis;
 }
 
+async function fetchTradisi(): Promise<TradisiItem[]> {
+    try {
+        const res = await fetch(`${BASE_URL}/api/tradisi`, {
+            next: { revalidate: 3600 },
+        });
+        if (!res.ok) return [];
+        const json = await res.json();
+        if (!json.success) return [];
+        const JENIS_TRADISI = ["TRADISI", "SENI"];
+        return (json.data || [])
+            .filter((item: TradisiItem) => {
+                const jenis = item.attributes?.jenis || item.jenis || "";
+                const aktif = item.attributes?.aktif ?? item.aktif;
+                return JENIS_TRADISI.includes(jenis) && aktif !== false;
+            })
+            .map((item: TradisiItem) => {
+                const a = item.attributes || item;
+                return {
+                    id: a.id || item.id,
+                    nama: a.nama || item.nama || "",
+                    jenis: a.jenis || item.jenis || "",
+                    deskripsi: a.deskripsi || item.deskripsi,
+                    waktu: a.waktu || item.waktu,
+                    padukuhan: a.padukuhan ?? item.padukuhan,
+                };
+            })
+            .sort((a: TradisiItem, b: TradisiItem) => {
+                return (a.nama || "").localeCompare(b.nama || "");
+            });
+    } catch {
+        return [];
+    }
+}
+
 export default async function TradisiPage() {
-    const traditions: any[] = (prisma && prisma.tradisiBudaya) ? await prisma.tradisiBudaya.findMany({
-        where: {
-            aktif: true,
-            jenis: { in: ["TRADISI", "SENI"] },
-        },
-        include: {
-            padukuhan: { select: { nama: true, slug: true } },
-        },
-        orderBy: { nama: "asc" },
-    }) : [];
+    const traditions = await fetchTradisi();
 
     // Group by padukuhan
-    const grouped = traditions.reduce<Record<string, typeof traditions>>((acc, t) => {
+    const grouped = traditions.reduce<Record<string, TradisiItem[]>>((acc, t) => {
         const key = t.padukuhan?.nama || "Tanpa Padukuhan";
         if (!acc[key]) acc[key] = [];
         acc[key].push(t);

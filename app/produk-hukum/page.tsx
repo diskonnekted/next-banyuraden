@@ -1,10 +1,31 @@
-import { FileText, FileDown, Filter, Download } from "lucide-react";
+import { FileText, FileDown, Download } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { prisma } from "@/lib/prisma";
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+interface ProdukHukumItem {
+    id: number | string;
+    attributes?: {
+        jenis?: string;
+        tahun?: number;
+        nomor?: string;
+        tanggal?: string | Date;
+        judul?: string;
+        deskripsi?: string;
+        fileUrl?: string;
+    };
+    jenis?: string;
+    tahun?: number;
+    nomor?: string;
+    tanggal?: string | Date | null | undefined;
+    judul?: string;
+    deskripsi?: string;
+    fileUrl?: string;
+}
 
 function getJenisBadge(jenis: string) {
     const styles: Record<string, string> = {
@@ -16,28 +37,47 @@ function getJenisBadge(jenis: string) {
     return styles[jenis] || "bg-gray-100 text-gray-800 border-gray-200";
 }
 
-function formatTanggal(date: Date | null | undefined): string {
+function formatTanggal(date: Date | string | null | undefined): string {
     if (!date) return "-";
     return new Intl.DateTimeFormat("id-ID", {
         day: "numeric",
         month: "long",
         year: "numeric",
-    }).format(date);
+    }).format(new Date(date));
+}
+
+async function fetchProdukHukum(): Promise<ProdukHukumItem[]> {
+    try {
+        const res = await fetch(`${BASE_URL}/api/produk-hukum`, {
+            next: { revalidate: 3600 },
+        });
+        if (!res.ok) return [];
+        const json = await res.json();
+        if (!json.success) return [];
+        return (json.data || []).map((item: ProdukHukumItem) => ({
+            id: item.id,
+            jenis: item.attributes?.jenis || item.jenis || "",
+            tahun: item.attributes?.tahun ?? item.tahun ?? 0,
+            nomor: item.attributes?.nomor || item.nomor || "",
+            tanggal: item.attributes?.tanggal || item.tanggal,
+            judul: item.attributes?.judul || item.judul || "",
+            deskripsi: item.attributes?.deskripsi || item.deskripsi,
+            fileUrl: item.attributes?.fileUrl || item.fileUrl,
+        }));
+    } catch {
+        return [];
+    }
 }
 
 export default async function ProdukHukumPage() {
-    const produkHukum: any[] = (prisma && prisma.produkHukum) ? await prisma.produkHukum.findMany({
-        orderBy: [
-            { jenis: "asc" },
-            { tahun: "desc" },
-        ],
-    }) : [];
+    const produkHukum = await fetchProdukHukum();
 
-    const jenisGroups = produkHukum.reduce<Record<string, typeof produkHukum>>((acc, p) => {
-        if (!acc[p.jenis]) acc[p.jenis] = [];
-        acc[p.jenis].push(p);
+    const jenisGroups = produkHukum.reduce<Record<string, ProdukHukumItem[]>>((acc, p) => {
+        const key = p.jenis || "";
+        if (!acc[key]) acc[key] = [];
+        acc[key].push(p);
         return acc;
-    }, {});
+    }, {} as Record<string, ProdukHukumItem[]>);
 
     const jenisLabels: Record<string, string> = {
         PERKAL: "Peraturan Kepala Kalurahan (Perkal)",
@@ -133,7 +173,7 @@ export default async function ProdukHukumPage() {
                                             <TableCell className="font-medium">{index + 1}</TableCell>
                                             <TableCell>
                                                 <div className="text-sm">
-                                                    <div className="font-medium">{ph.nomor}</div>
+                                                    <div className="font-medium">{String(ph.nomor)}</div>
                                                     <div className="text-muted-foreground">
                                                         {formatTanggal(ph.tanggal)}
                                                     </div>
@@ -141,10 +181,10 @@ export default async function ProdukHukumPage() {
                                             </TableCell>
                                             <TableCell>
                                                 <div className="max-w-md">
-                                                    <div className="font-medium text-sm">{ph.judul}</div>
+                                                    <div className="font-medium text-sm">{String(ph.judul)}</div>
                                                     {ph.deskripsi && (
                                                         <p className="text-xs text-muted-foreground line-clamp-2 mt-1">
-                                                            {ph.deskripsi}
+                                                            {String(ph.deskripsi)}
                                                         </p>
                                                     )}
                                                 </div>
@@ -152,7 +192,7 @@ export default async function ProdukHukumPage() {
                                             <TableCell className="text-right">
                                                 {ph.fileUrl ? (
                                                     <Button variant="outline" size="sm" asChild>
-                                                        <a href={ph.fileUrl} target="_blank" rel="noopener noreferrer">
+                                                        <a href={String(ph.fileUrl)} target="_blank" rel="noopener noreferrer">
                                                             <Download className="h-3 w-3 mr-1" />
                                                             Unduh
                                                         </a>

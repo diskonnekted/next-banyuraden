@@ -1,15 +1,10 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { fetchOpenSIDBumkal, createApiRouteHandler, unwrapOpenSIDResponse } from "@/lib/api-helpers";
 
-export async function GET(request: Request) {
+export const { GET } = createApiRouteHandler(async () => {
     try {
-        const data: any[] = (prisma && prisma.bumkal) ? await prisma.bumkal.findMany({
-            include: {
-                pengurus: true,
-                unitUsaha: true,
-            },
-            orderBy: { nama: "asc" },
-        }) : [];
+        const response = await fetchOpenSIDBumkal();
+        const data = unwrapOpenSIDResponse(response);
 
         return NextResponse.json({ success: true, data });
     } catch (error) {
@@ -18,4 +13,4 @@ export async function GET(request: Request) {
             { status: 500 }
         );
     }
-}
+});

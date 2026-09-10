@@ -1,27 +1,38 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { fetchOpenSIDWisata, createApiRouteHandler, unwrapOpenSIDResponse } from "@/lib/api-helpers";
 
-export async function GET(request: Request) {
+export const { GET } = createApiRouteHandler(async (request: Request) => {
     try {
         const { searchParams } = new URL(request.url);
         const padukuhanId = searchParams.get("padukuhanId");
         const jenis = searchParams.get("jenis");
 
-        const where: { padukuhanId?: number; jenis?: string } = {};
-        if (padukuhanId) {
-            where.padukuhanId = parseInt(padukuhanId, 10);
-        }
+        const response = await fetchOpenSIDWisata();
+        let data = unwrapOpenSIDResponse(response);
+
+        // Filter by jenis if specified
         if (jenis) {
-            where.jenis = jenis;
+            data = data.filter((item) => {
+                const itemJenis = item.attributes?.jenis || item.jenis;
+                return itemJenis === jenis;
+            });
         }
 
-        const data: any[] = (prisma && prisma.wisata) ? await prisma.wisata.findMany({
-            where,
-            include: {
-                padukuhan: true,
-            },
-            orderBy: { nama: "asc" },
-        }) : [];
+        // Filter by padukuhanId if specified
+        if (padukuhanId) {
+            const padukuhanIdNum = parseInt(padukuhanId, 10);
+            data = data.filter((item) => {
+                const itemPadukuhanId = item.attributes?.padukuhan_id || item.padukuhanId;
+                return itemPadukuhanId === padukuhanIdNum;
+            });
+        }
+
+        // Sort by nama
+        data = data.sort((a, b) => {
+            const namaA = a.attributes?.nama || a.nama || "";
+            const namaB = b.attributes?.nama || b.nama || "";
+            return namaA.localeCompare(namaB);
+        });
 
         return NextResponse.json({ success: true, data });
     } catch (error) {
@@ -30,4 +41,4 @@ export async function GET(request: Request) {
             { status: 500 }
         );
     }
-}
+});

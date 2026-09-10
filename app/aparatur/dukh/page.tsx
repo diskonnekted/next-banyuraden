@@ -4,7 +4,30 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { prisma } from "@/lib/prisma";
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+interface AparaturItem {
+    id: number | string;
+    namaLengkap?: string;
+    gelar?: string;
+    telepon?: string;
+    email?: string;
+    pendidikan?: string;
+    foto?: string;
+    aktif?: boolean;
+    urutan?: number;
+    attributes?: {
+        namaLengkap?: string;
+        gelar?: string;
+        telepon?: string;
+        email?: string;
+        pendidikan?: string;
+        foto?: string;
+        aktif?: boolean;
+        urutan?: number;
+    };
+}
 
 function getInitials(name: string): string {
     return name
@@ -16,18 +39,36 @@ function getInitials(name: string): string {
         .slice(0, 2);
 }
 
-export default async function DukuPage() {
-    let dukuhList: any[] = [];
+async function fetchDukuhs(): Promise<AparaturItem[]> {
     try {
-        dukuhList = (prisma && prisma.aparaturPamong) ? await prisma.aparaturPamong.findMany({
-            where: {
-                kelompok: "DUKUH",
-                aktif: true,
-            },
-            orderBy: { urutan: "asc" },
-        }) : [];
+        const res = await fetch(`${BASE_URL}/api/aparatur?kelompok=DUKUH`, {
+            next: { revalidate: 3600 },
+        });
+        if (!res.ok) return [];
+        const json = await res.json();
+        if (!json.success) return [];
+        return (json.data || []).map((item: AparaturItem) => ({
+            id: item.id,
+            namaLengkap: item.attributes?.namaLengkap || item.namaLengkap || "",
+            gelar: item.attributes?.gelar || item.gelar,
+            telepon: item.attributes?.telepon || item.telepon,
+            email: item.attributes?.email || item.email,
+            pendidikan: item.attributes?.pendidikan || item.pendidikan,
+            foto: item.attributes?.foto || item.foto,
+            aktif: item.attributes?.aktif ?? item.aktif !== false,
+            urutan: item.attributes?.urutan ?? item.urutan ?? 0,
+        }));
+    } catch {
+        return [];
+    }
+}
+
+export default async function DukuPage() {
+    let dukuhList: AparaturItem[] = [];
+    try {
+        dukuhList = await fetchDukuhs();
     } catch (e) {
-        console.error("Database connection failed during build, using empty array for DukuPage:", e);
+        console.error("Failed to fetch DUKUH data:", e);
     }
 
     return (
@@ -119,11 +160,11 @@ export default async function DukuPage() {
                                             <TableCell>
                                                 <Avatar className="h-10 w-10">
                                                     <AvatarImage
-                                                        src={dukuh.foto || undefined}
+                                                        src={dukuh.foto as string || undefined}
                                                         alt={dukuh.namaLengkap}
                                                     />
                                                     <AvatarFallback className="bg-emerald-600 text-white text-xs">
-                                                        {getInitials(dukuh.namaLengkap)}
+                                                        {getInitials(dukuh.namaLengkap || "")}
                                                     </AvatarFallback>
                                                 </Avatar>
                                             </TableCell>

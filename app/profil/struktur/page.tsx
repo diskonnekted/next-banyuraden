@@ -5,9 +5,46 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-export default function StrukturPage() {
-    // Real Lurah data
-    const lurah = {
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+interface AparaturItem {
+    id: number | string;
+    attributes?: {
+        namaLengkap?: string;
+        jabatan?: string;
+        [key: string]: unknown;
+    };
+    [key: string]: unknown;
+}
+
+async function fetchLurah(): Promise<{ nama: string; jabatan: string; periode: string; foto: string } | null> {
+    try {
+        const res = await fetch(`${BASE_URL}/api/aparatur`, {
+            next: { revalidate: 3600 },
+        });
+        if (!res.ok) return null;
+        const json = await res.json();
+        if (!json.success) return null;
+        const items: AparaturItem[] = json.data || [];
+        const lurahItem = items.find((item: AparaturItem) => {
+            const jabatan = item.attributes?.jabatan || item.jabatan || "";
+            return jabatan === "LURAH";
+        });
+        if (!lurahItem) return null;
+        const attrs: AparaturItem["attributes"] | AparaturItem = lurahItem.attributes || lurahItem;
+        return {
+            nama: String(attrs.namaLengkap || ""),
+            jabatan: String(attrs.jabatan || "Lurah/Kepala Kalurahan"),
+            periode: String(attrs.periode || "2021-2028"),
+            foto: String(attrs.foto || "/sudarisman.jpg"),
+        };
+    } catch {
+        return null;
+    }
+}
+
+export default async function StrukturPage() {
+    const lurah = await fetchLurah() || {
         nama: "Sudarisman, S.T.",
         jabatan: "Lurah/Kepala Kalurahan",
         periode: "2021-2028",

@@ -2,7 +2,24 @@ import { Landmark, MapPin, Phone } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { prisma } from "@/lib/prisma";
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+interface FasilitasItem {
+    id: number | string;
+    nama?: string;
+    alamat?: string;
+    telepon?: string;
+    jenis?: string;
+    padukuhan?: { nama?: string; slug?: string };
+    attributes?: {
+        nama?: string;
+        alamat?: string;
+        telepon?: string;
+        jenis?: string;
+        padukuhan?: { nama?: string; slug?: string };
+    };
+}
 
 function getJenisBadge(jenis: string) {
     const styles: Record<string, string> = {
@@ -22,21 +39,41 @@ function getJenisLabel(jenis: string): string {
     return labels[jenis] || jenis;
 }
 
+async function fetchIbadahFasilitas(): Promise<FasilitasItem[]> {
+    const JENIS_IBADAH = ["MASJID", "MUSHOLA", "GEREJA"];
+    try {
+        const res = await fetch(`${BASE_URL}/api/fasilitas`, {
+            next: { revalidate: 3600 },
+        });
+        if (!res.ok) return [];
+        const json = await res.json();
+        if (!json.success) return [];
+        return (json.data || [])
+            .filter((item: FasilitasItem) => {
+                const jenis = item.attributes?.jenis || item.jenis || "";
+                return JENIS_IBADAH.includes(jenis);
+            })
+            .map((item: FasilitasItem) => ({
+                id: item.id,
+                nama: item.attributes?.nama || item.nama || "",
+                alamat: item.attributes?.alamat || item.alamat,
+                telepon: item.attributes?.telepon || item.telepon,
+                jenis: item.attributes?.jenis || item.jenis || "",
+                padukuhan: item.attributes?.padukuhan || item.padukuhan,
+            }))
+            .sort((a: FasilitasItem, b: FasilitasItem) => {
+                return (a.nama || "").localeCompare(b.nama || "");
+            });
+    } catch {
+        return [];
+    }
+}
+
 export default async function IbadahPage() {
-    const fasilitas: any[] = (prisma && prisma.fasilitasPadukuhan) ? await prisma.fasilitasPadukuhan.findMany({
-        where: {
-            jenis: {
-                in: ["MASJID", "MUSHOLA", "GEREJA"],
-            },
-        },
-        include: {
-            padukuhan: { select: { nama: true, slug: true } },
-        },
-        orderBy: { nama: "asc" },
-    }) : [];
+    const fasilitas = await fetchIbadahFasilitas();
 
     // Group by padukuhan
-    const grouped = fasilitas.reduce<Record<string, typeof fasilitas>>((acc, f) => {
+    const grouped = fasilitas.reduce<Record<string, FasilitasItem[]>>((acc, f) => {
         const key = f.padukuhan?.nama || "Tanpa Padukuhan";
         if (!acc[key]) acc[key] = [];
         acc[key].push(f);

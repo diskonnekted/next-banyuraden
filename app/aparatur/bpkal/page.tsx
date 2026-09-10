@@ -3,7 +3,30 @@ import { Users, Building2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { prisma } from "@/lib/prisma";
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+interface AparaturItem {
+    id: number | string;
+    namaLengkap?: string;
+    gelar?: string;
+    telepon?: string;
+    email?: string;
+    pendidikan?: string;
+    foto?: string;
+    aktif?: boolean;
+    urutan?: number;
+    attributes?: {
+        namaLengkap?: string;
+        gelar?: string;
+        telepon?: string;
+        email?: string;
+        pendidikan?: string;
+        foto?: string;
+        aktif?: boolean;
+        urutan?: number;
+    };
+}
 
 function getInitials(name: string): string {
     return name
@@ -15,16 +38,32 @@ function getInitials(name: string): string {
         .slice(0, 2);
 }
 
+async function fetchBpkalMembers(): Promise<AparaturItem[]> {
+    try {
+        const res = await fetch(`${BASE_URL}/api/aparatur?kelompok=BPKAL`, {
+            next: { revalidate: 3600 },
+        });
+        if (!res.ok) return [];
+        const json = await res.json();
+        if (!json.success) return [];
+        return (json.data || []).map((item: AparaturItem) => ({
+            id: item.id,
+            namaLengkap: item.attributes?.namaLengkap || item.namaLengkap || "",
+            gelar: item.attributes?.gelar || item.gelar,
+            telepon: item.attributes?.telepon || item.telepon,
+            email: item.attributes?.email || item.email,
+            pendidikan: item.attributes?.pendidikan || item.pendidikan,
+            foto: item.attributes?.foto || item.foto,
+            aktif: item.attributes?.aktif ?? item.aktif !== false,
+            urutan: item.attributes?.urutan ?? item.urutan ?? 0,
+        }));
+    } catch {
+        return [];
+    }
+}
+
 export default async function BpkalPage() {
-    const bpkalMembers: any[] = (prisma && prisma.aparaturPamong)
-        ? await prisma.aparaturPamong.findMany({
-            where: {
-                kelompok: "BPKAL",
-                aktif: true,
-            },
-            orderBy: { urutan: "asc" },
-        })
-        : [];
+    const bpkalMembers = await fetchBpkalMembers();
 
     return (
         <div className="min-h-screen bg-linear-to-b from-gray-50 to-white py-8">
@@ -74,11 +113,11 @@ export default async function BpkalPage() {
                                     <div className="flex flex-col items-center text-center -mt-12">
                                         <Avatar className="h-24 w-24 ring-4 ring-offset-4 ring-white">
                                             <AvatarImage
-                                                src={member.foto || undefined}
+                                                src={member.foto as string || undefined}
                                                 alt={member.namaLengkap}
                                             />
                                             <AvatarFallback className="bg-violet-600 text-white text-lg">
-                                                {getInitials(member.namaLengkap)}
+                                                {getInitials(member.namaLengkap || "")}
                                             </AvatarFallback>
                                         </Avatar>
 

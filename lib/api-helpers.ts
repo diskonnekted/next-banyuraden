@@ -55,6 +55,17 @@ export async function fetchOpenSIDStatistik(endpoint: string, config?: { cacheTa
 }
 
 /**
+ * Unwrap OpenSID API response - extracts data array from response
+ * Returns empty array on failure
+ */
+export function unwrapOpenSIDResponse(response: { success: boolean; data?: unknown }): any[] {
+    if (!response.success || !response.data) return [];
+    // Handle JSON:API format { data: [...], meta: {...}, links: {...} }
+    const raw = response.data as { data?: unknown[] };
+    return raw.data ?? [];
+}
+
+/**
  * OpenSID statistik by ID helper (for statistik/{id} endpoints)
  */
 export async function fetchOpenSIDStatistikById(
@@ -386,4 +397,169 @@ export function filterBySearch<T>(data: T[], searchFields: (keyof T)[], searchTe
             return value && typeof value === "string" && value.toLowerCase().includes(lowerSearchTerm);
         })
     );
+}
+
+/**
+ * OpenSID Aparatur (perangkat desa) API helper
+ */
+export async function fetchOpenSIDAparatur() {
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback("/internal_api/aparatur", {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: ["opensid-data-aparatur"],
+            },
+        }
+    });
+}
+
+/**
+ * OpenSID Fasilitas API helper
+ */
+export async function fetchOpenSIDFasilitas() {
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback("/internal_api/fasilitas", {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: ["opensid-data-fasilitas"],
+            },
+        }
+    });
+}
+
+/**
+ * OpenSID UMKM API helper
+ */
+export async function fetchOpenSIDUMKM() {
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback("/internal_api/umkm", {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: ["opensid-data-umkm"],
+            },
+        }
+    });
+}
+
+/**
+ * OpenSID BUMKal API helper
+ */
+export async function fetchOpenSIDBumkal() {
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback("/internal_api/bumkal", {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: ["opensid-data-bumkal"],
+            },
+        }
+    });
+}
+
+/**
+ * OpenSID Pertanahan API helper
+ */
+export async function fetchOpenSIDPertanahan() {
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback("/internal_api/pertanahan", {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: ["opensid-data-pertanahan"],
+            },
+        }
+    });
+}
+
+/**
+ * OpenSID Inovasi API helper
+ */
+export async function fetchOpenSIDIInovasi() {
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback("/internal_api/inovasi", {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: ["opensid-data-inovasi"],
+            },
+        }
+    });
+}
+
+/**
+ * OpenSID Tradisi Budaya API helper
+ */
+export async function fetchOpenSIDTradisi() {
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback("/internal_api/tradisi", {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: ["opensid-data-tradisi"],
+            },
+        }
+    });
+}
+
+/**
+ * OpenSID Wisata API helper
+ */
+export async function fetchOpenSIDWisata() {
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback("/internal_api/wisata", {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: ["opensid-data-wisata"],
+            },
+        }
+    });
+}
+
+/**
+ * OpenSID Produk Hukum API helper
+ */
+export async function fetchOpenSIDProdukHukum() {
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback("/internal_api/produk_hukum", {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: ["opensid-data-produk-hukum"],
+            },
+        }
+    });
+}
+
+/**
+ * OpenSID Lurah (sejarah lurah) API helper
+ */
+export async function fetchOpenSIDISejarahLurah() {
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback("/internal_api/sejarah_lurah", {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: ["opensid-data-sejarah-lurah"],
+            },
+        }
+    });
+}
+
+/**
+ * OpenSID Kelompok Tani API helper
+ */
+export async function fetchOpenSIDKelompokTani() {
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback("/internal_api/kelompok_tani", {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: ["opensid-data-kelompok-tani"],
+            },
+        }
+    });
 }

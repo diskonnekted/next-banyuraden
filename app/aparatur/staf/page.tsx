@@ -3,7 +3,32 @@ import { Users, GraduationCap } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { prisma } from "@/lib/prisma";
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+interface AparaturItem {
+    id: number | string;
+    namaLengkap?: string;
+    gelar?: string;
+    telepon?: string;
+    pendidikan?: string;
+    foto?: string;
+    jabatan?: string;
+    kelompok?: string;
+    aktif?: boolean;
+    urutan?: number;
+    attributes?: {
+        namaLengkap?: string;
+        gelar?: string;
+        telepon?: string;
+        pendidikan?: string;
+        foto?: string;
+        jabatan?: string;
+        kelompok?: string;
+        aktif?: boolean;
+        urutan?: number;
+    };
+}
 
 function getInitials(name: string): string {
     return name
@@ -31,14 +56,33 @@ function getJabatanLabel(jabatan: string): string {
     return labels[jabatan] || jabatan;
 }
 
+async function fetchStafList(): Promise<AparaturItem[]> {
+    try {
+        const res = await fetch(`${BASE_URL}/api/aparatur`, {
+            next: { revalidate: 3600 },
+        });
+        if (!res.ok) return [];
+        const json = await res.json();
+        if (!json.success) return [];
+        return (json.data || []).map((item: AparaturItem) => ({
+            id: item.id,
+            namaLengkap: item.attributes?.namaLengkap || item.namaLengkap || "",
+            gelar: item.attributes?.gelar || item.gelar,
+            telepon: item.attributes?.telepon || item.telepon,
+            pendidikan: item.attributes?.pendidikan || item.pendidikan,
+            foto: item.attributes?.foto || item.foto,
+            jabatan: item.attributes?.jabatan || item.jabatan || "",
+            kelompok: item.attributes?.kelompok || item.kelompok || "",
+            aktif: item.attributes?.aktif ?? item.aktif !== false,
+            urutan: item.attributes?.urutan ?? item.urutan ?? 0,
+        }));
+    } catch {
+        return [];
+    }
+}
+
 export default async function StafPage() {
-    const stafList: any[] = (prisma && prisma.aparaturPamong) ? await prisma.aparaturPamong.findMany({
-        where: { aktif: true },
-        orderBy: [
-            { kelompok: "asc" },
-            { urutan: "asc" },
-        ],
-    }) : [];
+    const stafList = await fetchStafList();
 
     const stafFiltered = stafList.filter((a) => a.kelompok !== "DUKUH" && a.kelompok !== "BPKAL");
 
@@ -72,12 +116,12 @@ export default async function StafPage() {
 
                 {/* Grouped by Kelompok */}
                 {Object.entries(
-                    stafFiltered.reduce<Record<string, typeof stafList>>((acc, a) => {
+                    stafFiltered.reduce<Record<string, AparaturItem[]>>((acc, a) => {
                         const key = a.kelompok || "LAINNYA";
                         if (!acc[key]) acc[key] = [];
                         acc[key].push(a);
                         return acc;
-                    }, {})
+                    }, {} as Record<string, AparaturItem[]>)
                 ).map(([kelompok, items]) => (
                     <Card key={kelompok}>
                         <CardHeader>
@@ -98,11 +142,11 @@ export default async function StafPage() {
                                             <div className="flex flex-col items-center text-center">
                                                 <Avatar className="h-16 w-16 mb-3 ring-4 ring-offset-2 ring-gray-100">
                                                     <AvatarImage
-                                                        src={a.foto || undefined}
+                                                        src={a.foto as string || undefined}
                                                         alt={a.namaLengkap}
                                                     />
                                                     <AvatarFallback className="bg-gray-600 text-white">
-                                                        {getInitials(a.namaLengkap)}
+                                                        {getInitials(a.namaLengkap || "")}
                                                     </AvatarFallback>
                                                 </Avatar>
 
@@ -113,7 +157,7 @@ export default async function StafPage() {
                                                     </p>
                                                 )}
                                                 <Badge variant="secondary" className="mt-2">
-                                                    {getJabatanLabel(a.jabatan)}
+                                                    {getJabatanLabel(a.jabatan || "")}
                                                 </Badge>
 
                                                 <div className="mt-3 space-y-1 w-full">

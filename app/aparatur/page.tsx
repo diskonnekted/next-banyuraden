@@ -5,7 +5,34 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { prisma } from "@/lib/prisma";
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+interface AparaturItem {
+    id: number | string;
+    namaLengkap?: string;
+    gelar?: string;
+    telepon?: string;
+    email?: string;
+    pendidikan?: string;
+    foto?: string;
+    aktif?: boolean;
+    jabatan?: string;
+    kelompok?: string;
+    urutan?: number;
+    attributes?: {
+        namaLengkap?: string;
+        gelar?: string;
+        telepon?: string;
+        email?: string;
+        pendidikan?: string;
+        foto?: string;
+        aktif?: boolean;
+        jabatan?: string;
+        kelompok?: string;
+        urutan?: number;
+    };
+}
 
 function getInitials(name: string): string {
     return name
@@ -63,16 +90,48 @@ function getKelompokIcon(kelompok: string | null) {
     }
 }
 
-export default async function AparaturPage() {
-    const aparatur: any[] = (prisma && prisma.aparaturPamong) ? await prisma.aparaturPamong.findMany({
-        where: { aktif: true },
-        orderBy: [
-            { kelompok: "asc" },
-            { urutan: "asc" },
-        ],
-    }) : [];
+async function fetchAparatur(): Promise<AparaturItem[]> {
+    try {
+        const res = await fetch(`${BASE_URL}/api/aparatur`, {
+            next: { revalidate: 3600 },
+        });
+        if (!res.ok) return [];
+        const json = await res.json();
+        if (!json.success) return [];
+        return (json.data || [])
+            .filter((item: AparaturItem) => {
+                const aktif = item.attributes?.aktif ?? item.aktif;
+                return aktif !== false;
+            })
+            .map((item: AparaturItem) => ({
+                id: item.id,
+                namaLengkap: item.attributes?.namaLengkap || item.namaLengkap || "",
+                gelar: item.attributes?.gelar || item.gelar,
+                telepon: item.attributes?.telepon || item.telepon,
+                email: item.attributes?.email || item.email,
+                pendidikan: item.attributes?.pendidikan || item.pendidikan,
+                foto: item.attributes?.foto || item.foto,
+                jabatan: item.attributes?.jabatan || item.jabatan || "",
+                kelompok: item.attributes?.kelompok || item.kelompok || "",
+                urutan: item.attributes?.urutan ?? item.urutan ?? 0,
+            }))
+            .sort((a: AparaturItem, b: AparaturItem) => {
+                const urutanA = a.urutan ?? 0;
+                const urutanB = b.urutan ?? 0;
+                if (urutanA !== urutanB) return urutanA - urutanB;
+                const kelompokA = a.kelompok || "";
+                const kelompokB = b.kelompok || "";
+                return kelompokA.localeCompare(kelompokB);
+            });
+    } catch {
+        return [];
+    }
+}
 
-    const kelompoks = aparatur.reduce<Record<string, typeof aparatur>>((acc, a) => {
+export default async function AparaturPage() {
+    const aparatur = await fetchAparatur();
+
+    const kelompoks = aparatur.reduce<Record<string, AparaturItem[]>>((acc, a) => {
         const key = a.kelompok || "LAINNYA";
         if (!acc[key]) acc[key] = [];
         acc[key].push(a);
@@ -183,10 +242,10 @@ export default async function AparaturPage() {
                                                 <Avatar className="h-20 w-20 mb-4 ring-4 ring-offset-2 ring-blue-100">
                                                     <AvatarImage
                                                         src={a.foto || undefined}
-                                                        alt={a.namaLengkap}
+                                                        alt={a.namaLengkap || undefined}
                                                     />
-                                                    <AvatarFallback className={getKelompokIcon(a.kelompok)}>
-                                                        {getInitials(a.namaLengkap)}
+                                                    <AvatarFallback className={getKelompokIcon(a.kelompok || null)}>
+                                                        {getInitials(a.namaLengkap || "")}
                                                     </AvatarFallback>
                                                 </Avatar>
 
@@ -196,8 +255,8 @@ export default async function AparaturPage() {
                                                         {a.gelar}
                                                     </p>
                                                 )}
-                                                <Badge className={`mt-2 border ${getJabatanBadge(a.jabatan)}`}>
-                                                    {getJabatanLabel(a.jabatan)}
+                                                <Badge className={`mt-2 border ${getJabatanBadge(a.jabatan || "")}`}>
+                                                    {getJabatanLabel(a.jabatan || "")}
                                                 </Badge>
 
                                                 <div className="mt-4 space-y-2 w-full">

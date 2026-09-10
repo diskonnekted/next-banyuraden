@@ -2,16 +2,13 @@ import { Lightbulb, Flame, ShoppingCart, Utensils, Users } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { prisma } from "@/lib/prisma";
 
-function getKategoriBadge(kategori: string) {
-    const styles: Record<string, string> = {
-        TEKNOLOGI: "bg-blue-100 text-blue-800 border-blue-200",
-        PANGAN: "bg-green-100 text-green-800 border-green-200",
-        PERTANAHAN: "bg-emerald-100 text-emerald-800 border-emerald-200",
-        PELAYANAN: "bg-purple-100 text-purple-800 border-purple-200",
-    };
-    return styles[kategori] || "bg-gray-100 text-gray-800 border-gray-200";
+interface InovasiItem {
+    attributes?: Record<string, unknown>;
+    kategori?: string;
+    nama?: string;
+    tahun?: number;
+    deskripsi?: string;
 }
 
 function getKategoriIcon(kategori: string | null) {
@@ -41,11 +38,22 @@ function getKategoriLabel(kategori: string | null): string {
     return labels[k] || k;
 }
 
+function normalizeKategori(item: InovasiItem): string {
+    return (item.attributes?.kategori as string) || item.kategori || "TEKNOLOGI";
+}
+
+async function fetchInovasiList(): Promise<InovasiItem[]> {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000"}/api/inovasi`,
+        { next: { revalidate: 3600 } }
+    );
+    if (!res.ok) return [];
+    const json = await res.json();
+    return json.data || [];
+}
+
 export default async function InovasiPage() {
-    const inovasiList: any[] = (prisma && prisma.inovasi) ? await prisma.inovasi.findMany({
-        where: { aktif: true },
-        orderBy: { nama: "asc" },
-    }) : [];
+    const inovasiList = await fetchInovasiList();
 
     return (
         <div className="min-h-screen bg-linear-to-b from-gray-50 to-white py-8">
@@ -74,7 +82,7 @@ export default async function InovasiPage() {
                         <CardContent className="p-4 text-center">
                             <ShoppingCart className="h-8 w-8 text-green-600 mx-auto mb-2" />
                             <div className="text-3xl font-bold text-green-900">
-                                {inovasiList.filter((i) => i.kategori === "PANGAN").length}
+                                {inovasiList.filter((i) => normalizeKategori(i) === "PANGAN").length}
                             </div>
                             <p className="text-xs text-green-700">Inovasi Pangan</p>
                         </CardContent>
@@ -83,7 +91,7 @@ export default async function InovasiPage() {
                         <CardContent className="p-4 text-center">
                             <Utensils className="h-8 w-8 text-purple-600 mx-auto mb-2" />
                             <div className="text-3xl font-bold text-purple-900">
-                                {inovasiList.filter((i) => i.kategori === "PELAYANAN").length}
+                                {inovasiList.filter((i) => normalizeKategori(i) === "PELAYANAN").length}
                             </div>
                             <p className="text-xs text-purple-700">Inovasi Pelayanan</p>
                         </CardContent>

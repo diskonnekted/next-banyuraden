@@ -1,23 +1,28 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { fetchOpenSIDAparatur, createApiRouteHandler, unwrapOpenSIDResponse } from "@/lib/api-helpers";
 
-export async function GET(request: Request) {
+export const { GET } = createApiRouteHandler(async (request: Request) => {
     try {
         const { searchParams } = new URL(request.url);
-        const kelopok = searchParams.get("kelompok");
+        const kelompok = searchParams.get("kelompok");
 
-        const where: { kelompok?: string } = {};
-        if (kelopok) {
-            where.kelompok = kelopok;
+        const response = await fetchOpenSIDAparatur();
+        let data = unwrapOpenSIDResponse(response);
+
+        // Filter by kelompok if specified
+        if (kelompok) {
+            data = data.filter((item) => {
+                const itemKelompok = item.attributes?.pamong_kelompok || item.attributes?.kelompok || item.kelompok;
+                return itemKelompok === kelompok;
+            });
         }
 
-        const data: any[] = (prisma && prisma.aparaturPamong) ? await prisma.aparaturPamong.findMany({
-            where,
-            include: {
-                padukuhan: true,
-            },
-            orderBy: { urutan: "asc" },
-        }) : [];
+        // Sort by urutan
+        data = data.sort((a, b) => {
+            const urutanA = a.attributes?.pamong_urutan ?? a.attributes?.urutan ?? a.urutan ?? 0;
+            const urutanB = b.attributes?.pamong_urutan ?? b.attributes?.urutan ?? b.urutan ?? 0;
+            return urutanA - urutanB;
+        });
 
         return NextResponse.json({ success: true, data });
     } catch (error) {
@@ -26,4 +31,4 @@ export async function GET(request: Request) {
             { status: 500 }
         );
     }
-}
+});

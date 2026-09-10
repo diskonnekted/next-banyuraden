@@ -6,35 +6,148 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { prisma } from "@/lib/prisma";
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+interface FasilitasItem {
+    id: string;
+    nama: string;
+    alamat?: string;
+    telepon?: string;
+    jenis?: string;
+    attributes?: {
+        nama?: string;
+        alamat?: string;
+        telepon?: string;
+        jenis?: string;
+    };
+}
+
+interface UmkmItem {
+    id: string;
+    nama: string;
+    jenis?: string;
+    deskripsi?: string;
+    pemilik?: string;
+    telepon?: string;
+    attributes?: {
+        nama?: string;
+        jenis?: string;
+        deskripsi?: string;
+        pemilik?: string;
+        telepon?: string;
+    };
+}
+
+interface TradisiItem {
+    id: string;
+    nama: string;
+    jenis?: string;
+    deskripsi?: string;
+    waktu?: string;
+    attributes?: {
+        nama?: string;
+        jenis?: string;
+        deskripsi?: string;
+        waktu?: string;
+    };
+}
+
+interface PadukuhanData {
+    id: string;
+    nama: string;
+    slug: string;
+    deskripsi?: string;
+    kampung?: string;
+    totalPenduduk: number | null;
+    jumlahKK: number | null;
+    luasHa: number | null;
+    jumlahRW: number | null;
+    jumlahRT: number | null;
+    jumlahLakiLaki: number | null;
+    jumlahPerempuan: number | null;
+    fasilitas: FasilitasItem[];
+    umkm: UmkmItem[];
+    traditions: TradisiItem[];
+    pertanahan: unknown[];
+    aparat: AparaturItem[];
+    [key: string]: unknown;
+}
+
+interface AparaturItem {
+    id: string;
+    namaLengkap: string;
+}
 
 function formatNumber(num: number | null): string {
     if (num === null) return "-";
     return new Intl.NumberFormat("id-ID").format(num);
 }
 
-function formatCurrency(amount: number | null | undefined): string {
-    if (amount === null || amount === undefined) return "-";
-    return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(amount);
+async function fetchPadukuhan(slug: string): Promise<PadukuhanData | null> {
+    try {
+        const res = await fetch(`${BASE_URL}/api/padukuhan?slug=${encodeURIComponent(slug)}`, {
+            next: { revalidate: 3600 },
+        });
+        if (!res.ok) {
+            if (res.status === 404) return null;
+            return null;
+        }
+        const json = await res.json();
+        if (!json.success || !json.data) return null;
+        const d = json.data;
+        const item = d.attributes || d;
+
+        return {
+            id: item.id || "",
+            nama: item.nama || "",
+            slug: item.slug || slug,
+            deskripsi: item.deskripsi,
+            kampung: item.kampung,
+            totalPenduduk: item.totalPenduduk ?? null,
+            jumlahKK: item.jumlahKK ?? null,
+            luasHa: item.luasHa ?? null,
+            jumlahRW: item.jumlahRW ?? null,
+            jumlahRT: item.jumlahRT ?? null,
+            jumlahLakiLaki: item.jumlahLakiLaki ?? null,
+            jumlahPerempuan: item.jumlahPerempuan ?? null,
+            fasilitas: (item.fasilitas || []).map((f: any) => ({
+                id: f.id || "",
+                nama: f.attributes?.nama || f.nama || "",
+                alamat: f.attributes?.alamat || f.alamat,
+                telepon: f.attributes?.telepon || f.telepon,
+                jenis: f.attributes?.jenis || f.jenis || "",
+            })),
+            umkm: (item.umkm || []).map((u: any) => ({
+                id: u.id || "",
+                nama: u.attributes?.nama || u.nama || "",
+                jenis: u.attributes?.jenis || u.jenis || "",
+                deskripsi: u.attributes?.deskripsi || u.deskripsi,
+                pemilik: u.attributes?.pemilik || u.pemilik,
+                telepon: u.attributes?.telepon || u.telepon,
+            })),
+            traditions: (item.traditions || []).map((t: any) => ({
+                id: t.id || "",
+                nama: t.attributes?.nama || t.nama || "",
+                jenis: t.attributes?.jenis || t.jenis || "",
+                deskripsi: t.attributes?.deskripsi || t.deskripsi,
+                waktu: t.attributes?.waktu || t.waktu,
+            })),
+            pertanahan: item.pertanahan || [],
+            aparat: (item.aparat || []).map((a: any) => ({
+                id: a.id || "",
+                namaLengkap: a.attributes?.namaLengkap || a.namaLengkap || "",
+            })),
+        };
+    } catch {
+        return null;
+    }
 }
 
 export default async function DetailPadukuhanPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
 
-    const padukuhan: any = (prisma && prisma.padukuhan) ? await prisma.padukuhan.findUnique({
-        where: { slug },
-        include: {
-            fasilitas: true,
-            umkm: true,
-            traditions: true,
-            wisatas: true,
-            pertanahan: true,
-            aparat: {
-                where: { kelompok: "DUKUH" },
-                orderBy: { urutan: "asc" },
-            },
-        },
-    }) : null;
+    const padukuhan = await fetchPadukuhan(slug);
 
     if (!padukuhan) {
         notFound();
@@ -213,9 +326,9 @@ export default async function DetailPadukuhanPage({ params }: { params: Promise<
                         <CardContent>
                             {/* Group by jenis */}
                             {(() => {
-                                const groups: Record<string, any[]> = {};
-                                (padukuhan.fasilitas || []).forEach((f: any) => {
-                                    const key = f.jenis;
+                                const groups: Record<string, FasilitasItem[]> = {};
+                                padukuhan.fasilitas.forEach((f) => {
+                                    const key = f.jenis || "";
                                     if (!groups[key]) groups[key] = [];
                                     groups[key].push(f);
                                 });
@@ -251,9 +364,9 @@ export default async function DetailPadukuhanPage({ params }: { params: Promise<
                                                     </TableRow>
                                                 </TableHeader>
                                                 <TableBody>
-                                                    {(facilities as any[]).map((f: any) => (
+                                                    {facilities.map((f) => (
                                                         <TableRow key={f.id}>
-                                                             <TableCell className="font-medium">{f.nama}</TableCell>
+                                                             <TableCell className="font-medium">{String(f.nama)}</TableCell>
                                                              <TableCell className="text-sm">
                                                                  {f.alamat || "-"}
                                                              </TableCell>
@@ -273,7 +386,7 @@ export default async function DetailPadukuhanPage({ params }: { params: Promise<
                  )}
 
                  {/* UMKM Section */}
-                 {padukuhan.umkm && padukuhan.umkm.length > 0 && (
+                 {padukuhan.umkm.length > 0 && (
                      <Card>
                          <CardHeader>
                              <CardTitle className="flex items-center gap-2">
@@ -283,24 +396,24 @@ export default async function DetailPadukuhanPage({ params }: { params: Promise<
                          </CardHeader>
                          <CardContent>
                              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                 {(padukuhan.umkm as any[]).map((umkm: any) => (
+                                 {padukuhan.umkm.map((umkm) => (
                                      <Card key={umkm.id}>
                                          <CardHeader className="pb-2">
-                                             <CardTitle className="text-base">{umkm.nama}</CardTitle>
+                                             <CardTitle className="text-base">{String(umkm.nama)}</CardTitle>
                                              <CardDescription>
-                                                 <Badge variant="secondary">{umkm.jenis}</Badge>
+                                                 <Badge variant="secondary">{String(umkm.jenis)}</Badge>
                                              </CardDescription>
                                          </CardHeader>
                                          <CardContent>
                                              <p className="text-sm text-muted-foreground line-clamp-3">
-                                                 {umkm.deskripsi || "Belum ada deskripsi."}
+                                                 {String(umkm.deskripsi || "Belum ada deskripsi.")}
                                              </p>
                                              <div className="mt-3 pt-3 border-t space-y-1 text-xs text-muted-foreground">
                                                  {umkm.pemilik && (
-                                                     <p>Pemilik: {umkm.pemilik}</p>
+                                                     <p>Pemilik: {String(umkm.pemilik)}</p>
                                                  )}
                                                  {umkm.telepon && (
-                                                     <p>Telepon: {umkm.telepon}</p>
+                                                     <p>Telepon: {String(umkm.telepon)}</p>
                                                  )}
                                              </div>
                                          </CardContent>
@@ -312,7 +425,7 @@ export default async function DetailPadukuhanPage({ params }: { params: Promise<
                  )}
 
                  {/* Tradisi & Budaya */}
-                 {padukuhan.traditions && padukuhan.traditions.length > 0 && (
+                 {padukuhan.traditions.length > 0 && (
                      <Card>
                          <CardHeader>
                              <CardTitle className="flex items-center gap-2">
@@ -322,21 +435,21 @@ export default async function DetailPadukuhanPage({ params }: { params: Promise<
                          </CardHeader>
                          <CardContent>
                              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                 {(padukuhan.traditions as any[]).map((tradisi: any) => (
+                                 {padukuhan.traditions.map((tradisi) => (
                                     <Card key={tradisi.id}>
                                         <CardHeader className="pb-2">
-                                            <CardTitle className="text-base">{tradisi.nama}</CardTitle>
+                                            <CardTitle className="text-base">{String(tradisi.nama)}</CardTitle>
                                             <CardDescription>
-                                                <Badge variant="outline">{tradisi.jenis}</Badge>
+                                                <Badge variant="outline">{String(tradisi.jenis)}</Badge>
                                             </CardDescription>
                                         </CardHeader>
                                         <CardContent>
                                             <p className="text-sm text-muted-foreground line-clamp-3">
-                                                {tradisi.deskripsi}
+                                                {String(tradisi.deskripsi || "")}
                                             </p>
                                             {tradisi.waktu && (
                                                 <p className="text-xs text-muted-foreground mt-2">
-                                                    Waktu: {tradisi.waktu}
+                                                    Waktu: {String(tradisi.waktu)}
                                                 </p>
                                             )}
                                         </CardContent>

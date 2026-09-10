@@ -1,31 +1,37 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { fetchOpenSIDISejarahLurah, unwrapOpenSIDResponse, createApiRouteHandler } from "@/lib/api-helpers";
 
-export async function GET(request: Request) {
+export const { GET } = createApiRouteHandler(async () => {
     try {
+        const response = await fetchOpenSIDISejarahLurah();
+
+        // Get all history sorted by periode_awal ascending
+        const allHistory = unwrapOpenSIDResponse(response);
+
         // Get current lurah (latest period)
-        const lurah = prisma ? await prisma.$queryRaw`
-            SELECT * FROM sejarah_lurah 
-            WHERE periode_akhir IS NULL OR periode_akhir >= YEAR(NOW())
-            ORDER BY periode_awal DESC
-            LIMIT 1
-        ` as any[] : [];
+        const currentLurah = allHistory
+            .filter((item: any) => {
+                const periodeAkhir = item.attributes?.periode_akhir ?? item.periode_akhir;
+                return !periodeAkhir || parseInt(periodeAkhir) >= new Date().getFullYear();
+            })
+            .sort((a: any, b: any) => {
+                const tahunA = a.attributes?.periode_awal ?? a.periode_awal ?? 0;
+                const tahunB = b.attributes?.periode_awal ?? b.periode_awal ?? 0;
+                return tahunB - tahunA;
+            })[0] || null;
 
-        const lurahHistory = prisma ? await prisma.$queryRaw`
-            SELECT * FROM sejarah_lurah 
-            ORDER BY periode_awal ASC
-        ` as any[] : [];
-
-        return NextResponse.json({
-            success: true,
-            current: lurah[0] || null,
-            history: lurahHistory
+        // Sort history by periode_awal ascending
+        const history = [...allHistory].sort((a: any, b: any) => {
+            const tahunA = a.attributes?.periode_awal ?? a.periode_awal ?? 0;
+            const tahunB = b.attributes?.periode_awal ?? b.periode_awal ?? 0;
+            return tahunA - tahunB;
         });
+
+        return NextResponse.json({ success: true, current: currentLurah, history });
     } catch (error) {
-        console.error("Error in lurah API:", error);
         return NextResponse.json(
-            { error: "Internal server error", current: null, history: [] },
+            { success: false, error: error instanceof Error ? error.message : "Unknown error" },
             { status: 500 }
         );
     }
-}
+});

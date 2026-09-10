@@ -2,7 +2,37 @@ import { Store, Users, Phone, MapPin, Filter } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { prisma } from "@/lib/prisma";
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+interface UmkmAttributes {
+    nama?: string;
+    jenis?: string;
+    deskripsi?: string;
+    pemilik?: string;
+    telepon?: string;
+    alamat?: string;
+    padukuhan?: {
+        nama?: string;
+        slug?: string;
+    };
+    [key: string]: unknown;
+}
+
+interface UmkmItem {
+    id: number | string;
+    attributes?: UmkmAttributes;
+    nama?: string;
+    jenis?: string;
+    deskripsi?: string;
+    pemilik?: string;
+    telepon?: string;
+    alamat?: string;
+    padukuhan?: {
+        nama?: string;
+        slug?: string;
+    };
+}
 
 function getJenisBadge(jenis: string) {
     const styles: Record<string, string> = {
@@ -30,22 +60,39 @@ function getJenisLabel(jenis: string): string {
     return labels[jenis] || jenis;
 }
 
+async function fetchUmkmList(): Promise<UmkmItem[]> {
+    try {
+        const res = await fetch(`${BASE_URL}/api/umkm`, {
+            next: { revalidate: 3600 },
+        });
+        if (!res.ok) return [];
+        const json = await res.json();
+        if (!json.success) return [];
+        return (json.data || []).map((item: UmkmItem) => ({
+            id: item.id,
+            nama: item.attributes?.nama || item.nama || "",
+            jenis: item.attributes?.jenis || item.jenis || "",
+            deskripsi: item.attributes?.deskripsi || item.deskripsi,
+            pemilik: item.attributes?.pemilik || item.pemilik,
+            telepon: item.attributes?.telepon || item.telepon,
+            alamat: item.attributes?.alamat || item.alamat,
+            padukuhan: item.attributes?.padukuhan || item.padukuhan,
+        }));
+    } catch {
+        return [];
+    }
+}
+
 export default async function UmkmPage() {
-    const umkmList: any[] = (prisma && prisma.uMKM) ? await prisma.uMKM.findMany({
-        where: { aktif: true },
-        include: {
-            padukuhan: { select: { nama: true, slug: true } },
-        },
-        orderBy: { nama: "asc" },
-    }) : [];
+    const umkmList = await fetchUmkmList();
 
     // Group by padukuhan
-    const grouped = umkmList.reduce<Record<string, typeof umkmList>>((acc, u) => {
-        const key = u.padukuhan?.nama || "Tanpa Padukuhan";
+    const grouped = umkmList.reduce<Record<string, UmkmItem[]>>((acc, u) => {
+        const key = (u.padukuhan?.nama as string) || "Tanpa Padukuhan";
         if (!acc[key]) acc[key] = [];
         acc[key].push(u);
         return acc;
-    }, {});
+    }, {} as Record<string, UmkmItem[]>);
 
     // Group by jenis
     const jenisOptions = [...new Set(umkmList.map((u) => u.jenis))];
@@ -118,7 +165,7 @@ export default async function UmkmPage() {
                                     variant="outline"
                                     className="cursor-default"
                                 >
-                                    {getJenisLabel(jenis)}
+                                    {getJenisLabel(jenis || "")}
                                 </Badge>
                             ))}
                         </div>
@@ -140,36 +187,36 @@ export default async function UmkmPage() {
                                 {items.map((umkm) => (
                                     <Card key={umkm.id}>
                                         <CardHeader className="pb-2">
-                                            <CardTitle className="text-base">{umkm.nama}</CardTitle>
+                                            <CardTitle className="text-base">{String(umkm.nama || "")}</CardTitle>
                                             <CardDescription>
-                                                <Badge className={getJenisBadge(umkm.jenis)}>
-                                                    {getJenisLabel(umkm.jenis)}
+                                                <Badge className={getJenisBadge(umkm.jenis || "")}>
+                                                    {getJenisLabel(umkm.jenis || "")}
                                                 </Badge>
                                             </CardDescription>
                                         </CardHeader>
                                         <CardContent>
                                             {umkm.deskripsi && (
                                                 <p className="text-sm text-muted-foreground line-clamp-3 mb-3">
-                                                    {umkm.deskripsi}
+                                                    {String(umkm.deskripsi)}
                                                 </p>
                                             )}
                                             <div className="space-y-1 text-xs text-muted-foreground">
                                                 {umkm.pemilik && (
                                                     <div className="flex items-center gap-1">
                                                         <Users className="h-3 w-3 shrink-0" />
-                                                        <span>{umkm.pemilik}</span>
+                                                        <span>{String(umkm.pemilik)}</span>
                                                     </div>
                                                 )}
                                                 {umkm.telepon && (
                                                     <div className="flex items-center gap-1">
                                                         <Phone className="h-3 w-3 shrink-0" />
-                                                        <span>{umkm.telepon}</span>
+                                                        <span>{String(umkm.telepon)}</span>
                                                     </div>
                                                 )}
                                                 {umkm.alamat && (
                                                     <div className="flex items-center gap-1">
                                                         <MapPin className="h-3 w-3 shrink-0" />
-                                                        <span className="line-clamp-1">{umkm.alamat}</span>
+                                                        <span className="line-clamp-1">{String(umkm.alamat)}</span>
                                                     </div>
                                                 )}
                                             </div>

@@ -1,23 +1,29 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { fetchOpenSIDKelompokTani, createApiRouteHandler, unwrapOpenSIDResponse } from "@/lib/api-helpers";
 
-export async function GET(request: Request) {
+export const { GET } = createApiRouteHandler(async (request: Request) => {
     try {
         const { searchParams } = new URL(request.url);
         const padukuhanId = searchParams.get("padukuhanId");
 
-        const where: { padukuhanId?: number } = {};
+        const response = await fetchOpenSIDKelompokTani();
+        let data = unwrapOpenSIDResponse(response);
+
+        // Filter by padukuhanId if specified
         if (padukuhanId) {
-            where.padukuhanId = parseInt(padukuhanId, 10);
+            const padukuhanIdNum = parseInt(padukuhanId, 10);
+            data = data.filter((item) => {
+                const itemPadukuhanId = item.attributes?.padukuhan_id || item.padukuhanId;
+                return itemPadukuhanId === padukuhanIdNum;
+            });
         }
 
-        const data: any[] = (prisma && prisma.kelompokTani) ? await prisma.kelompokTani.findMany({
-            where,
-            include: {
-                padukuhan: true,
-            },
-            orderBy: { nama: "asc" },
-        }) : [];
+        // Sort by nama
+        data = data.sort((a, b) => {
+            const namaA = a.attributes?.nama || a.nama || "";
+            const namaB = b.attributes?.nama || b.nama || "";
+            return namaA.localeCompare(namaB);
+        });
 
         return NextResponse.json({ success: true, data });
     } catch (error) {
@@ -26,4 +32,4 @@ export async function GET(request: Request) {
             { status: 500 }
         );
     }
-}
+});

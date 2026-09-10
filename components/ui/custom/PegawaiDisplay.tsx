@@ -228,29 +228,29 @@ export function PegawaiDisplay({ className }: PegawaiDisplayProps) {
                                         <div className="space-y-2 text-xs">
                                             <div className="flex items-center gap-2 text-muted-foreground">
                                                 <Briefcase className="h-4 w-4" />
-                                                <span>{pegawai.penduduk.pekerjaan?.nama || "-"}</span>
+                                                <span>{pegawai.penduduk?.pekerjaan?.nama || "-"}</span>
                                             </div>
 
                                             <div className="flex items-center gap-2 text-muted-foreground">
                                                 <UserCheck className="h-4 w-4" />
                                                 <span>
-                                                    {pegawai.penduduk.jenis_kelamin?.nama} • {pegawai.penduduk.usia}
+                                                    {pegawai.penduduk?.jenis_kelamin?.nama || "-"} • {pegawai.penduduk?.usia || "-"}
                                                 </span>
                                             </div>
 
                                             <div className="flex items-center gap-2 text-muted-foreground">
                                                 <MapPin className="h-4 w-4" />
-                                                <span>{pegawai.penduduk.alamat_wilayah}</span>
+                                                <span>{pegawai.penduduk?.alamat_wilayah || "-"}</span>
                                             </div>
 
-                                            {pegawai.penduduk.telepon && (
+                                            {pegawai.penduduk?.telepon && (
                                                 <div className="flex items-center gap-2 text-muted-foreground">
                                                     <Phone className="h-4 w-4" />
                                                     <ProtectedContact value={pegawai.penduduk.telepon} type="phone" />
                                                 </div>
                                             )}
 
-                                            {pegawai.penduduk.email && (
+                                            {pegawai.penduduk?.email && (
                                                 <div className="flex items-center gap-2 text-muted-foreground">
                                                     <Mail className="h-4 w-4" />
                                                     <ProtectedContact value={pegawai.penduduk.email} type="email" />
@@ -259,11 +259,11 @@ export function PegawaiDisplay({ className }: PegawaiDisplayProps) {
 
                                             <div className="flex items-center gap-2 text-muted-foreground">
                                                 <Calendar className="h-4 w-4" />
-                                                <span>SK: {formatDate(pegawai.pamong_tglsk)}</span>
+                                                <span>SK: {pegawai.pamong_tglsk ? formatDate(pegawai.pamong_tglsk) : "-"}</span>
                                             </div>
                                         </div>
 
-                                        {pegawai.penduduk.pendidikan_k_k?.nama && (
+                                        {pegawai.penduduk?.pendidikan_k_k?.nama && (
                                             <div className="pt-2 border-t">
                                                 <p className="text-xs text-muted-foreground">
                                                     <span className="font-semibold">Pendidikan:</span>{" "}

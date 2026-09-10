@@ -2,8 +2,16 @@ import { School, MapPin, Phone } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { prisma } from "@/lib/prisma";
+
+interface FasilitasItem {
+    attributes?: Record<string, unknown>;
+    jenis?: string;
+    nama?: string;
+    alamat?: string;
+    telepon?: string;
+    jamOperasi?: string;
+    padukuhan?: { nama?: string };
+}
 
 function getJenisBadge(jenis: string) {
     const styles: Record<string, string> = {
@@ -33,21 +41,29 @@ function getJenisLabel(jenis: string): string {
     return labels[jenis] || jenis;
 }
 
+function normalizeJenis(item: FasilitasItem): string {
+    return (item.attributes?.jenis as string) || item.jenis || "";
+}
+
+const JENIS_PENDIDIKAN = ["SD", "SMP", "SMA", "SMK", "TK", "PAUD", "PONDOK_PESANTREN", "PERGURUAN_TINGGI"];
+
+async function fetchFasilitasPendidikan(): Promise<FasilitasItem[]> {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000"}/api/fasilitas`,
+        { next: { revalidate: 3600 } }
+    );
+    if (!res.ok) return [];
+    const json = await res.json();
+    return (json.data || []).filter((f: FasilitasItem) =>
+        JENIS_PENDIDIKAN.includes(normalizeJenis(f))
+    );
+}
+
 export default async function PendidikanPage() {
-    const fasilitas: any[] = (prisma && prisma.fasilitasPadukuhan) ? await prisma.fasilitasPadukuhan.findMany({
-        where: {
-            jenis: {
-                in: ["SD", "SMP", "SMA", "SMK", "TK", "PAUD", "PONDOK_PESANTREN", "PERGURUAN_TINGGI"],
-            },
-        },
-        include: {
-            padukuhan: { select: { nama: true, slug: true } },
-        },
-        orderBy: { nama: "asc" },
-    }) : [];
+    const fasilitas = await fetchFasilitasPendidikan();
 
     // Group by padukuhan
-    const grouped = fasilitas.reduce<Record<string, typeof fasilitas>>((acc, f) => {
+    const grouped = fasilitas.reduce<Record<string, FasilitasItem[]>>((acc, f) => {
         const key = f.padukuhan?.nama || "Tanpa Padukuhan";
         if (!acc[key]) acc[key] = [];
         acc[key].push(f);

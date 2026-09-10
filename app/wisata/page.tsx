@@ -2,7 +2,26 @@ import { MapPin, Compass, Camera } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { prisma } from "@/lib/prisma";
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+interface WisataItem {
+    id: number | string;
+    nama?: string;
+    jenis?: string;
+    deskripsi?: string;
+    alamat?: string;
+    aktif?: boolean;
+    padukuhan?: { nama?: string; slug?: string };
+    attributes?: {
+        nama?: string;
+        jenis?: string;
+        deskripsi?: string;
+        alamat?: string;
+        aktif?: boolean;
+        padukuhan?: { nama?: string; slug?: string };
+    };
+}
 
 function getJenisBadge(jenis: string) {
     const styles: Record<string, string> = {
@@ -24,17 +43,43 @@ function getJenisLabel(jenis: string): string {
     return labels[jenis] || jenis;
 }
 
+async function fetchWisata(): Promise<WisataItem[]> {
+    try {
+        const res = await fetch(`${BASE_URL}/api/wisata`, {
+            next: { revalidate: 3600 },
+        });
+        if (!res.ok) return [];
+        const json = await res.json();
+        if (!json.success) return [];
+        return (json.data || [])
+            .filter((item: WisataItem) => {
+                const aktif = item.attributes?.aktif ?? item.aktif;
+                return aktif !== false;
+            })
+            .map((item: WisataItem) => {
+                const a = item.attributes || item;
+                return {
+                    id: a.id || item.id,
+                    nama: a.nama || item.nama || "",
+                    jenis: a.jenis || item.jenis || "",
+                    deskripsi: a.deskripsi || item.deskripsi,
+                    alamat: a.alamat || item.alamat,
+                    padukuhan: a.padukuhan ?? item.padukuhan,
+                };
+            })
+            .sort((a: WisataItem, b: WisataItem) => {
+                return (a.nama || "").localeCompare(b.nama || "");
+            });
+    } catch {
+        return [];
+    }
+}
+
 export default async function WisataPage() {
-    const wisatas: any[] = (prisma && prisma.wisata) ? await prisma.wisata.findMany({
-        where: { aktif: true },
-        include: {
-            padukuhan: { select: { nama: true, slug: true } },
-        },
-        orderBy: { nama: "asc" },
-    }) : [];
+    const wisatas = await fetchWisata();
 
     // Group by padukuhan
-    const grouped = wisatas.reduce<Record<string, typeof wisatas>>((acc, w) => {
+    const grouped = wisatas.reduce<Record<string, WisataItem[]>>((acc, w) => {
         const key = w.padukuhan?.nama || "Tanpa Padukuhan";
         if (!acc[key]) acc[key] = [];
         acc[key].push(w);
