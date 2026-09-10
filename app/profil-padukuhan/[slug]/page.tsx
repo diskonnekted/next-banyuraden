@@ -213,8 +213,8 @@ export default async function DetailPadukuhanPage({ params }: { params: Promise<
                         <CardContent>
                             {/* Group by jenis */}
                             {(() => {
-                                const groups: Record<string, typeof padukuhan.fasilitas> = {};
-                                padukuhan.fasilitas.forEach((f) => {
+                                const groups: Record<string, any[]> = {};
+                                (padukuhan.fasilitas || []).forEach((f: any) => {
                                     const key = f.jenis;
                                     if (!groups[key]) groups[key] = [];
                                     groups[key].push(f);
@@ -251,78 +251,78 @@ export default async function DetailPadukuhanPage({ params }: { params: Promise<
                                                     </TableRow>
                                                 </TableHeader>
                                                 <TableBody>
-                                                    {facilities.map((f) => (
+                                                    {(facilities as any[]).map((f: any) => (
                                                         <TableRow key={f.id}>
-                                                            <TableCell className="font-medium">{f.nama}</TableCell>
-                                                            <TableCell className="text-sm">
-                                                                {f.alamat || "-"}
-                                                            </TableCell>
-                                                            <TableCell className="text-right text-sm">
-                                                                {f.telepon || "-"}
-                                                            </TableCell>
-                                                        </TableRow>
-                                                    ))}
-                                                </TableBody>
-                                            </Table>
-                                        </div>
-                                    );
-                                });
-                            })()}
-                        </CardContent>
-                    </Card>
-                )}
+                                                             <TableCell className="font-medium">{f.nama}</TableCell>
+                                                             <TableCell className="text-sm">
+                                                                 {f.alamat || "-"}
+                                                             </TableCell>
+                                                             <TableCell className="text-right text-sm">
+                                                                 {f.telepon || "-"}
+                                                             </TableCell>
+                                                         </TableRow>
+                                                     ))}
+                                                 </TableBody>
+                                             </Table>
+                                         </div>
+                                     );
+                                 });
+                             })()}
+                         </CardContent>
+                     </Card>
+                 )}
 
-                {/* UMKM Section */}
-                {padukuhan.umkm.length > 0 && (
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="flex items-center gap-2">
-                                <Store className="h-5 w-5 text-blue-600" />
-                                UMKM di {padukuhan.nama}
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {padukuhan.umkm.map((umkm) => (
-                                    <Card key={umkm.id}>
-                                        <CardHeader className="pb-2">
-                                            <CardTitle className="text-base">{umkm.nama}</CardTitle>
-                                            <CardDescription>
-                                                <Badge variant="secondary">{umkm.jenis}</Badge>
-                                            </CardDescription>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <p className="text-sm text-muted-foreground line-clamp-3">
-                                                {umkm.deskripsi || "Belum ada deskripsi."}
-                                            </p>
-                                            <div className="mt-3 pt-3 border-t space-y-1 text-xs text-muted-foreground">
-                                                {umkm.pemilik && (
-                                                    <p>Pemilik: {umkm.pemilik}</p>
-                                                )}
-                                                {umkm.telepon && (
-                                                    <p>Telepon: {umkm.telepon}</p>
-                                                )}
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                ))}
-                            </div>
-                        </CardContent>
-                    </Card>
-                )}
+                 {/* UMKM Section */}
+                 {padukuhan.umkm && padukuhan.umkm.length > 0 && (
+                     <Card>
+                         <CardHeader>
+                             <CardTitle className="flex items-center gap-2">
+                                 <Store className="h-5 w-5 text-blue-600" />
+                                 UMKM di {padukuhan.nama}
+                             </CardTitle>
+                         </CardHeader>
+                         <CardContent>
+                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                 {(padukuhan.umkm as any[]).map((umkm: any) => (
+                                     <Card key={umkm.id}>
+                                         <CardHeader className="pb-2">
+                                             <CardTitle className="text-base">{umkm.nama}</CardTitle>
+                                             <CardDescription>
+                                                 <Badge variant="secondary">{umkm.jenis}</Badge>
+                                             </CardDescription>
+                                         </CardHeader>
+                                         <CardContent>
+                                             <p className="text-sm text-muted-foreground line-clamp-3">
+                                                 {umkm.deskripsi || "Belum ada deskripsi."}
+                                             </p>
+                                             <div className="mt-3 pt-3 border-t space-y-1 text-xs text-muted-foreground">
+                                                 {umkm.pemilik && (
+                                                     <p>Pemilik: {umkm.pemilik}</p>
+                                                 )}
+                                                 {umkm.telepon && (
+                                                     <p>Telepon: {umkm.telepon}</p>
+                                                 )}
+                                             </div>
+                                         </CardContent>
+                                     </Card>
+                                 ))}
+                             </div>
+                         </CardContent>
+                     </Card>
+                 )}
 
-                {/* Tradisi & Budaya */}
-                {padukuhan.traditions.length > 0 && (
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="flex items-center gap-2">
-                                <Landmark className="h-5 w-5 text-blue-600" />
-                                Tradisi & Budaya
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {padukuhan.traditions.map((tradisi) => (
+                 {/* Tradisi & Budaya */}
+                 {padukuhan.traditions && padukuhan.traditions.length > 0 && (
+                     <Card>
+                         <CardHeader>
+                             <CardTitle className="flex items-center gap-2">
+                                 <Landmark className="h-5 w-5 text-blue-600" />
+                                 Tradisi & Budaya
+                             </CardTitle>
+                         </CardHeader>
+                         <CardContent>
+                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                 {(padukuhan.traditions as any[]).map((tradisi: any) => (
                                     <Card key={tradisi.id}>
                                         <CardHeader className="pb-2">
                                             <CardTitle className="text-base">{tradisi.nama}</CardTitle>

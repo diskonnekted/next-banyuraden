@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { FileCheck, TrendingUp, Users } from "lucide-react";
 

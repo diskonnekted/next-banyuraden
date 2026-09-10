@@ -25,7 +25,6 @@ function getJenisLabel(jenis: string): string {
 export default async function IbadahPage() {
     const fasilitas: any[] = (prisma && prisma.fasilitasPadukuhan) ? await prisma.fasilitasPadukuhan.findMany({
         where: {
-            aktif: true,
             jenis: {
                 in: ["MASJID", "MUSHOLA", "GEREJA"],
             },

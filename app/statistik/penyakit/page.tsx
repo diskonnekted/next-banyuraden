@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Heart, Users, TrendingUp } from "lucide-react";
 

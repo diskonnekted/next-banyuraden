@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Globe2, Users, TrendingUp } from "lucide-react";
 

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Calendar, Users, TrendingUp } from "lucide-react";
 

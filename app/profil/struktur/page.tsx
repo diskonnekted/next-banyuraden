@@ -8,10 +8,10 @@ import Image from "next/image";
 export default function StrukturPage() {
     // Real Lurah data
     const lurah = {
-        nama: "R. Widayatma, SE",
+        nama: "Sudarisman, S.T.",
         jabatan: "Lurah/Kepala Kalurahan",
-        periode: "2021-2026",
-        foto: "/uploads/perangkat-desa/lurah.jpg",
+        periode: "2021-2028",
+        foto: "/sudarisman.jpg",
     };
 
     return (

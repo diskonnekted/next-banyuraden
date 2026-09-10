@@ -6,7 +6,6 @@ import { prisma } from "@/lib/prisma";
 
 export default async function FasilitasPage() {
     const fasilitasList: any[] = (prisma && prisma.fasilitasPadukuhan) ? await prisma.fasilitasPadukuhan.findMany({
-        where: { aktif: true },
         include: {
             padukuhan: { select: { nama: true } },
         },

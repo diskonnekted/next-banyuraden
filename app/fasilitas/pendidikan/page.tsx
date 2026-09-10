@@ -36,7 +36,6 @@ function getJenisLabel(jenis: string): string {
 export default async function PendidikanPage() {
     const fasilitas: any[] = (prisma && prisma.fasilitasPadukuhan) ? await prisma.fasilitasPadukuhan.findMany({
         where: {
-            aktif: true,
             jenis: {
                 in: ["SD", "SMP", "SMA", "SMK", "TK", "PAUD", "PONDOK_PESANTREN", "PERGURUAN_TINGGI"],
             },

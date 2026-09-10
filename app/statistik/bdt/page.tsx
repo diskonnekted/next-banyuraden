@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Database, TrendingUp, Users } from "lucide-react";
 

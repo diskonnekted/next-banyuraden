@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { CreditCard, UserCheck, TrendingUp } from "lucide-react";
 

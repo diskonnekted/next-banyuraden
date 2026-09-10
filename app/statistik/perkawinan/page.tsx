@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Heart, Users, UserCheck } from "lucide-react";
 

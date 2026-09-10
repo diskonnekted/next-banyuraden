@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Shield, Briefcase, TrendingUp } from "lucide-react";
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
@@ -8,7 +9,6 @@ import { MobileNavigationWrapper } from "@/components/layout/MobileNavigationWra
 import { CustomToast } from "@/components/ui/custom/CustomToast";
 import { BackToTop } from "@/components/ui/custom/BackToTop";
 import { PWAInstallPrompt } from "@/components/ui/custom/PWAInstallPrompt";
-import { env } from "process";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL(env.NEXT_PUBLIC_SITE_URL || "https://banyuraden.slemankab.go.id"),
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://banyuraden.slemankab.go.id"),
     title: "Portal Resmi Kalurahan Banyuraden - Sleman, DIY",
     description:
         "Portal resmi Pemerintah Kalurahan Banyuraden, Kabupaten Sleman, DIY. Informasi lengkap layanan publik, berita terkini, dan transparansi pemerintahan kalurahan.",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
         type: "website",
         locale: "id_ID",
         url: "https://banyuraden.slemankab.go.id",
-        siteName: env.APP_NAME || "Portal Kalurahan Banyuraden",
+        siteName: process.env.APP_NAME || "Portal Kalurahan Banyuraden",
         images: [
             {
                 url: "/favicon-512x512.png",
@@ -79,7 +79,7 @@ export function generateViewport() {
 export default function RootLayout({
     children,
 }: Readonly<{
-    children: React.ReactNode;
+    children: ReactNode;
 }>) {
     return (
         <html lang="id" suppressHydrationWarning>

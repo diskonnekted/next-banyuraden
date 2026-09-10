@@ -1,8 +1,10 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-// import { fetchOpenSIDArsip } from "@/lib/api-helpers"; // Commented as unused
-import { env } from "process";
 import { createApiRouteHandler } from "@/lib/api-helpers";
+
+// Primary and fallback OpenSID endpoints
+const OPENSID_PRIMARY = process.env.OPENSID_API_PRIMARY || "https://banyuraden.id";
+const OPENSID_FALLBACK = process.env.OPENSID_API_FALLBACK || process.env.OPENSID_API_URL || "https://banyuraden.sleman-desa.id";
 
 // Type definitions for OpenSID article structure
 interface OpenSIDArticle {
@@ -27,27 +29,44 @@ export const { GET, OPTIONS } = createApiRouteHandler(async (request: NextReques
         const { searchParams } = new URL(request.url);
         const kategori = searchParams.get("kategori");
 
-        // Fetch news data from external API
-        const response = await fetch(
-            `${env.OPENSID_API_URL ?? "https://banyuraden.sleman-desa.id"}/internal_api/arsip`,
-            {
-                method: "GET",
-                headers: {
-                    "User-Agent":
-                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-                    Accept: "application/json",
-                    "Accept-Language": "id-ID,id;q=0.9,en;q=0.8",
-                },
-                next: {
-                    // Cache the result for 1 hour
-                    revalidate: 60 * 60,
-                    // Optionally, assign a tag for on-demand revalidation
-                    tags: ["opensid-data-proxy"],
-                },
-                // Add timeout to prevent hanging
-                signal: AbortSignal.timeout(30000),
-            }
-        );
+        let response = null;
+        let activeDomain = OPENSID_PRIMARY;
+
+        // Try primary first
+        try {
+            response = await fetch(
+                `${OPENSID_PRIMARY}/internal_api/arsip`,
+                {
+                    method: "GET",
+                    headers: {
+                        "User-Agent":
+                            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+                        Accept: "application/json",
+                        "Accept-Language": "id-ID,id;q=0.9,en;q=0.8",
+                    },
+                    next: { revalidate: 60 * 60, tags: ["opensid-data-proxy"] },
+                    signal: AbortSignal.timeout(15000),
+                }
+            );
+            if (!response.ok) throw new Error(`Primary response error: ${response.status}`);
+        } catch (err) {
+            console.warn(`Primary OpenSID API failed: ${err}. Attempting fallback...`);
+            activeDomain = OPENSID_FALLBACK;
+            response = await fetch(
+                `${OPENSID_FALLBACK}/internal_api/arsip`,
+                {
+                    method: "GET",
+                    headers: {
+                        "User-Agent":
+                            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+                        Accept: "application/json",
+                        "Accept-Language": "id-ID,id;q=0.9,en;q=0.8",
+                    },
+                    next: { revalidate: 60 * 60, tags: ["opensid-data-proxy"] },
+                    signal: AbortSignal.timeout(30000),
+                }
+            );
+        }
 
         if (!response.ok) {
             return NextResponse.json(
@@ -89,11 +108,11 @@ export const { GET, OPTIONS } = createApiRouteHandler(async (request: NextReques
                 let imageUrl = article.attributes.gambar as string;
                 // If it's just a filename, add OpenSID path
                 if (!imageUrl.includes("/")) {
-                    imageUrl = `https://banyuraden.sleman-desa.id/desa/upload/artikel/sedang_${imageUrl}`;
+                    imageUrl = `${activeDomain}/desa/upload/artikel/sedang_${imageUrl}`;
                 } else {
                     // If it's a relative path, add base URL
                     if (imageUrl.startsWith("/")) {
-                        imageUrl = `https://banyuraden.sleman-desa.id${imageUrl}`;
+                        imageUrl = `${activeDomain}${imageUrl}`;
                     }
                     // Force HTTPS
                     imageUrl = imageUrl.replace(/^http:\/\//, "https://");

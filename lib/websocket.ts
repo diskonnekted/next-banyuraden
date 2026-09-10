@@ -1,4 +1,4 @@
-import { env } from "process";
+import { useState, useEffect, useRef } from "react";
 
 /**
  * WebSocket Utilities for Real-time Features
@@ -517,18 +517,18 @@ export function useWebSocket(config: WebSocketConfig, handlers: WebSocketEventHa
  * Default WebSocket configuration for development
  */
 export const DEFAULT_WEBSOCKET_CONFIG: WebSocketConfig = {
-    url: env.NEXT_PUBLIC_WS_URL ?? "wss://banyuraden.sleman-desa.id/ws",
+    url: process.env.NEXT_PUBLIC_WS_URL ?? "wss://banyuraden.sleman-desa.id/ws",
     reconnectAttempts: 5,
     reconnectInterval: 3000,
     heartbeatInterval: 30000,
-    debug: env.NODE_ENV === "development",
+    debug: process.env.NODE_ENV === "development",
 };
 
 /**
  * WebSocket configuration for production
  */
 export const PRODUCTION_WEBSOCKET_CONFIG: WebSocketConfig = {
-    url: env.NEXT_PUBLIC_WS_URL ?? "wss://banyuraden.sleman-desa.id/ws",
+    url: process.env.NEXT_PUBLIC_WS_URL ?? "wss://banyuraden.sleman-desa.id/ws",
     reconnectAttempts: 10,
     reconnectInterval: 5000,
     heartbeatInterval: 60000,
@@ -540,11 +540,8 @@ export const PRODUCTION_WEBSOCKET_CONFIG: WebSocketConfig = {
  */
 export function createWebSocket(
     handlers: WebSocketEventHandlers = {},
-    isProduction = env.NODE_ENV === "production"
+    isProduction = process.env.NODE_ENV === "production"
 ): RealtimeWebSocket {
     const config = isProduction ? PRODUCTION_WEBSOCKET_CONFIG : DEFAULT_WEBSOCKET_CONFIG;
     return new RealtimeWebSocket(config, handlers);
 }
-
-// React hook import
-import { useState, useEffect, useRef } from "react";

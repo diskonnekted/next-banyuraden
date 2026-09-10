@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Heart, FileText, TrendingUp } from "lucide-react";
 

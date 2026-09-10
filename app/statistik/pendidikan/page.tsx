@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { GraduationCap, BookOpen, TrendingUp, Users } from "lucide-react";
 

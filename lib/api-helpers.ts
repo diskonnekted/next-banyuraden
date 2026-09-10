@@ -30,12 +30,16 @@ export function extractQueryParams(request: NextRequest) {
  * OpenSID statistik API helper
  */
 export async function fetchOpenSIDStatistik(endpoint: string, config?: { cacheTags?: string[]; fallbackData?: unknown }) {
-    const response = await opensidApi.get(endpoint, {
-        cache: {
-            revalidate: 3600,
-            tags: config?.cacheTags,
-        },
+    const { fetchWithFallback } = await import("./api-service");
+    const response = await fetchWithFallback(endpoint, {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: config?.cacheTags,
+            },
+        }
     });
+
 
     // Return fallback data if request fails
     if (!response.success && config?.fallbackData) {
@@ -69,14 +73,18 @@ export async function fetchOpenSIDStatistikById(
  * OpenSID arsip/berita API helper
  */
 export async function fetchOpenSIDArsip(page?: number) {
+    const { fetchWithFallback } = await import("./api-service");
     const endpoint = page ? `/internal_api/arsip?page[number]=${page}` : "/internal_api/arsip";
-    return opensidApi.get(endpoint, {
-        cache: {
-            revalidate: 60, // 60 seconds
-            tags: ["opensid-data-proxy"],
-        },
+    return fetchWithFallback(endpoint, {
+        config: {
+            cache: {
+                revalidate: 60, // 60 seconds
+                tags: ["opensid-data-proxy"],
+            },
+        }
     });
 }
+
 
 /**
  * SDGS API helper with location code
@@ -106,11 +114,14 @@ export async function fetchSDGSDetail(goalId: string, locationCode = "3404140004
  * IDM API helper with year parameter
  */
 export async function fetchIDMData(year = "2024") {
-    return opensidApi.get(`/internal_api/idm/${year}`, {
-        cache: {
-            revalidate: 60 * 60 * 24 * 30, // 30 days
-            tags: ["idm-data"],
-        },
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback(`/internal_api/idm/${year}`, {
+        config: {
+            cache: {
+                revalidate: 60 * 60 * 24 * 30, // 30 days
+                tags: ["idm-data"],
+            },
+        }
     });
 }
 
@@ -164,11 +175,14 @@ export async function fetchLocalAPI(endpoint: string, config?: { cacheTags?: str
  * OpenSID APBDES (keuangan) API helper
  */
 export async function fetchOpenSIDKeuangan(tahun: string) {
-    return opensidApi.get(`/internal_api/apbdes?tahun=${tahun}`, {
-        cache: {
-            revalidate: 3600,
-            tags: ["opensid-data-keuangan"],
-        },
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback(`/internal_api/apbdes?tahun=${tahun}`, {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: ["opensid-data-keuangan"],
+            },
+        }
     });
 }
 
@@ -176,11 +190,14 @@ export async function fetchOpenSIDKeuangan(tahun: string) {
  * OpenSID government API helper
  */
 export async function fetchOpenSIDPemerintah() {
-    return opensidApi.get("/internal_api/pemerintah", {
-        cache: {
-            revalidate: 3600,
-            tags: ["opensid-data-pemerintah"],
-        },
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback("/internal_api/pemerintah", {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: ["opensid-data-pemerintah"],
+            },
+        }
     });
 }
 
@@ -188,11 +205,14 @@ export async function fetchOpenSIDPemerintah() {
  * OpenSID pembangunan API helper
  */
 export async function fetchOpenSIDPembangunan() {
-    return opensidApi.get("/internal_api/pembangunan", {
-        cache: {
-            revalidate: 3600,
-            tags: ["opensid-data-pembangunan"],
-        },
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback("/internal_api/pembangunan", {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: ["opensid-data-pembangunan"],
+            },
+        }
     });
 }
 
@@ -200,11 +220,14 @@ export async function fetchOpenSIDPembangunan() {
  * OpenSID peta API helper
  */
 export async function fetchOpenSIDPeta() {
-    return opensidApi.get("/internal_api/peta", {
-        cache: {
-            revalidate: 3600,
-            tags: ["opensid-data-peta"],
-        },
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback("/internal_api/peta", {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: ["opensid-data-peta"],
+            },
+        }
     });
 }
 
@@ -212,11 +235,14 @@ export async function fetchOpenSIDPeta() {
  * OpenSID PPID API helper
  */
 export async function fetchOpenSIDPPID() {
-    return opensidApi.get("/internal_api/informasi-publik", {
-        cache: {
-            revalidate: 3600,
-            tags: ["opensid-data-ppid"],
-        },
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback("/internal_api/informasi-publik", {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: ["opensid-data-ppid"],
+            },
+        }
     });
 }
 
@@ -224,13 +250,17 @@ export async function fetchOpenSIDPPID() {
  * OpenSID wilayah API helper
  */
 export async function fetchOpenSIDWilayah() {
-    return opensidApi.get("/internal_api/wilayah/administratif", {
-        cache: {
-            revalidate: 3600,
-            tags: ["opensid-data-wilayah"],
-        },
+    const { fetchWithFallback } = await import("./api-service");
+    return fetchWithFallback("/internal_api/wilayah/administratif", {
+        config: {
+            cache: {
+                revalidate: 3600,
+                tags: ["opensid-data-wilayah"],
+            },
+        }
     });
 }
+
 
 
 /**

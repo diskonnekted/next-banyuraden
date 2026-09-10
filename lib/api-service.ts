@@ -37,7 +37,7 @@ const DEFAULT_CONFIG: Required<Omit<ApiConfig, "baseUrl" | "cache">> = {
 
 // Common CORS headers
 export const CORS_HEADERS = {
-    "Access-Control-Allow-Origin": process.env.CORS_ORIGIN || process.env.NEXT_PUBLIC_SITE_URL || "https://devoneclickbanyuraden.slemankab.go.id",
+    "Access-Control-Allow-Origin": process.env.CORS_ORIGIN || process.env.NEXT_PUBLIC_SITE_URL || "https://banyuraden.slemankab.go.id",
     "Access-Control-Allow-Methods": "GET, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
 };
@@ -234,15 +234,61 @@ export class ApiService {
 // Pre-configured API services for common use cases
 
 /**
- * OpenSID API service
+ * Primary OpenSID base URL (banyuraden.id)
+ */
+const OPENSID_PRIMARY_URL = process.env.OPENSID_API_PRIMARY || "https://banyuraden.id";
+
+/**
+ * Fallback OpenSID base URL (banyuraden.sleman-desa.id)
+ */
+const OPENSID_FALLBACK_URL = process.env.OPENSID_API_FALLBACK || process.env.OPENSID_API_URL || "https://banyuraden.sleman-desa.id";
+
+/**
+ * OpenSID API service with primary URL
  */
 export const opensidApi = new ApiService({
-    baseUrl: process.env.OPENSID_API_URL || "https://banyuraden.sleman-desa.id",
+    baseUrl: OPENSID_FALLBACK_URL, // Default to working fallback
     timeout: 30000,
     cache: {
         revalidate: 3600, // 1 hour
     },
 });
+
+/**
+ * Helper to fetch from OpenSID with primary→fallback strategy
+ * Tries banyuraden.id first, falls back to banyuraden.sleman-desa.id
+ */
+export async function fetchWithFallback(
+    endpoint: string,
+    options: RequestInit & { config?: Partial<ApiConfig> } = {}
+): Promise<ApiResponse> {
+    // Try primary URL first
+    const primaryService = new ApiService({
+        baseUrl: OPENSID_PRIMARY_URL,
+        timeout: 15000,
+        retries: 1,
+        cache: { revalidate: 3600 },
+    });
+
+    const primaryResult = await primaryService.request(endpoint, options);
+
+    if (primaryResult.success) {
+        return primaryResult;
+    }
+
+    // Fall back to secondary URL
+    console.warn(`OpenSID primary (${OPENSID_PRIMARY_URL}) failed for ${endpoint}, trying fallback...`);
+    const fallbackService = new ApiService({
+        baseUrl: OPENSID_FALLBACK_URL,
+        timeout: 30000,
+        retries: 2,
+        cache: { revalidate: 3600 },
+    });
+
+    return fallbackService.request(endpoint, options);
+}
+
+
 
 /**
  * SDGS API service
@@ -272,7 +318,7 @@ const LOCAL_BASE_URL =
     process.env.NEXT_PUBLIC_SITE_URL ||
     process.env.NEXTAUTH_URL ||
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ||
-    (process.env.NODE_ENV === "development" ? "http://localhost:5091" : "https://devoneclickbanyuraden.slemankab.go.id");
+    (process.env.NODE_ENV === "development" ? "http://localhost:5091" : "https://banyuraden.slemankab.go.id");
 
 export const localApi = new ApiService({
     baseUrl: LOCAL_BASE_URL,

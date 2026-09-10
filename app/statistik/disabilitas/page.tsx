@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Accessibility, Users, TrendingUp } from "lucide-react";
 

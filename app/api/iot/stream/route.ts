@@ -1,120 +1,87 @@
 import { fetchAllIoTData } from "@/lib/thingspeak";
 import { CORS_HEADERS } from "@/lib/api-service";
 
-const activeConnections: Set<ReadableStreamDefaultController> = new Set();
+export const dynamic = "force-dynamic";
 
-export async function GET() {
+export async function GET(req: Request) {
     const encoder = new TextEncoder();
 
-    // Create a ReadableStream for Server-Sent Events
-    const stream = new ReadableStream({
-        start(controller) {
-            activeConnections.add(controller);
+    // Create a ReadableStream for Server-Sent Events (per-request stream suitable for Serverless)
+    let isCancelled = false;
+    let timer: NodeJS.Timeout | null = null;
 
+    const stream = new ReadableStream({
+        async start(controller) {
             // Send initial connection message
             const connectionMessage = {
                 type: "connection",
                 message: "Connected to IoT data stream",
                 timestamp: new Date().toISOString(),
             };
-
             controller.enqueue(encoder.encode(`data: ${JSON.stringify(connectionMessage)}\n\n`));
 
-            // Start the polling interval
-            startPolling(controller, encoder);
+            const sendIoTUpdate = async () => {
+                if (isCancelled) return;
+                try {
+                    const data = await fetchAllIoTData();
+                    if (isCancelled) return;
+
+                    const message = {
+                        type: "iot-update",
+                        data: data,
+                        timestamp: new Date().toISOString(),
+                    };
+                    controller.enqueue(encoder.encode(`data: ${JSON.stringify(message)}\n\n`));
+                } catch (error) {
+                    if (isCancelled) return;
+                    console.error("Error fetching IoT data in stream:", error);
+                    const errorMessage = {
+                        type: "error",
+                        message: "Failed to fetch IoT data",
+                        timestamp: new Date().toISOString(),
+                    };
+                    try {
+                        controller.enqueue(encoder.encode(`data: ${JSON.stringify(errorMessage)}\n\n`));
+                    } catch {
+                        // ignore enqueue errors if closed
+                    }
+                }
+            };
+
+            // Send first data immediately
+            await sendIoTUpdate();
+
+            // Periodic updates every 15s per connection
+            timer = setInterval(() => {
+                sendIoTUpdate();
+            }, 15000);
         },
 
         cancel() {
-            // Cleanup when client disconnects
-            for (const controller of activeConnections) {
-                if (controller.desiredSize === 0) {
-                    activeConnections.delete(controller);
-                }
+            isCancelled = true;
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
             }
         },
     });
 
-    // Stop polling when the last client disconnects
-    if (activeConnections.size === 0) {
-        stopPolling();
-    }
+    // Also listen to request abort signal
+    req.signal.addEventListener("abort", () => {
+        isCancelled = true;
+        if (timer) {
+            clearInterval(timer);
+            timer = null;
+        }
+    });
 
     return new Response(stream, {
         headers: {
             "Content-Type": "text/event-stream",
-            "Cache-Control": "no-cache",
+            "Cache-Control": "no-cache, no-transform",
             Connection: "keep-alive",
             "Access-Control-Allow-Origin": CORS_HEADERS["Access-Control-Allow-Origin"],
             "Access-Control-Allow-Headers": "Cache-Control",
         },
     });
 }
-
-let pollingInterval: NodeJS.Timeout | null = null;
-
-function startPolling(controller: ReadableStreamDefaultController, encoder: TextEncoder) {
-    if (pollingInterval) return;
-
-    console.log("Starting IoT data polling...");
-
-    const poll = async () => {
-        try {
-            const startTime = Date.now();
-            const data = await fetchAllIoTData();
-            const fetchDuration = Date.now() - startTime;
-
-            console.log(`IoT data fetched in ${fetchDuration}ms`);
-
-            const message = {
-                type: "iot-update",
-                data: data,
-                timestamp: new Date().toISOString(),
-            };
-
-            // Send to all active connections
-            const encodedMessage = encoder.encode(`data: ${JSON.stringify(message)}\n\n`);
-
-            for (const conn of activeConnections) {
-                try {
-                    conn.enqueue(encodedMessage);
-                } catch (error) {
-                    console.error("Error sending to client:", error);
-                    activeConnections.delete(conn);
-                }
-            }
-        } catch (error) {
-            console.error("Error polling IoT data:", error);
-
-            // Send error message to clients
-            const errorMessage = {
-                type: "error",
-                message: "Failed to fetch IoT data",
-                timestamp: new Date().toISOString(),
-            };
-
-            try {
-                controller.enqueue(encoder.encode(`data: ${JSON.stringify(errorMessage)}\n\n`));
-            } catch (e) {
-                console.error("Error sending error message:", e);
-            }
-        }
-    };
-
-    // Initial poll - run immediately (will use cache if available)
-    poll();
-
-    // Poll every 15 seconds (matching cache duration)
-    pollingInterval = setInterval(poll, 15000);
-}
-
-function stopPolling() {
-    if (pollingInterval) {
-        clearInterval(pollingInterval);
-        pollingInterval = null;
-        console.log("IoT data polling stopped");
-    }
-}
-
-// Cleanup on server shutdown
-process.on("SIGTERM", stopPolling);
-process.on("SIGINT", stopPolling);

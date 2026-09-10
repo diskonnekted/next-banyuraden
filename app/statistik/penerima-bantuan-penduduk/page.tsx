@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { HandHeart, Target, TrendingUp } from "lucide-react";
 

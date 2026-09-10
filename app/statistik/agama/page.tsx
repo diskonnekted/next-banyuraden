@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Church, Users, Star } from "lucide-react";
 

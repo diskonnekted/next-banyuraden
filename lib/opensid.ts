@@ -1,5 +1,3 @@
-import { env } from "process";
-
 // OpenSID API Integration Service
 interface OpenSIDArticle {
     type: string;
@@ -52,18 +50,23 @@ interface OpenSIDApiResponse {
     };
 }
 
-// Configuration
+// Configuration - Primary: banyuraden.id, Fallback: banyuraden.sleman-desa.id
+const PRIMARY_DOMAIN = process.env.OPENSID_API_PRIMARY || "https://banyuraden.id";
+const FALLBACK_DOMAIN = process.env.OPENSID_API_FALLBACK || process.env.OPENSID_API_URL || "https://banyuraden.sleman-desa.id";
+
 const OPENSID_CONFIG = {
-    baseUrl: `${env.OPENSID_API_URL ?? "https://banyuraden.sleman-desa.id"}/internal_api/arsip`,
+    primaryUrl: `${PRIMARY_DOMAIN}/internal_api/arsip`,
+    fallbackUrl: `${FALLBACK_DOMAIN}/internal_api/arsip`,
     postsPerPage: 50, // Increased to show more posts per page
     cacheTimeout: 60 * 60 * 1000, // 1 jam cache
 };
 
-// Default domain untuk fallback
-const DEFAULT_DOMAIN = "https://banyuraden.sleman-desa.id";
+// Default domain untuk fallback image URLs
+const DEFAULT_DOMAIN = FALLBACK_DOMAIN;
 
 // Cache untuk menyimpan data sementara
 const cache = new Map<string, { data: unknown; timestamp: number }>();
+
 
 // Helper function untuk cache
 function getCachedData(key: string) {
@@ -121,15 +124,15 @@ function decodeHtmlEntities(text: string): string {
     });
 }
 
-// Base API function - now uses proxy to avoid CORS issues
+// Base API function - uses proxy to avoid CORS issues
 async function fetchFromOpenSID(_endpoint: string = "", params: Record<string, string> = {}) {
     // Use proxy API route to avoid CORS issues
     const baseUrl =
         typeof window !== "undefined"
             ? window.location.origin
-            : env.NEXTAUTH_URL ||
-              env.NEXT_PUBLIC_SITE_URL ||
-              (env.VERCEL_URL ? `https://${env.VERCEL_URL}` : undefined) ||
+            : process.env.NEXTAUTH_URL ||
+              process.env.NEXT_PUBLIC_SITE_URL ||
+              (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ||
               DEFAULT_DOMAIN;
     const url = new URL("/api/opensid-proxy", baseUrl);
 
@@ -164,6 +167,7 @@ async function fetchFromOpenSID(_endpoint: string = "", params: Record<string, s
         return null;
     }
 }
+
 
 // Transform OpenSID article ke format aplikasi
 function transformArticle(article: OpenSIDArticle) {

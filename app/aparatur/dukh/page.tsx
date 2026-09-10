@@ -17,13 +17,18 @@ function getInitials(name: string): string {
 }
 
 export default async function DukuPage() {
-    const dukuhList: any[] = (prisma && prisma.aparaturPamong) ? await prisma.aparaturPamong.findMany({
-        where: {
-            kelompok: "DUKUH",
-            aktif: true,
-        },
-        orderBy: { urutan: "asc" },
-    }) : [];
+    let dukuhList: any[] = [];
+    try {
+        dukuhList = (prisma && prisma.aparaturPamong) ? await prisma.aparaturPamong.findMany({
+            where: {
+                kelompok: "DUKUH",
+                aktif: true,
+            },
+            orderBy: { urutan: "asc" },
+        }) : [];
+    } catch (e) {
+        console.error("Database connection failed during build, using empty array for DukuPage:", e);
+    }
 
     return (
         <div className="min-h-screen bg-linear-to-b from-gray-50 to-white py-8">

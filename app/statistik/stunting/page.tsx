@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Baby, Heart, TrendingUp, Users } from "lucide-react";
 

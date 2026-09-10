@@ -2,7 +2,6 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
     reactCompiler: true,
-    cacheComponents: true,
     poweredByHeader: false,
 
     allowedDevOrigins: ['banyuraden.slemankab.go.id', 'banyuraden.id'],
@@ -143,6 +142,18 @@ const nextConfig: NextConfig = {
                 hostname: 'banyuraden.slemankab.go.id',
                 port: '',
                 pathname: '/desa/upload/galeri/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'banyuraden.sleman-desa.id',
+                port: '',
+                pathname: '/desa/upload/artikel/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'banyuraden.id',
+                port: '',
+                pathname: '/desa/upload/artikel/**',
             },
         ],
 

@@ -24,31 +24,31 @@ export default function ProfilPage() {
     const kalurahanData = {
         // Basic Info
         nama: "Banyuraden",
-        kapanewon: "Tempel",
+        kapanewon: "Gamping",
         kabupaten: "Sleman",
         provinsi: "D.I Yogyakarta",
         tahunSemester: "II/2024",
 
         // Geography & Climate
-        tinggiDaerah: "320 mdpl",
-        suhuMax: "30°C",
-        suhuMin: "18°C",
+        tinggiDaerah: "145 mdpl",
+        suhuMax: "32°C",
+        suhuMin: "24°C",
         bentukWilayah: "Dataran sampai berombak: 100%",
-        jumlahCurahHujan: "mm/th",
-        hariCurahHujan: "2 hari",
+        jumlahCurahHujan: "2200 mm/th",
+        hariCurahHujan: "120 hari",
 
         batasWilayah: {
-            utara: "Kapanewon Turi",
-            timur: "Kapanewon Sleman",
-            selatan: "Kapanewon Seyegan",
-            barat: "Kapanewon Salam, Ngluwar",
+            utara: "Kalurahan Sendangadi & Kapanewon Mlati",
+            timur: "Kota Yogyakarta",
+            selatan: "Kapanewon Kasihan (Bantul)",
+            barat: "Kalurahan Ambarketawang",
         },
 
         jarak: {
-            padukuhanTerjauh: "1 km/jam",
-            keKapanewon: "2,5 km; /jam",
-            keKabupaten: "10 km; /jam",
-            keProvinsi: "20 km; /jam",
+            padukuhanTerjauh: "2,5 km",
+            keKapanewon: "2 km",
+            keKabupaten: "11 km",
+            keProvinsi: "5 km",
         },
 
         // Kalurahan Categories
@@ -65,7 +65,7 @@ export default function ProfilPage() {
             },
             swasembada: {
                 mula: 0,
-                madya: 0,
+                madya: 1,
                 lanjut: 0,
             },
             idt: 0,
@@ -73,30 +73,30 @@ export default function ProfilPage() {
 
         // Kejuaraan
         kejuaraan: {
-            kapanewon: { i: 0, ii: 0, iii: 0 },
-            kabupaten: { i: 0, ii: 0, iii: 0 },
-            provinsi: { i: 0, ii: 0, iii: 0 },
+            kapanewon: { i: 1, ii: 0, iii: 0 },
+            kabupaten: { i: 1, ii: 1, iii: 0 },
+            provinsi: { i: 0, ii: 1, iii: 0 },
         },
 
         // Land Use
-        luasTotal: "327.1980 Ha",
+        luasTotal: "275.64 Ha",
         tanahSawah: {
-            total: "52.5 Ha",
-            irigasiTeknis: "32.5 Ha",
-            irigasiSetengahTeknis: "55 Ha",
-            irigasiSederhana: "7.5 Ha",
-            tadahHujan: "10 Ha",
+            total: "82.5 Ha",
+            irigasiTeknis: "42.5 Ha",
+            irigasiSetengahTeknis: "25 Ha",
+            irigasiSederhana: "15 Ha",
+            tadahHujan: "0 Ha",
         },
-        pekarangan: "102.2696 Ha",
-        lapanganOlahraga: "0.5850 Ha",
-        kuburan: "2.3600 Ha",
-        lainnya: "40.2680 Ha",
+        pekarangan: "142.26 Ha",
+        lapanganOlahraga: "1.58 Ha",
+        kuburan: "4.36 Ha",
+        lainnya: "44.94 Ha",
 
         // Government Structure
         government: {
-            padukuhan: 9,
-            rw: 20,
-            rt: 47,
+            padukuhan: 8,
+            rw: 22,
+            rt: 64,
         },
 
         // LPMK Data
@@ -108,19 +108,19 @@ export default function ProfilPage() {
 
         // Lurah Info
         lurah: {
-            nama: "R. Widayatma, SE",
+            nama: "Sudarisman, S.T.",
             jabatan: "Lurah/Kepala Kalurahan",
-            periode: "2021-2026",
-            foto: "/uploads/perangkat-desa/lurah.jpg",
+            periode: "2021-2028",
+            foto: "/sudarisman.jpg",
         },
 
         // Historical Data
         sejarah: {
-            maklumat: "Maklumat Gubernur DIY Sri Sultan Hamengkubuwono ke IX",
-            nomor: "05",
+            maklumat: "Maklumat Pemerintah Daerah Istimewa Yogyakarta",
+            nomor: "05/1948",
             tahun: "1948",
             deskripsi:
-                "Kalurahan Banyuraden dulunya terbagi menjadi 2 (dua) Kalurahan yaitu Kalurahan Ngentak dan Kalurahan Glagahombo.",
+                "Kalurahan Banyuraden dibentuk berdasarkan Maklumat Pemerintah Daerah Istimewa Yogyakarta Nomor 5 Tahun 1948 tentang Penggabungan Kelurahan. Wilayah Banyuraden merupakan penggabungan dari beberapa kelurahan lama guna menyederhanakan birokrasi dan meningkatkan pelayanan publik.",
         },
     };
 
